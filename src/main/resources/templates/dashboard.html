@@ -1,0 +1,85 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ja">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script type="text/javascript" th:src="@{/webjars/jquery/3.2.0/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+		<link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
+		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
+		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
+
+		<title>ダッシュホード</title>
+	</head>
+	<body>
+		<div th:replace="common/layout::navbar-layout"></div>
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1>ダッシュボード</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--<div class="section">-->
+			<!--<div class="container">-->
+				<!--<div class="row">-->
+					<!--<div class="col-md-12">-->
+						<!--<ul class="media-list">-->
+							<!--<li class="media">-->
+								<!--<a class="pull-left" th:href="@{/clients}"><i class="fa fa-4x fa-fw fa-users"></i></a>-->
+								<!--<div class="media-body">-->
+									<!--<h4 class="media-heading">顧客管理</h4>-->
+									<!--<p></p>-->
+								<!--</div>-->
+							<!--</li>-->
+							<!--<li class="media">-->
+								<!--<a class="pull-left" th:href="@{/orders}"><i class="fa fa-4x fa-fw s fa-cart-arrow-down"></i></a>-->
+								<!--<div class="media-body">-->
+									<!--<h4 class="media-heading">注文管理</h4>-->
+									<!--<p></p>-->
+								<!--</div>-->
+							<!--</li>-->
+							<!--<li class="media">-->
+								<!--<a class="pull-left" href="#"><i class="fa fa-4x fa-fw s fa-archive"></i></a>-->
+								<!--<div class="media-body">-->
+									<!--<h4 class="media-heading">在庫管理</h4>-->
+									<!--<p></p>-->
+								<!--</div>-->
+							<!--</li>-->
+							<!--<li class="media">-->
+								<!--<a class="pull-left" href="#"><i class="fa fa-4x fa-fw s fa-book"></i></a>-->
+								<!--<div class="media-body">-->
+									<!--<h4 class="media-heading">データ管理</h4>-->
+									<!--<p></p>-->
+								<!--</div>-->
+							<!--</li>-->
+							<!--<li class="media">-->
+								<!--<a class="pull-left" href="#"><i class="fa fa-4x fa-fw s fa-folder"></i></a>-->
+								<!--<div class="media-body">-->
+									<!--<h4 class="media-heading">マスタ管理</h4>-->
+									<!--<p></p>-->
+								<!--</div>-->
+							<!--</li>-->
+							<!--<li class="media">-->
+								<!--<a class="pull-left" href="#"><i class="fa fa-4x fa-fw s fa-briefcase"></i></a>-->
+								<!--<div class="media-body">-->
+									<!--<h4 class="media-heading">販促</h4>-->
+									<!--<p></p>-->
+								<!--</div>-->
+							<!--</li>-->
+							<!--<li class="media">-->
+								<!--<a class="pull-left" th:href="@{/contact}"><i class="fa fa-4x fa-fw s fa-envelope"></i></a>-->
+								<!--<div class="media-body">-->
+									<!--<h4 class="media-heading">お問い合わせ</h4>-->
+									<!--<p></p>-->
+								<!--</div>-->
+							<!--</li>-->
+						<!--</ul>-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+	</body>
+</html>
