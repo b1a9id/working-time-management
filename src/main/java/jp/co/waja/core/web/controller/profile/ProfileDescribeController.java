@@ -3,13 +3,14 @@ package jp.co.waja.core.web.controller.profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping
+@RequestMapping("/profile")
 public class ProfileDescribeController {
 
-	@GetMapping
-	public String describe() {
+	@GetMapping("/describe")
+	public String describe(@RequestParam(required = false) Long userId) {
 		return "profile/describe";
 	}
 }
