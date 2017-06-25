@@ -1,0 +1,124 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script type="text/javascript" th:src="@{/webjars/jquery/3.2.0/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
+	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
+	<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
+
+	<title>稼働実績入力</title>
+</head>
+<body>
+<div th:replace="common/layout::navbar-layout"></div>
+<div class="section"></div>
+<div class="section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1>稼働実績入力</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="breadcrumb">
+					<li><a th:href="@{/}">ダッシュボード</a></li>
+					<li><a th:href="@{/work-time/list}">稼働実績照会</a></li>
+					<li class="active">稼働実績入力</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<form class="form-horizontal" role="form" th:action="@{/work-time/edit}" method="post">
+					<div class="form-group">
+						<div class="col-sm-2">
+							<label class="control-label">注文番号</label>
+						</div>
+						<div class="col-sm-10">
+							<p class="form-control-static">655000</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2">
+							<label class="control-label">注文日</label>
+						</div>
+						<div class="col-sm-10">
+							<p class="form-control-static">2017/05/17 19:20:32</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2">
+							<label class="control-label">状況</label>
+						</div>
+						<div class="col-sm-10">
+							<input class="form-control" placeholder="状況" value="ご入金待ち"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2">
+							<label class="control-label">TBS出荷指図</label>
+						</div>
+						<div class="col-sm-10">
+							<input class="form-control" placeholder="TBS出荷指図" value="未指図" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2">
+							<label class="control-label">名前</label>
+						</div>
+						<div class="col-sm-10 form-inline">
+							<input class="form-control" placeholder="田中" value="山田" />
+							<input class="form-control" placeholder="太郎" value="太郎" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2">
+							<label class="control-label">ふりがな</label>
+						</div>
+						<div class="col-sm-10 form-inline">
+							<input class="form-control" placeholder="たなか" value="やまだ"/>
+							<input class="form-control" placeholder="たろう" value="たろう"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2">
+							<label class="control-label">郵便番号</label>
+						</div>
+						<div class="col-sm-10">
+							<input class="form-control" placeholder="106-0041" value="106-0041" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2">
+							<label class="control-label">住所</label>
+						</div>
+						<div class="col-sm-10">
+							<input class="form-control" placeholder="住所" value="東京都港区麻布台３丁目４−１１"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2">
+							<label class="control-label">電話番号</label>
+						</div>
+						<div class="col-sm-10">
+							<input class="form-control" placeholder="電話番号" value="080-1000-0001"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<a th:href="@{/orders/payment-waiting/describe/655000}" type="button" class="btn btn-default col-md-offset-5">戻る</a>
+						<button type="submit" class="btn btn-success">保存</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
