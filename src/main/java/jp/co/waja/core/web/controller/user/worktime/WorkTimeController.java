@@ -11,13 +11,17 @@ public class WorkTimeController {
 
 	@GetMapping("/list")
 	public String list() {
-		return "worktime/list";
+		return "user/worktime/list";
 	}
 
 	@GetMapping("/edit")
 	public String edit(Model model) {
 		model.addAttribute("timePerOne", WorkTimeUtil.timePerOne());
+		return "user/worktime/edit";
+	}
 
-		return "worktime/edit";
+	@PostMapping("/edit")
+	public String edit() {
+		return "redirect:/work-time/list";
 	}
 }

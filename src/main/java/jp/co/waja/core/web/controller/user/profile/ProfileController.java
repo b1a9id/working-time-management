@@ -11,6 +11,6 @@ public class ProfileController {
 
 	@GetMapping("/describe")
 	public String describe(@RequestParam(required = false) Long userId) {
-		return "profile/describe";
+		return "user/profile/describe";
 	}
 }

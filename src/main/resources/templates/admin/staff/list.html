@@ -1,4 +1,4 @@
-<!DOCTYPE html SYSTEM" http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ja">
 	<head>
 		<meta charset="utf-8"/>
@@ -20,7 +20,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<h1>着荷一覧</h1>
+					<h1>スタッフ一覧</h1>
 				</div>
 			</div>
 		</div>
@@ -33,39 +33,28 @@
 						<form class="form-horizontal" role="form">
 							<div class="form-group">
 								<div class="col-sm-2">
-									<label class="control-label">M番号</label>
-								</div>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" placeholder="M番号" />
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-2">
-									<label class="control-label">バイヤー/ドナー</label>
-								</div>
-								<div class="col-sm-10">
-									<input type="text" class="form-control"  placeholder="バイヤー/ドナー" />
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-2">
-									<label class="control-label">状況</label>
+									<label class="control-label">チーム</label>
 								</div>
 								<div class="col-sm-10">
 									<select class="form-control">
-										<option value="未到着" selected="selected">未到着</option>
-										<option value="てすと１">てすと１</option>
-										<option value="てすと２">てすと２</option>
+										<option value="creative" selected="selected">CRチーム</option>
+										<option value="mp">MPチーム</option>
+										<option value="sp">SPチーム</option>
+										<option value="事推">事推</option>
+										<option value="ff">FFチーム</option>
 									</select>
 								</div>
 							</div>
 							<div class="form-group">
-								<div class="col-sm-offset-2 col-sm-10">
-									<div class="checkbox">
-										<label>
-											<input type="checkbox" />お取り寄せ
-										</label>
-									</div>
+								<div class="col-sm-2">
+									<label class="control-label">残有給日数</label>
+								</div>
+								<div class="col-sm-10">
+									<select class="form-control">
+										<option value="" selected="selected">0 ~ 5</option>
+										<option value="てすと１">5 ~ 10</option>
+										<option value="てすと２">10 ~ 20</option>
+									</select>
 								</div>
 							</div>
 							<div class="form-group">
@@ -132,60 +121,94 @@
 					<table class="table">
 						<thead>
 						<tr>
-							<th>M番号</th>
-							<th>バイヤー/ドナー</th>
-							<th>送り状番号</th>
-							<th>状況</th>
-							<th>D番号</th>
-							<th>最終申請日</th>
-							<th class="col-md-1">お取り寄せ</th>
+							<th>チーム</th>
+							<th>名前</th>
+							<th>ふりがな</th>
+							<th>性別</th>
+							<th>入社日</th>
+							<th>残有給日数</th>
 						</tr>
 						</thead>
 						<tbody>
 						<tr>
-							<td><a>M53000</a></td>
+							<td>CRチーム</td>
 							<td>テスト太郎</td>
-							<td>1000-0000-0000</td>
-							<td>未到着</td>
-							<td></td>
-							<td>2017/05/05 12:00</td>
-							<td class="text-center">○</td>
+							<td>てすとたろう</td>
+							<td>男</td>
+							<td>2015/06/01</td>
+							<td>10日</td>
 						</tr>
 						<tr>
-							<td><a>M53001</a></td>
+							<td>MPチーム</td>
 							<td>テスト一郎</td>
-							<td>1000-0000-0000</td>
-							<td>未到着</td>
-							<td></td>
-							<td>2017/05/05 12:00</td>
-							<td class="text-center"></td>
+							<td>てすといちろう</td>
+							<td>男</td>
+							<td>2013/01/01</td>
+							<td>23日</td>
 						</tr>
 						<tr>
-							<td><a>M53002</a></td>
+							<td>事推</td>
+							<td>テスト花子</td>
+							<td>てすとはなこ</td>
+							<td>女</td>
+							<td>2017/04/10</td>
+							<td>0日</td>
+						</tr>
+						<tr>
+							<td>CRチーム</td>
+							<td>テスト桃子</td>
+							<td>てすとももこ</td>
+							<td>女</td>
+							<td>2015/06/01</td>
+							<td>15日</td>
+						</tr>
+						<tr>
+							<td>FFチーム</td>
 							<td>テスト二郎</td>
-							<td>1000-0000-0000</td>
-							<td>未到着</td>
-							<td></td>
-							<td>2017/05/05 12:00</td>
-							<td class="text-center">○</td>
+							<td>てすとじろう</td>
+							<td>男</td>
+							<td>2015/06/01</td>
+							<td>2日</td>
 						</tr>
 						<tr>
-							<td><a>M53003</a></td>
-							<td>テスト三郎</td>
-							<td>1000-0000-0000</td>
-							<td>未到着</td>
-							<td></td>
-							<td>2017/05/05 12:00</td>
-							<td class="text-center">○</td>
+							<td>CRチーム</td>
+							<td>テスト太郎</td>
+							<td>てすとたろう</td>
+							<td>男</td>
+							<td>2015/06/01</td>
+							<td>10日</td>
 						</tr>
 						<tr>
-							<td><a>M53005</a></td>
-							<td>テスト四郎</td>
-							<td>1000-0000-0000</td>
-							<td>未到着</td>
-							<td></td>
-							<td>2017/05/05 12:00</td>
-							<td class="text-center"></td>
+							<td>MPチーム</td>
+							<td>テスト一郎</td>
+							<td>てすといちろう</td>
+							<td>男</td>
+							<td>2013/01/01</td>
+							<td>23日</td>
+						</tr>
+						<tr>
+							<td>事推</td>
+							<td>テスト花子</td>
+							<td>てすとはなこ</td>
+							<td>女</td>
+							<td>2017/04/10</td>
+							<td>0日</td>
+						</tr>
+						<tr>
+							<td>CRチーム</td>
+							<td>テスト桃子</td>
+							<td>てすとももこ</td>
+							<td>女</td>
+							<td>2015/06/01</td>
+							<td>15日</td>
+						</tr>
+						<tr>
+							<td>FFチーム</td>
+							<td>テスト二郎</td>
+							<td>てすとじろう</td>
+							<td>男</td>
+							<td>2015/06/01</td>
+							<td>2日</td>
 						</tr>
 						</tbody>
 					</table>

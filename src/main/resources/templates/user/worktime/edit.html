@@ -35,13 +35,13 @@
 <div class="section">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
+			<div class="col-md-12">
 				<form class="form-horizontal" role="form" th:action="@{/work-time/edit}" method="post" th:object="${workTimeEditForm}">
 					<table class="table form-group">
 						<thead>
 						<tr>
 							<th class="col-md-1">日付</th>
-							<th class="col-md-3">種別</th>
+							<th class="col-md-2">種別</th>
 							<th>始業時間</th>
 							<th>就業時間</th>
 							<th>休憩時間</th>
@@ -75,7 +75,7 @@
 							</td>
 							<td>1:00</td>
 							<td>8:00</td>
-							<td></td>
+							<td><input type="text" class="form-control" id="" placeholder="備考" /></td>
 						</tr>
 						<tr>
 							<td>6/2（金）</td>
@@ -341,7 +341,7 @@
 						</tbody>
 					</table>
 					<div class="form-group">
-						<a th:href="@{/orders/payment-waiting/describe/655000}" type="button" class="btn btn-default col-md-offset-5">戻る</a>
+						<a th:href="@{/work-time/list}" type="button" class="btn btn-default col-md-offset-5">戻る</a>
 						<button type="submit" class="btn btn-success">保存</button>
 					</div>
 				</form>
