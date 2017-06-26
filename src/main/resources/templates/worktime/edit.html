@@ -36,81 +36,310 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
-				<form class="form-horizontal" role="form" th:action="@{/work-time/edit}" method="post">
-					<div class="form-group">
-						<div class="col-sm-2">
-							<label class="control-label">注文番号</label>
-						</div>
-						<div class="col-sm-10">
-							<p class="form-control-static">655000</p>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-2">
-							<label class="control-label">注文日</label>
-						</div>
-						<div class="col-sm-10">
-							<p class="form-control-static">2017/05/17 19:20:32</p>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-2">
-							<label class="control-label">状況</label>
-						</div>
-						<div class="col-sm-10">
-							<input class="form-control" placeholder="状況" value="ご入金待ち"/>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-2">
-							<label class="control-label">TBS出荷指図</label>
-						</div>
-						<div class="col-sm-10">
-							<input class="form-control" placeholder="TBS出荷指図" value="未指図" />
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-2">
-							<label class="control-label">名前</label>
-						</div>
-						<div class="col-sm-10 form-inline">
-							<input class="form-control" placeholder="田中" value="山田" />
-							<input class="form-control" placeholder="太郎" value="太郎" />
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-2">
-							<label class="control-label">ふりがな</label>
-						</div>
-						<div class="col-sm-10 form-inline">
-							<input class="form-control" placeholder="たなか" value="やまだ"/>
-							<input class="form-control" placeholder="たろう" value="たろう"/>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-2">
-							<label class="control-label">郵便番号</label>
-						</div>
-						<div class="col-sm-10">
-							<input class="form-control" placeholder="106-0041" value="106-0041" />
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-2">
-							<label class="control-label">住所</label>
-						</div>
-						<div class="col-sm-10">
-							<input class="form-control" placeholder="住所" value="東京都港区麻布台３丁目４−１１"/>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-2">
-							<label class="control-label">電話番号</label>
-						</div>
-						<div class="col-sm-10">
-							<input class="form-control" placeholder="電話番号" value="080-1000-0001"/>
-						</div>
-					</div>
+				<form class="form-horizontal" role="form" th:action="@{/work-time/edit}" method="post" th:object="${workTimeEditForm}">
+					<table class="table form-group">
+						<thead>
+						<tr>
+							<th class="col-md-1">日付</th>
+							<th class="col-md-3">種別</th>
+							<th>始業時間</th>
+							<th>就業時間</th>
+							<th>休憩時間</th>
+							<th>稼働時間</th>
+							<th>備考</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td>6/1（木）</td>
+							<td>
+								<select class="form-control">
+									<option>出勤</option>
+									<option>公休</option>
+									<option>有給/半休</option>
+									<option>事後有給/事後半休</option>
+									<option>欠勤/半欠勤</option>
+									<option>代休</option>
+									<option>特別休暇</option>
+								</select>
+							</td>
+							<td>
+								<select class="form-control">
+									<option th:each="time : ${timePerOne}" th:text="|${time}時|">9時</option>
+								</select>
+							</td>
+							<td>
+								<select class="form-control">
+									<option th:each="time : ${timePerOne}" th:text="|${time}時|">9時</option>
+								</select>
+							</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/2（金）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/3（土）</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/4（日）</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/5（月）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/6（火）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/7（水）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/8（木）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/9（金）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/10（土）</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/11（日）</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/12（月）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/13（火）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/14（水）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/15（木）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/16（金）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/17（土）</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/18（日）</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/19（月）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/20（火）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/21（水）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/22（木）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/23（金）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/24（土）</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/25（日）</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/26（月）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/27（火）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/28（水）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/29（木）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>6/30（金）</td>
+							<td></td>
+							<td>9:00</td>
+							<td>18:00</td>
+							<td>1:00</td>
+							<td>8:00</td>
+							<td></td>
+						</tr>
+						</tbody>
+					</table>
 					<div class="form-group">
 						<a th:href="@{/orders/payment-waiting/describe/655000}" type="button" class="btn btn-default col-md-offset-5">戻る</a>
 						<button type="submit" class="btn btn-success">保存</button>
