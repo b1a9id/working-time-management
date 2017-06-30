@@ -1,11 +1,10 @@
 package jp.co.waja.core.web.controller.admin.staff;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/staff")
 @Controller
+@RequestMapping("/staff")
 public class StaffController {
 
 	@GetMapping("/list")
