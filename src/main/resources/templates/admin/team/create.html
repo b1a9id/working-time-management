@@ -10,7 +10,7 @@
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
 
-		<title>テスト太郎編集</title>
+		<title>チーム登録</title>
 	</head>
 
 	<body>
@@ -19,16 +19,15 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1>テスト太郎編集</h1>
+						<h1>チーム登録</h1>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<ul class="breadcrumb">
 							<li><a th:href="@{/}">ダッシュボード</a></li>
-							<li><a th:href="@{/staff/list}">スタッフ一覧</a></li>
-							<li><a th:href="@{/staff/describe/1}">テスト太郎詳細</a></li>
-							<li class="active">テスト太郎編集</li>
+							<li><a th:href="@{/team/list}">チーム一覧</a></li>
+							<li class="active">チーム登録</li>
 						</ul>
 					</div>
 				</div>
@@ -41,69 +40,38 @@
 						<form class="form-horizontal" role="form" method="post" th:action="@{/contact}">
 							<div class="form-group">
 								<div class="col-sm-2">
-									<label class="control-label">チーム</label>
-								</div>
-								<div class="col-sm-10">
-									<select class="form-control" name="number">
-										<option value="0" selected="selected"></option>
-										<option value="1">CRチーム</option>
-										<option value="2">MPチーム</option>
-										<option value="3">事推</option>
-										<option value="4">SPチーム</option>
-										<option value="5">FFチーム</option>
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-2">
-									<label class="control-label">名前</label>
+									<label class="control-label">チーム名</label>
 								</div>
 								<div class="col-sm-10 row">
 									<div class="col-sm-6">
-										<input type="text" class="form-control" placeholder="山田" />
-									</div>
-									<div class="col-sm-6">
-										<input type="text" class="form-control" placeholder="太郎" />
+										<input type="text" class="form-control" placeholder="チーム" />
 									</div>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-2">
-									<label class="control-label">ふりがな</label>
+									<label class="control-label">略称</label>
 								</div>
 								<div class="col-sm-10 row">
 									<div class="col-sm-6">
-										<input type="text" class="form-control" placeholder="やまだ" />
+										<input type="text" class="form-control" placeholder="略称" />
 									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-2">
+									<label class="control-label">略称</label>
+								</div>
+								<div class="col-sm-10 row">
 									<div class="col-sm-6">
-										<input type="text" class="form-control" placeholder="たろう" />
+										<input type="text" class="form-control" placeholder="略称" />
 									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-2">
-									<label class="control-label">性別</label>
-								</div>
-								<div class="col-sm-10">
-									<select class="form-control" name="number">
-										<option value="0" selected="selected"></option>
-										<option value="1">男</option>
-										<option value="2" >女</option>
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-2">
-									<label class="control-label">入社日</label>
-								</div>
-								<div class="col-sm-10">
-									<input type="email" class="form-control" />
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
 									<a type="submit" class="btn btn-default" th:href="@{/staff/describe/1}">戻る</a>
-									<button type="submit" class="btn btn-success">更新</button>
+									<button type="submit" class="btn btn-success">登録</button>
 								</div>
 							</div>
 						</form>

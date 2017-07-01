@@ -10,7 +10,7 @@
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
 
-		<title>スタッフ一覧</title>
+		<title>チーム一覧</title>
 	</head>
 
 	<body>
@@ -20,14 +20,14 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<h1>スタッフ一覧</h1>
+					<h1>チーム一覧</h1>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
 					<ul class="breadcrumb">
 						<li><a th:href="@{/}">ダッシュボード</a></li>
-						<li class="active">スタッフ一覧</li>
+						<li class="active">チーム一覧</li>
 					</ul>
 				</div>
 			</div>
@@ -98,7 +98,7 @@
 			<div class="row">
 				<div class="col-md-12 text-right">
 					<div class="btn-group">
-						<a class="btn btn-success" href="#">登録</a>
+						<a class="btn btn-success" th:href="@{/team/create}">登録</a>
 					</div>
 				</div>
 			</div>
@@ -138,95 +138,37 @@
 					<table class="table">
 						<thead>
 						<tr>
-							<th>チーム</th>
-							<th>名前</th>
-							<th>ふりがな</th>
-							<th>性別</th>
-							<th>入社日</th>
-							<th>残有給日数</th>
+							<th class="col-md-4">チーム名</th>
+							<th class="col-md-4">略称</th>
+							<th class="col-md-4">マネージャ</th>
 						</tr>
 						</thead>
 						<tbody>
-						<tr>
-							<td>CRチーム</td>
-							<td><a th:href="@{/staff/describe/1}">テスト太郎</a></td>
-							<td>てすとたろう</td>
-							<td>男</td>
-							<td>2015/06/01</td>
-							<td>10日</td>
-						</tr>
-						<tr>
-							<td>MPチーム</td>
-							<td>テスト一郎</td>
-							<td>てすといちろう</td>
-							<td>男</td>
-							<td>2013/01/01</td>
-							<td>23日</td>
-						</tr>
-						<tr>
-							<td>事推</td>
-							<td>テスト花子</td>
-							<td>てすとはなこ</td>
-							<td>女</td>
-							<td>2017/04/10</td>
-							<td>0日</td>
-						</tr>
-						<tr>
-							<td>CRチーム</td>
-							<td>テスト桃子</td>
-							<td>てすとももこ</td>
-							<td>女</td>
-							<td>2015/06/01</td>
-							<td>15日</td>
-						</tr>
-						<tr>
-							<td>FFチーム</td>
-							<td>テスト二郎</td>
-							<td>てすとじろう</td>
-							<td>男</td>
-							<td>2015/06/01</td>
-							<td>2日</td>
-						</tr>
-						<tr>
-							<td>CRチーム</td>
-							<td>テスト太郎</td>
-							<td>てすとたろう</td>
-							<td>男</td>
-							<td>2015/06/01</td>
-							<td>10日</td>
-						</tr>
-						<tr>
-							<td>MPチーム</td>
-							<td>テスト一郎</td>
-							<td>てすといちろう</td>
-							<td>男</td>
-							<td>2013/01/01</td>
-							<td>23日</td>
-						</tr>
-						<tr>
-							<td>事推</td>
-							<td>テスト花子</td>
-							<td>てすとはなこ</td>
-							<td>女</td>
-							<td>2017/04/10</td>
-							<td>0日</td>
-						</tr>
-						<tr>
-							<td>CRチーム</td>
-							<td>テスト桃子</td>
-							<td>てすとももこ</td>
-							<td>女</td>
-							<td>2015/06/01</td>
-							<td>15日</td>
-						</tr>
-						<tr>
-							<td>FFチーム</td>
-							<td>テスト二郎</td>
-							<td>てすとじろう</td>
-							<td>男</td>
-							<td>2015/06/01</td>
-							<td>2日</td>
-						</tr>
+							<tr>
+								<td>クリエイティブチーム</td>
+								<td>CR</td>
+								<td><a th:href="@{/staff/describe/1}">テスト太郎</a></td>
+							</tr>
+							<tr>
+								<td>セールスプロモーションチーム</td>
+								<td>SP</td>
+								<td><a th:href="@{/staff/describe/1}">テスト太郎</a></td>
+							</tr>
+							<tr>
+								<td>事業推進室</td>
+								<td>事推</td>
+								<td><a th:href="@{/staff/describe/1}">テスト太郎</a></td>
+							</tr>
+							<tr>
+								<td>フルフィルメントチーム</td>
+								<td>FF</td>
+								<td><a th:href="@{/staff/describe/1}">テスト太郎</a></td>
+							</tr>
+							<tr>
+								<td>マネジメントプランニングチーム</td>
+								<td>MP</td>
+								<td><a th:href="@{/staff/describe/1}">テスト太郎</a></td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
