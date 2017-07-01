@@ -1,30 +1,34 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ja">
 	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 		<script type="text/javascript" th:src="@{/webjars/jquery/3.2.0/jquery.min.js}"></script>
 		<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+		<script type="text/javascript" th:src="@{/js/common/describe-search.js}"></script>
 		<link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
 
-		<title>プロフィール</title>
+		<title>スタッフ詳細</title>
 	</head>
+
 	<body>
 		<div th:replace="common/layout::navbar-layout"></div>
+		<div class="section"></div>
 		<div class="section">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1>プロフィール</h1>
+						<h1>テスト太郎</h1>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<ul class="breadcrumb">
 							<li><a th:href="@{/}">ダッシュボード</a></li>
-							<li class="active">プロフィール</li>
+							<li><a th:href="@{/staff}">スタッフ一覧</a></li>
+							<li class="active">スタッフ詳細</li>
 						</ul>
 					</div>
 				</div>
@@ -33,24 +37,51 @@
 		<div class="section">
 			<div class="container">
 				<div class="row">
+					<div class="col-md-12 text-right">
+						<div class="btn-group">
+							<a class="btn btn-default" href="#">登録</a>
+						</div>
+						<div class="btn-group">
+							<a class="btn btn-success dropdown-toggle" data-toggle="dropdown"> メニュー <span class="fa fa-caret-down"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<a th:href="@{/staff/edit/1}">編集</a>
+									<a href="#">削除</a>
+									<a href="#">有給管理</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
 					<div class="col-md-12">
 						<table class="table">
 							<tbody>
-
+								<tr>
+									<th>チーム</th>
+									<td><a href="#">CRチーム</a></td>
+								</tr>
 								<tr>
 									<th>名前</th>
-									<td>内立良介</td>
-								</tr>
-								<tr><tr>
-									<th>チーム</th>
-									<td>クリエイティブチーム</td>
-								</tr>
-									<th>入社日</th>
-									<td>2017/04/01</td>
+									<td>テスト太郎</td>
 								</tr>
 								<tr>
-									<th>有給日数</th>
-									<td>0日</td>
+									<th>ふりがな</th>
+									<td>てすとたろう</td>
+								</tr>
+								<tr>
+									<th>性別</th>
+									<td>男</td>
+								</tr>
+								<tr>
+									<th>入社日</th>
+									<td>2015/06/01</td>
+								</tr>
+								<tr>
+									<th>残有給日数</th>
+									<td>10日</td>
 								</tr>
 							</tbody>
 						</table>
