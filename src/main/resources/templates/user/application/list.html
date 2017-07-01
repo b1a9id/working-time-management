@@ -10,7 +10,7 @@
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
 
-		<title>スタッフ一覧</title>
+		<title>申請一覧</title>
 	</head>
 
 	<body>
@@ -20,14 +20,14 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<h1>スタッフ一覧</h1>
+					<h1>申請一覧</h1>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
 					<ul class="breadcrumb">
 						<li><a th:href="@{/}">ダッシュボード</a></li>
-						<li class="active">スタッフ一覧</li>
+						<li class="active">申請一覧</li>
 					</ul>
 				</div>
 			</div>
@@ -45,8 +45,7 @@
 								</div>
 								<div class="col-sm-10">
 									<select class="form-control">
-										<option value="" selected="selected"></option>
-										<option value="creative">CRチーム</option>
+										<option value="creative" selected="selected">CRチーム</option>
 										<option value="mp">MPチーム</option>
 										<option value="sp">SPチーム</option>
 										<option value="事推">事推</option>
@@ -56,15 +55,13 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-2">
-									<label class="control-label">雇用形態</label>
+									<label class="control-label">残有給日数</label>
 								</div>
 								<div class="col-sm-10">
 									<select class="form-control">
-										<option value="" selected="selected"></option>
-										<option value="てすと１">正社員</option>
-										<option value="てすと２">クルー週２</option>
-										<option value="てすと２">クルー週３</option>
-										<option value="てすと２">クルー週４</option>
+										<option value="" selected="selected">0 ~ 5</option>
+										<option value="てすと１">5 ~ 10</option>
+										<option value="てすと２">10 ~ 20</option>
 									</select>
 								</div>
 							</div>
@@ -141,105 +138,56 @@
 					<table class="table">
 						<thead>
 						<tr>
-							<th>チーム</th>
-							<th>名前</th>
-							<th>ふりがな</th>
-							<th>雇用形態</th>
-							<th>入社日</th>
-							<th>残有給日数</th>
-							<th>在宅勤務</th>
+							<th>種別</th>
+							<th>申請者</th>
+							<th>申請日</th>
+							<th>内容</th>
+							<th>ステータス</th>
+							<th>承認者</th>
+							<th>ステータス変更日</th>
+							<th></th>
 						</tr>
 						</thead>
 						<tbody>
 						<tr>
-							<td>CRチーム</td>
-							<td><a th:href="@{/staff/describe/1}">テスト太郎</a></td>
-							<td>てすとたろう</td>
-							<td>正社員</td>
-							<td>2015/06/01</td>
-							<td>10日</td>
-							<td>○</td>
-						</tr>
-						<tr>
-							<td>MPチーム</td>
-							<td>テスト一郎</td>
-							<td>てすといちろう</td>
-							<td>正社員</td>
-							<td>2013/01/01</td>
-							<td>23日</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>事推</td>
-							<td>テスト花子</td>
-							<td>てすとはなこ</td>
-							<td>クルー週２</td>
-							<td>2017/04/10</td>
-							<td>0日</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>CRチーム</td>
-							<td>テスト桃子</td>
-							<td>てすとももこ</td>
-							<td>正社員</td>
-							<td>2015/06/01</td>
-							<td>15日</td>
-							<td>○</td>
-						</tr>
-						<tr>
-							<td>FFチーム</td>
-							<td>テスト二郎</td>
-							<td>てすとじろう</td>
-							<td>クルー週３</td>
-							<td>2015/06/01</td>
-							<td>2日</td>
-							<td>○</td>
-						</tr>
-						<tr>
-							<td>CRチーム</td>
+							<td>残業</td>
 							<td>テスト太郎</td>
-							<td>てすとたろう</td>
-							<td>正社員</td>
-							<td>2015/06/01</td>
-							<td>10日</td>
-							<td></td>
+							<td>2017/06/15</td>
+							<td>PCセットアップ御手伝いのため</td>
+							<td>承認済み</td>
+							<td>テスト承認者</td>
+							<td>2017/06/30</td>
+							<td><i class="glyphicon glyphicon-pencil"></i></td>
 						</tr>
 						<tr>
-							<td>MPチーム</td>
-							<td>テスト一郎</td>
-							<td>てすといちろう</td>
-							<td>正社員</td>
-							<td>2013/01/01</td>
-							<td>23日</td>
+							<td>残業</td>
+							<td>テスト太郎</td>
+							<td>2017/06/16</td>
+							<td>PCセットアップ御手伝いのため</td>
+							<td>未承認</td>
+							<td>テスト承認者</td>
 							<td></td>
+							<td><i class="glyphicon glyphicon-pencil"></i></td>
 						</tr>
 						<tr>
-							<td>事推</td>
-							<td>テスト花子</td>
-							<td>てすとはなこ</td>
-							<td>クルー週４</td>
-							<td>2017/04/10</td>
-							<td>0日</td>
-							<td>○</td>
+							<td>有給</td>
+							<td>テスト太郎</td>
+							<td>2017/06/22</td>
+							<td></td>
+							<td>却下</td>
+							<td>テスト承認者</td>
+							<td>2017/06/30</td>
+							<td><i class="glyphicon glyphicon-pencil"></i></td>
 						</tr>
 						<tr>
-							<td>CRチーム</td>
-							<td>テスト桃子</td>
-							<td>てすとももこ</td>
-							<td>正社員</td>
-							<td>2015/06/01</td>
-							<td>15日</td>
+							<td>残業</td>
+							<td>テスト太郎</td>
+							<td>2017/06/18</td>
+							<td>PCセットアップ御手伝いのため</td>
+							<td>未承認</td>
+							<td>テスト承認者</td>
 							<td></td>
-						</tr>
-						<tr>
-							<td>FFチーム</td>
-							<td>テスト二郎</td>
-							<td>てすとじろう</td>
-							<td>クルー週２</td>
-							<td>2015/06/01</td>
-							<td>2日</td>
-							<td></td>
+							<td><i class="glyphicon glyphicon-pencil"></i></td>
 						</tr>
 						</tbody>
 					</table>
