@@ -2,9 +2,7 @@ package jp.co.waja.core.web.controller.user.application;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/application")
@@ -20,13 +18,18 @@ public class ApplicationController {
 		return "user/application/create";
 	}
 
-	@GetMapping("/edit")
-	public String edit(Model model) {
+	@PostMapping("/create")
+	public String create() {
+		return "redirect:/application/list";
+	}
+
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable Long id, Model model) {
 		return "user/application/edit";
 	}
 
-	@PostMapping("/edit")
-	public String edit() {
+	@PostMapping("/edit/{id}")
+	public String edit(@PathVariable Long id) {
 		return "redirect:/application/list";
 	}
 }

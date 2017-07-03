@@ -41,27 +41,26 @@
 						<form class="form-horizontal" role="form">
 							<div class="form-group">
 								<div class="col-sm-2">
-									<label class="control-label">チーム</label>
+									<label class="control-label">種別</label>
 								</div>
 								<div class="col-sm-10">
 									<select class="form-control">
-										<option value="creative" selected="selected">CRチーム</option>
-										<option value="mp">MPチーム</option>
-										<option value="sp">SPチーム</option>
-										<option value="事推">事推</option>
-										<option value="ff">FFチーム</option>
+										<option value="creative" selected="selected"></option>
+										<option value="">残業</option>
+										<option value="">有給</option>
 									</select>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-2">
-									<label class="control-label">残有給日数</label>
+									<label class="control-label">ステータス</label>
 								</div>
 								<div class="col-sm-10">
 									<select class="form-control">
-										<option value="" selected="selected">0 ~ 5</option>
-										<option value="てすと１">5 ~ 10</option>
-										<option value="てすと２">10 ~ 20</option>
+										<option value="" selected="selected"></option>
+										<option value="">未承認</option>
+										<option value="">承認済み</option>
+										<option value="">却下</option>
 									</select>
 								</div>
 							</div>
@@ -98,7 +97,7 @@
 			<div class="row">
 				<div class="col-md-12 text-right">
 					<div class="btn-group">
-						<a class="btn btn-success" href="#">登録</a>
+						<a class="btn btn-success" th:href="@{/application/create}">登録</a>
 					</div>
 				</div>
 			</div>
@@ -157,7 +156,7 @@
 							<td>承認済み</td>
 							<td>テスト承認者</td>
 							<td>2017/06/30</td>
-							<td><i class="glyphicon glyphicon-pencil"></i></td>
+							<td><a th:href="@{/application/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>
 						</tr>
 						<tr>
 							<td>残業</td>
@@ -167,7 +166,7 @@
 							<td>未承認</td>
 							<td>テスト承認者</td>
 							<td></td>
-							<td><i class="glyphicon glyphicon-pencil"></i></td>
+							<td><a th:href="@{/application/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>
 						</tr>
 						<tr>
 							<td>有給</td>
@@ -177,7 +176,7 @@
 							<td>却下</td>
 							<td>テスト承認者</td>
 							<td>2017/06/30</td>
-							<td><i class="glyphicon glyphicon-pencil"></i></td>
+							<td><a th:href="@{/application/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>
 						</tr>
 						<tr>
 							<td>残業</td>
@@ -187,7 +186,7 @@
 							<td>未承認</td>
 							<td>テスト承認者</td>
 							<td></td>
-							<td><i class="glyphicon glyphicon-pencil"></i></td>
+							<td><a th:href="@{/application/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>
 						</tr>
 						</tbody>
 					</table>
