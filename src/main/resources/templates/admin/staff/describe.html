@@ -39,13 +39,16 @@
 				<div class="row">
 					<div class="col-md-12 text-right">
 						<div class="btn-group">
+							<a class="btn btn-default">変更履歴</a>
+						</div>
+						<div class="btn-group">
 							<a class="btn btn-success dropdown-toggle" data-toggle="dropdown"> メニュー <span class="fa fa-caret-down"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
 									<a th:href="@{/staff/edit/1}">編集</a>
 									<a href="#">削除</a>
 									<a href="#">有給管理</a>
-									<a href="#">稼働実績確認</a>
+									<a th:href="@{/work-time/list}">稼働実績確認</a>
 								</li>
 							</ul>
 						</div>
