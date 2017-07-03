@@ -10,7 +10,7 @@
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
 
-		<title>テスト太郎編集</title>
+		<title>申請編集</title>
 	</head>
 
 	<body>
@@ -19,16 +19,15 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1>テスト太郎編集</h1>
+						<h1>申請編集</h1>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<ul class="breadcrumb">
 							<li><a th:href="@{/}">ダッシュボード</a></li>
-							<li><a th:href="@{/staff/list}">スタッフ一覧</a></li>
-							<li><a th:href="@{/staff/describe/1}">テスト太郎詳細</a></li>
-							<li class="active">テスト太郎編集</li>
+							<li><a th:href="@{/application/list}">申請一覧</a></li>
+							<li class="active">申請編集</li>
 						</ul>
 					</div>
 				</div>
@@ -45,8 +44,8 @@
 								</div>
 								<div class="col-sm-10">
 									<select class="form-control" name="number">
-										<option value="0"></option>
-										<option value="1" selected="selected">残業</option>
+										<option value="0" selected="selected"></option>
+										<option value="1">残業</option>
 										<option value="2">有給</option>
 									</select>
 								</div>

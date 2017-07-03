@@ -2,7 +2,14 @@ package jp.co.waja.core.web.controller.user.application;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+<<<<<<< Updated upstream
 import org.springframework.web.bind.annotation.*;
+=======
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+>>>>>>> Stashed changes
 
 @Controller
 @RequestMapping("/application")
@@ -23,8 +30,8 @@ public class ApplicationController {
 		return "redirect:/application/list";
 	}
 
-	@GetMapping("/edit/{id}")
-	public String edit(@PathVariable Long id, Model model) {
+	@GetMapping("/edit/{applicationId}")
+	public String edit(Model model, @PathVariable Long applicationId) {
 		return "user/application/edit";
 	}
 
