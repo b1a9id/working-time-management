@@ -1,9 +1,8 @@
 package jp.co.waja.core.web.controller.admin.staff;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/staff")
@@ -25,7 +24,12 @@ public class StaffController {
 	}
 
 	@GetMapping("/edit/{staffId}")
-	public String edit(@PathVariable Long staffId) {
+	public String edit(Model model, @PathVariable Long staffId) {
 		return "admin/staff/edit";
+	}
+
+	@PostMapping("/edit/{staffId}")
+	public String edit(@PathVariable Long staffId) {
+		return "redirect:/staff/list";
 	}
 }
