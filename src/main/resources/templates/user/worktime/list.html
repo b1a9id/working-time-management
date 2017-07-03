@@ -9,7 +9,7 @@
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
 
-		<title>稼働実績照会</title>
+		<title>2017年07月稼働実績</title>
 	</head>
 	<body>
 		<div th:replace="common/layout::navbar-layout"></div>
@@ -17,14 +17,14 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1>稼働実績照会</h1>
+						<h1>2017年07月稼働実績</h1>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<ul class="breadcrumb">
 							<li><a th:href="@{/}">ダッシュボード</a></li>
-							<li class="active">稼働実績照会</li>
+							<li class="active">2017年07月稼働実績</li>
 						</ul>
 					</div>
 				</div>
@@ -33,7 +33,7 @@
 				<div class="row">
 					<div class="col-md-12 text-right">
 						<div class="btn-group">
-							<a class="btn btn-default">一括入力</a>
+							<a class="btn btn-default" href="#bulk-input" data-toggle="modal">一括入力</a>
 						</div>
 						<div class="btn-group">
 							<a class="btn btn-success dropdown-toggle" data-toggle="dropdown"> メニュー <span class="fa fa-caret-down"></span></a>
@@ -42,6 +42,18 @@
 									<a th:href="@{/work-time/edit}">稼働実績入力</a>
 								</li>
 							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="btn-group pull-left">
+							<a><i class="glyphicon glyphicon-chevron-left"></i></a>
+						</div>
+						<div class="btn-group pull-right">
+							<a><i class="glyphicon glyphicon-chevron-right"></i></a>
 						</div>
 					</div>
 				</div>
@@ -369,7 +381,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="modal fade">
+		<div class="modal fade" id="bulk-input" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
