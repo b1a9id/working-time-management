@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/staff")
-public class StaffController {
+@RequestMapping("/admin/staff")
+public class AdminStaffController {
 
 	@GetMapping("/list")
 	public String list() {
