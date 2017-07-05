@@ -45,4 +45,9 @@ public class AdminStaffController {
 	public String history(@PathVariable Long staffId) {
 		return "admin/staff/history";
 	}
+
+	@GetMapping("/paid-vacation/histories/1")
+	public String paidVacation(@PathVariable Long staffId) {
+		return "admin/staff/history";
+	}
 }

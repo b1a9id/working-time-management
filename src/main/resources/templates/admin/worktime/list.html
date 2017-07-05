@@ -33,18 +33,7 @@
 				<div class="row">
 					<div class="col-md-12 text-right">
 						<div class="btn-group">
-							<a class="btn btn-success" href="#">承認</a>
-						</div>
-						<div class="btn-group">
-							<a class="btn btn-danger" href="#">却下</a>
-						</div>
-						<div class="btn-group">
-							<a class="btn btn-default dropdown-toggle" data-toggle="dropdown"> メニュー <span class="fa fa-caret-down"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li>
-									<a th:href="@{/work-time/edit}">稼働実績入力</a>
-								</li>
-							</ul>
+							<a class="btn btn-success" href="#accept-modal" data-toggle="modal">承認</a>
 						</div>
 					</div>
 				</div>
@@ -54,10 +43,10 @@
 					<div class="col-md-12">
 						<ul class="pager">
 							<li>
-								<a href="#">←  2017年6月</a>
+								<a href="#">＜  2017年6月</a>
 							</li>
 							<li>
-								<a href="#">2017年8月  →</a>
+								<a href="#">2017年8月  ＞</a>
 							</li>
 						</ul>
 					</div>
@@ -422,36 +411,19 @@
 				</div>
 			</div>
 		</div>
-		<div class="modal fade" id="bulk-input" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
+		<div class="modal fade" id="accept-modal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-						<h4 class="modal-title">一括入力</h4>
+						<h4 class="modal-title">承認確認</h4>
 					</div>
 					<div class="modal-body col-md-12">
-						<div class="row">
-							<div class="col-md-6">
-								<label>始業時間</label>
-								<select class="form-control">
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
-								</select>
-							</div>
-							<div class="col-md-6">
-								<label>終業時間</label>
-								<select class="form-control">
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
-								</select>
-							</div>
-						</div>
+						<p>2017年7月　内立良介の稼働実績を承認しますか？</p>
 					</div>
 					<div class="modal-footer">
 						<a class="btn btn-default" data-dismiss="modal">キャンセル</a>
-						<a class="btn btn-primary">保存</a>
+						<a class="btn btn-primary">承認</a>
 					</div>
 				</div>
 			</div>
