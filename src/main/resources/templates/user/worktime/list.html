@@ -90,6 +90,10 @@
 								<th>遅延遅刻回数</th>
 								<td>0日</td>
 							</tr>
+							<tr>
+								<th>欠勤回数</th>
+								<td>0日</td>
+							</tr>
 							</tbody>
 						</table>
 					</div>
@@ -431,9 +435,7 @@
 							<div class="col-md-6">
 								<label>始業時間</label>
 								<select class="form-control">
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
+									<option th:each="time : ${timePerOne}" th:text="|${time}時|">9時</option>
 								</select>
 							</div>
 							<div class="col-md-6">

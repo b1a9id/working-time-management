@@ -44,7 +44,7 @@
 							<th class="col-md-2">種別</th>
 							<th>始業時間</th>
 							<th>就業時間</th>
-							<th>休憩時間</th>
+							<th class="col-md-1">休憩時間</th>
 							<th>稼働時間</th>
 							<th>備考</th>
 						</tr>
@@ -64,16 +64,35 @@
 								</select>
 							</td>
 							<td>
-								<select class="form-control">
-									<option th:each="time : ${timePerOne}" th:text="|${time}時|">9時</option>
-								</select>
+								<div class="form-inline">
+									<select class="form-control">
+										<option th:each="hour : ${workTimeHour}" th:text="|${hour}時|">9時</option>
+									</select>
+									<select class="form-control">
+										<option th:each="minute : ${workTimeMinute}" th:text="|${minute}分|">15分</option>
+									</select>
+								</div>
+							</td>
+							<td>
+								<div class="form-inline">
+									<select class="form-control">
+										<option th:each="hour : ${workTimeHour}" th:text="|${hour}時|">9時</option>
+									</select>
+									<select class="form-control">
+										<option th:each="minute : ${workTimeMinute}" th:text="|${minute}分|">15分</option>
+									</select>
+								</div>
 							</td>
 							<td>
 								<select class="form-control">
-									<option th:each="time : ${timePerOne}" th:text="|${time}時|">9時</option>
+									<option value=""></option>
+									<option value="">45分</option>
+									<option value="" selected="true">60分</option>
+									<option value="">75分</option>
+									<option value="">90分</option>
+									<option value="">120分</option>
 								</select>
 							</td>
-							<td>1:00</td>
 							<td>8:00</td>
 							<td><input type="text" class="form-control" id="" placeholder="備考" /></td>
 						</tr>

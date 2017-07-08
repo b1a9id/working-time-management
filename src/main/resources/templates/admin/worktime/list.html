@@ -9,7 +9,7 @@
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
 
-		<title>2017年07月稼働実績</title>
+		<title>2017年07月稼働実績　内立良介</title>
 	</head>
 	<body>
 		<div th:replace="common/layout::navbar-layout"></div>
@@ -17,14 +17,14 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1>2017年07月稼働実績</h1>
+						<h1>2017年07月稼働実績　内立良介</h1>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<ul class="breadcrumb">
 							<li><a th:href="@{/}">ダッシュボード</a></li>
-							<li class="active">2017年07月稼働実績</li>
+							<li class="active">2017年07月稼働実績　内立良介</li>
 						</ul>
 					</div>
 				</div>
@@ -34,6 +34,9 @@
 					<div class="col-md-12 text-right">
 						<div class="btn-group">
 							<a class="btn btn-success" href="#accept-modal" data-toggle="modal">承認</a>
+						</div>
+						<div class="btn-group">
+							<a class="btn btn-danger" href="#reject-modal" data-toggle="modal">修正依頼</a>
 						</div>
 					</div>
 				</div>
@@ -80,6 +83,10 @@
 							</tr>
 							<tr>
 								<th>遅延遅刻回数</th>
+								<td>0日</td>
+							</tr>
+							<tr>
+								<th>欠勤回数</th>
 								<td>0日</td>
 							</tr>
 							</tbody>
@@ -424,6 +431,23 @@
 					<div class="modal-footer">
 						<a class="btn btn-default" data-dismiss="modal">キャンセル</a>
 						<a class="btn btn-primary">承認</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="reject-modal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h4 class="modal-title">修正依頼</h4>
+					</div>
+					<div class="modal-body col-md-12">
+						<p>修正依頼しますか？</p>
+					</div>
+					<div class="modal-footer">
+						<a class="btn btn-default" data-dismiss="modal">キャンセル</a>
+						<a class="btn btn-primary">はい</a>
 					</div>
 				</div>
 			</div>
