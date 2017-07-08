@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class WorkTimeController {
 
 	@GetMapping("/list")
-	public String list() {
+	public String list(Model model) {
+		model.addAttribute("workTimeHour", WorkTimeUtil.workTimeHour());
+		model.addAttribute("workTimeMinute", WorkTimeUtil.workTimeMinute());
 		return "user/worktime/list";
 	}
 

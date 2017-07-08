@@ -430,20 +430,36 @@
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 						<h4 class="modal-title">一括入力</h4>
 					</div>
-					<div class="modal-body col-md-12">
+					<div class="modal-body col-md-12 form-inline">
 						<div class="row">
-							<div class="col-md-6">
-								<label>始業時間</label>
+							<div class="col-md-4">
+								<label>種別</label>
 								<select class="form-control">
-									<option th:each="time : ${timePerOne}" th:text="|${time}時|">9時</option>
+									<option>出勤</option>
+									<option>午前休</option>
+									<option>午後休</option>
+									<option>事後午前休</option>
+									<option>事後午後休</option>
+									<option>午前欠勤</option>
+									<option>午後欠勤</option>
 								</select>
 							</div>
-							<div class="col-md-6">
-								<label>終業時間</label>
+							<div class="col-md-4">
+								<label>始</label>
 								<select class="form-control">
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
+									<option th:each="hour : ${workTimeHour}" th:text="|${hour}時|">9時</option>
+								</select>
+								<select class="form-control">
+									<option th:each="minute : ${workTimeMinute}" th:text="|${minute}分|">15分</option>
+								</select>
+							</div>
+							<div class="col-md-4">
+								<label>終</label>
+								<select class="form-control">
+									<option th:each="hour : ${workTimeHour}" th:text="|${hour}時|">9時</option>
+								</select>
+								<select class="form-control">
+									<option th:each="minute : ${workTimeMinute}" th:text="|${minute}分|">15分</option>
 								</select>
 							</div>
 						</div>

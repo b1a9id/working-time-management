@@ -1,8 +1,10 @@
 package jp.co.waja.core.web.controller.admin.team;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -19,13 +21,15 @@ public class AdminTeamController {
 		return "admin/team/create";
 	}
 
-	@GetMapping("/describe/{teamId}")
-	public String describe(@PathVariable Long teamId) {
-		return "admin/team/describe";
+	@GetMapping("/edit/{teamId}")
+	public String edit(
+			@PathVariable Long teamId,
+			Model model) {
+		return "admin/team/edit";
 	}
 
-	@GetMapping("/edit/{teamId}")
+	@PostMapping("/edit/{teamId}")
 	public String edit(@PathVariable Long teamId) {
-		return "admin/team/edit";
+		return "redirect:/admin/team/list";
 	}
 }
