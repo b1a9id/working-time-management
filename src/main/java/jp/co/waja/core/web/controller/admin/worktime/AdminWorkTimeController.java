@@ -21,7 +21,7 @@ public class AdminWorkTimeController {
 		return "admin/worktime/list";
 	}
 
-	@GetMapping("/edit")
+	@GetMapping("/edit/")
 	public String edit(Model model) {
 		model.addAttribute("workTimeHour", WorkTimeUtil.workTimeHour());
 		model.addAttribute("workTimeMinute", WorkTimeUtil.workTimeMinute());
