@@ -35,13 +35,13 @@ public class AbstractEntity<PK extends Serializable> implements Persistable<PK>,
 	@Setter
 	private LocalDateTime createdAt;
 
-	@Column(nullable = false, name = "last_modified_by")
+	@Column(name = "last_modified_by")
 	@LastModifiedBy
 	@Getter
 	@Setter
 	private String lastModifiedBy;
 
-	@Column(nullable = false, name = "last_modified_at")
+	@Column(name = "last_modified_at")
 	@LastModifiedDate
 	@Getter
 	@Setter

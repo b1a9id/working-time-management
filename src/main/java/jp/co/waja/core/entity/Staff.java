@@ -25,8 +25,18 @@ import java.util.TreeSet;
 @EntityListeners(AuditingEntityListener.class)
 public class Staff extends AbstractEntity<Long> implements Serializable {
 
-	enum EmploymentType {
+	enum Gender {
+		MAN,
+		WOMAN
+	}
 
+	enum EmploymentType {
+		PERMANENT_STAFF,
+		CREW_ONE,
+		CREW_TWO,
+		CREW_THREE,
+		CREW_FOUR,
+		CREW_FIVE
 	}
 
 	@ManyToOne
@@ -48,6 +58,10 @@ public class Staff extends AbstractEntity<Long> implements Serializable {
 	@Column(nullable = false, name = "email")
 	@Email
 	private String email;
+
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Gender gender;
 
 	@Column(nullable = false, name = "employment_type")
 	@Enumerated(EnumType.STRING)
