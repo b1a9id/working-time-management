@@ -16,9 +16,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/admin/teams/create")
 public class TeamCreateController {
 
-	public static final String FORM_MODEL_KEY = "form";
+	private static final String FORM_MODEL_KEY = "form";
 
-	public static final String ERRORS_MODEL_KEYS = BindingResult.MODEL_KEY_PREFIX + FORM_MODEL_KEY;
+	private static final String ERRORS_MODEL_KEYS = BindingResult.MODEL_KEY_PREFIX + FORM_MODEL_KEY;
 
 	@Autowired
 	private TeamService teamService;
