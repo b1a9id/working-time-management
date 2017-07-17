@@ -1,5 +1,7 @@
 package jp.co.waja.core.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.springframework.data.annotation.*;
 import org.springframework.data.annotation.Transient;
@@ -23,55 +25,31 @@ public class AbstractEntity<PK extends Serializable> implements Persistable<PK>,
 
 	@Column(nullable = false, name = "created_by")
 	@CreatedBy
+	@Getter
+	@Setter
 	private String createdBy;
 
 	@Column(nullable = false, name = "created_at")
 	@CreatedDate
+	@Getter
+	@Setter
 	private LocalDateTime createdAt;
 
 	@Column(nullable = false, name = "last_modified_by")
 	@LastModifiedBy
+	@Getter
+	@Setter
 	private String lastModifiedBy;
 
 	@Column(nullable = false, name = "last_modified_at")
 	@LastModifiedDate
-	private String lastModifiedAt;
+	@Getter
+	@Setter
+	private LocalDateTime lastModifiedAt;
 
 	@Override
 	public PK getId() {
 		return id;
-	}
-
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public String getLastModifiedBy() {
-		return lastModifiedBy;
-	}
-
-	public void setLastModifiedBy(String lastModifiedBy) {
-		this.lastModifiedBy = lastModifiedBy;
-	}
-
-	public String getLastModifiedAt() {
-		return lastModifiedAt;
-	}
-
-	public void setLastModifiedAt(String lastModifiedAt) {
-		this.lastModifiedAt = lastModifiedAt;
 	}
 
 	protected void setId(final PK id) {
