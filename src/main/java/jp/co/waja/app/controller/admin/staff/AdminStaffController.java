@@ -1,4 +1,4 @@
-package jp.co.waja.core.web.controller.admin.staff;
+package jp.co.waja.app.controller.admin.staff;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

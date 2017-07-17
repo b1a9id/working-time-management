@@ -1,6 +1,6 @@
-package jp.co.waja.core.web.controller.admin.worktime;
+package jp.co.waja.app.controller.admin.worktime;
 
-import jp.co.waja.core.support.WorkTimeUtil;
+import jp.co.waja.support.WorkTimeUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

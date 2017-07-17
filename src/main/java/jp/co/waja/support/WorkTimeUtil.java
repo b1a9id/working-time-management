@@ -1,8 +1,9 @@
-package jp.co.waja.core.support;
+package jp.co.waja.support;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Created by uchitate on 2017/06/26.

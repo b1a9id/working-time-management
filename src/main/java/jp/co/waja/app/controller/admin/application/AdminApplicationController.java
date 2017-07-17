@@ -1,4 +1,4 @@
-package jp.co.waja.core.web.controller.user.application;
+package jp.co.waja.app.controller.admin.application;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,31 +8,31 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/application")
-public class ApplicationController {
+@RequestMapping("/admin/application")
+public class AdminApplicationController {
 
 	@GetMapping("/list")
 	public String list() {
-		return "user/application/list";
+		return "admin/application/list";
 	}
 
 	@GetMapping("/create")
 	public String create(Model model) {
-		return "user/application/create";
+		return "admin/application/create";
 	}
 
 	@PostMapping("/create")
 	public String create() {
-		return "redirect:/application/list";
+		return "redirect:/admin/application/list";
 	}
 
 	@GetMapping("/edit/{applicationId}")
 	public String edit(Model model, @PathVariable Long applicationId) {
-		return "user/application/edit";
+		return "admin/application/edit";
 	}
 
 	@PostMapping("/edit/{id}")
 	public String edit(@PathVariable Long id) {
-		return "redirect:/application/list";
+		return "redirect:/admin/application/list";
 	}
 }

@@ -1,4 +1,4 @@
-package jp.co.waja.core.web.controller.user.profile;
+package jp.co.waja.app.controller.user.profile;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
