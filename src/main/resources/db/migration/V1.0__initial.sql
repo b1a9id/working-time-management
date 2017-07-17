@@ -8,8 +8,8 @@ create table team (
   id bigint not null auto_increment,
   name varchar(255) not null,
   short_name varchar(255) not null,
-  created_at datetime not null,
-  created_by varchar(255) not null,
+  created_at datetime,
+  created_by varchar(255),
   last_modified_at datetime,
   last_modified_by varchar(255),
   primary key (id)
@@ -29,8 +29,8 @@ create table staff (
   entered_date date not null,
   telework bit,
   password varchar(255) not null,
-  created_at datetime not null,
-  created_by varchar(255) not null,
+  created_at datetime,
+  created_by varchar(255),
   last_modified_at datetime,
   last_modified_by varchar(255),
   primary key (id)
@@ -43,8 +43,8 @@ create table paid_vacation (
   days integer not null,
   provide_date date not null,
   disappear_date date not null,
-  created_at datetime not null,
-  created_by varchar(255) not null,
+  created_at datetime,
+  created_by varchar(255),
   last_modified_at datetime,
   last_modified_by varchar(255),
   primary key (id)
@@ -60,8 +60,8 @@ create table work_time (
   end_at time,
   rest_time integer,
   remarks varchar(255),
-  created_at datetime not null,
-  created_by varchar(255) not null,
+  created_at datetime,
+  created_by varchar(255),
   last_modified_at datetime,
   last_modified_by varchar(255),
   primary key (id)

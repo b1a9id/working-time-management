@@ -15,7 +15,6 @@
 
 	<body>
 	<div th:replace="common/layout::navbar-layout"></div>
-	<div class="section"></div>
 	<div class="section">
 		<div class="container">
 			<div class="row">
@@ -32,13 +31,22 @@
 				</div>
 			</div>
 		</div>
+		<div th:if="${savedTeam}" class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-success" role="alert">
+						<span th:text="|[${savedTeam.name}]を登録しました。|">TESTを登録しました。</span>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div class="section">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 text-right">
 					<div class="btn-group">
-						<a class="btn btn-success" th:href="@{/team/create}">登録</a>
+						<a class="btn btn-success" th:href="@{/admin/teams/create}">登録</a>
 					</div>
 				</div>
 			</div>
@@ -80,40 +88,18 @@
 						<tr>
 							<th class="col-md-4">チーム名</th>
 							<th class="col-md-4">略称</th>
-							<th class="col-md-4">マネージャ</th>
+							<th>マネージャ</th>
+							<th></th>
 							<th></th>
 						</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>クリエイティブチーム</td>
-								<td>CR</td>
-								<td><a th:href="@{/staff/describe/1}">テスト太郎</a></td>
-								<td><a th:href="@{/admin/team/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>
-							</tr>
-							<tr>
-								<td>セールスプロモーションチーム</td>
-								<td>SP</td>
-								<td><a th:href="@{/staff/describe/1}">テスト太郎</a></td>
-								<td><a th:href="@{/admin/team/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>
-							</tr>
-							<tr>
-								<td>事業推進室</td>
-								<td>事推</td>
-								<td><a th:href="@{/staff/describe/1}">テスト太郎</a></td>
-								<td><a th:href="@{/admin/team/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>
-							</tr>
-							<tr>
-								<td>フルフィルメントチーム</td>
-								<td>FF</td>
-								<td><a th:href="@{/staff/describe/1}">テスト太郎</a></td>
-								<td><a th:href="@{/admin/team/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>
-							</tr>
-							<tr>
-								<td>マネジメントプランニングチーム</td>
-								<td>MP</td>
-								<td><a th:href="@{/staff/describe/1}">テスト太郎</a></td>
-								<td><a th:href="@{/admin/team/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>
+							<tr th:each="team : ${teams}">
+								<td th:text="${team.name}">クリエイティブチーム</td>
+								<td th:text="${team.shortName}">CR</td>
+								<td>waja太郎</td>
+								<td><a th:href="@{/admin/teams/edit/{teamId}(teamId=${team.id})}"><i class="glyphicon glyphicon-pencil"></i></a></td>
+								<td><a th:href="@{/admin/teams/delete/{teamId}(teamId=${team.id})}"><i class="glyphicon glyphicon-trash"></i></a></td>
 							</tr>
 						</tbody>
 					</table>

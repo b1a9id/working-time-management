@@ -23,13 +23,13 @@ public class AbstractEntity<PK extends Serializable> implements Persistable<PK>,
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private PK id;
 
-	@Column(nullable = false, name = "created_by")
+	@Column(name = "created_by")
 	@CreatedBy
 	@Getter
 	@Setter
 	private String createdBy;
 
-	@Column(nullable = false, name = "created_at")
+	@Column(name = "created_at")
 	@CreatedDate
 	@Getter
 	@Setter

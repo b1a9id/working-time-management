@@ -1,8 +1,6 @@
 package jp.co.waja.core.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -17,8 +15,6 @@ import java.util.List;
 @Table(name = "team")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Team extends AbstractEntity<Long> implements Serializable {
 
