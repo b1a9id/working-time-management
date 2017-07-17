@@ -1,0 +1,82 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ja">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<script type="text/javascript" th:src="@{/webjars/jquery/3.2.0/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+		<script type="text/javascript" th:src="@{/js/common/describe-search.js}"></script>
+		<link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
+		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
+		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
+
+		<title>変更履歴</title>
+	</head>
+	<body>
+		<div th:replace="common/layout::navbar-layout"></div>
+		<div class="section"></div>
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1>テスト太郎有給管理</h1>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="breadcrumb">
+							<li><a th:href="@{/}">ダッシュボード</a></li>
+							<li><a th:href="@{/staff/list}">スタッフ一覧</a></li>
+							<li><a th:href="@{/staff/describe/1}">テスト太郎詳細</a></li>
+							<li class="active">テスト太郎有給管理</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 text-left">
+						<table class="table table-striped">
+							<tbody>
+							<tr>
+								<td>付与</td>
+								<td>0日</td>
+								<td>10日</td>
+								<td>2017/10/1 0:00</td>
+							</tr>
+							<tr>
+								<td>使用</td>
+								<td>10日</td>
+								<td>9日</td>
+								<td>2017/11/02 11:03</td>
+							</tr>
+							<tr>
+								<td>使用</td>
+								<td>9日</td>
+								<td>8日</td>
+								<td>2017/12/10 11:03</td>
+							</tr>
+							<tr>
+								<td>編集</td>
+								<td>8日</td>
+								<td>9日</td>
+								<td>2017/12/11 16:03</td>
+							</tr>
+							</tbody>
+							<thead>
+							<tr>
+								<th class="col-md-3">操作</th>
+								<th class="col-md-3">変更前</th>
+								<th class="col-md-3">変更後</th>
+								<th class="col-md-3">日時</th>
+							</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

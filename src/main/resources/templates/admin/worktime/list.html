@@ -1,0 +1,485 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ja">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script type="text/javascript" th:src="@{/webjars/jquery/3.2.0/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+		<link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
+		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
+		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
+
+		<title>2017年07月稼働実績　内立良介</title>
+	</head>
+	<body>
+		<div th:replace="common/layout::navbar-layout"></div>
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1>2017年07月稼働実績　内立良介</h1>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="breadcrumb">
+							<li><a th:href="@{/}">ダッシュボード</a></li>
+							<li class="active">2017年07月稼働実績　内立良介</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 text-right">
+						<p>承認日時：2017/08/01 10:21</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-right">
+						<div class="btn-group">
+							<a class="btn btn-success" href="#accept-modal" data-toggle="modal">承認</a>
+						</div>
+						<div class="btn-group">
+							<a class="btn btn-danger" href="#reject-modal" data-toggle="modal">修正依頼</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="pager">
+							<li>
+								<a href="#">＜  2017年6月</a>
+							</li>
+							<li>
+								<a href="#">2017年8月  ＞</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-bordered">
+							<caption>マネージャー記入欄</caption>
+							<thead>
+							<tr>
+								<th>内容</th>
+								<th>日数</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<th>出勤日数</th>
+								<td>22日</td>
+							</tr>
+							<tr>
+								<th>有給取得回数</th>
+								<td>0日</td>
+							</tr>
+							<tr>
+								<th>事後休・半有休取得回数</th>
+								<td>0日</td>
+							</tr>
+							<tr>
+								<th>遅延遅刻回数</th>
+								<td>0日</td>
+							</tr>
+							<tr>
+								<th>欠勤回数</th>
+								<td>0日</td>
+							</tr>
+							<!--<tr>-->
+								<!--<th>前月不足勤務時間</th>-->
+								<!--<td></td>-->
+							<!--</tr>-->
+							<!--<tr>-->
+								<!--<th>月間所定勤務日数</th>-->
+								<!--<td></td>-->
+							<!--</tr>-->
+							<!--<tr>-->
+								<!--<th>月間所定勤務時間</th>-->
+								<!--<td></td>-->
+							<!--</tr>-->
+							<!--<tr>-->
+								<!--<th>1日あたりの規定労働時間</th>-->
+								<!--<td></td>-->
+							<!--</tr>-->
+							<!--<tr>-->
+								<!--<th>月間労働時間</th>-->
+								<!--<td></td>-->
+							<!--</tr>-->
+							<!--<tr>-->
+								<!--<th>有休消化計</th>-->
+								<!--<td></td>-->
+							<!--</tr>-->
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table">
+							<caption>勤怠表</caption>
+							<thead>
+							<tr>
+								<th class="col-md-1">日付</th>
+								<th>種別</th>
+								<th>始業時間</th>
+								<th>就業時間</th>
+								<th>休憩時間</th>
+								<th>稼働時間</th>
+								<th>備考</th>
+							</tr>
+							</thead>
+							<tfoot>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>180:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+							<td></td>
+								<td></td>
+								<td>規定労働時間</td>
+								<td>160:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>残業時間</td>
+								<td>20:00</td>
+								<td></td>
+							</tr>
+							</tfoot>
+							<tbody>
+							<tr>
+								<td>6/1（木）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							<tr class="bg-danger">
+								<td>6/2（金）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>19:00</td>
+								<td>1:00</td>
+								<td>9:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/3（土）</td>
+								<td>公休</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/4（日）</td>
+								<td>公休</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/5（月）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/6（火）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/7（水）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/8（木）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/9（金）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/10（土）</td>
+								<td>公休</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/11（日）</td>
+								<td>公休</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/12（月）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/13（火）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/14（水）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/15（木）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							<tr class="bg-danger">
+								<td>6/16（金）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>20:00</td>
+								<td>1:00</td>
+								<td>10:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/17（土）</td>
+								<td>公休</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/18（日）</td>
+								<td>公休</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/19（月）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/20（火）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/21（水）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/22（木）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/23（金）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/24（土）</td>
+								<td>公休</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/25（日）</td>
+								<td>公休</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/26（月）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/27（火）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/28（水）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/29（木）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6/30（金）</td>
+								<td>出勤</td>
+								<td>9:00</td>
+								<td>18:00</td>
+								<td>1:00</td>
+								<td>8:00</td>
+								<td></td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="accept-modal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h4 class="modal-title">承認確認</h4>
+					</div>
+					<div class="modal-body col-md-12">
+						<p>2017年7月　内立良介の稼働実績を承認しますか？</p>
+					</div>
+					<div class="modal-footer">
+						<a class="btn btn-default" data-dismiss="modal">キャンセル</a>
+						<a class="btn btn-primary">承認</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="reject-modal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h4 class="modal-title">修正依頼</h4>
+					</div>
+					<div class="modal-body col-md-12">
+						<p>修正依頼しますか？</p>
+					</div>
+					<div class="modal-footer">
+						<a class="btn btn-default" data-dismiss="modal">キャンセル</a>
+						<a class="btn btn-primary">はい</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
