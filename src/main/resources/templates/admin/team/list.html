@@ -111,7 +111,7 @@
 								<td>
 									<form method="post" th:action="@{/admin/teams/delete?id={id}(id=${team.id})}">
 										<input type="hidden" name="_method" value="delete"/>
-										<button><i class="glyphicon glyphicon-trash"></i></button>
+										<button type="button" class="btn btn-secondary"><i class="glyphicon glyphicon-trash"></i></button>
 									</form>
 								</td>
 							</tr>

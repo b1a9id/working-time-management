@@ -132,7 +132,7 @@
 			<div class="row">
 				<div class="col-md-12 text-right">
 					<div class="btn-group">
-						<a class="btn btn-success" th:href="@{/staff/create}">登録</a>
+						<a class="btn btn-success" th:href="@{/admin/staff/create}">登録</a>
 					</div>
 				</div>
 			</div>
@@ -185,126 +185,126 @@
 						</tr>
 						</thead>
 						<tbody>
-						<tr>
-							<td>CRチーム</td>
-							<td><a th:href="@{/admin/staff/describe/1}">テスト太郎</a></td>
-							<td>てすとたろう</td>
-							<td>正社員</td>
-							<td>2015/06/01</td>
+						<tr th:each="staff : ${staffs}">
+							<td th:text="${staff.team}">CRチーム</td>
+							<td><a th:href="@{/admin/staff/describe/1}" th:text="${staff.nameLast} + ${staff.nameFirst}">テスト太郎</a></td>
+							<td th:text="${staff.nameLastKana} + ${staff.nameFirstKana}">てすとたろう</td>
+							<td th:text="#{|staff.employmenttype.${staff.employmentType}|}">正社員</td>
+							<td th:text="${staff.enteredDate}">2015/06/01</td>
 							<td>06/01</td>
 							<td>10日</td>
-							<td>○</td>
+							<td><i th:if="${staff.telework}" class="glyphicon glyphicon-ok"></i></td>
 							<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>
 							<td><a th:href="@{/admin/staff/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>
 						</tr>
-						<tr>
-							<td>MPチーム</td>
-							<td>テスト一郎</td>
-							<td>てすといちろう</td>
-							<td>正社員</td>
-							<td>2013/01/01</td>
-							<td>06/01</td>
-							<td>23日</td>
-							<td></td>
-							<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>
-							<td><a th:href="@{/admin/staff/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>
-						</tr>
-						<tr>
-							<td>事推</td>
-							<td>テスト花子</td>
-							<td>てすとはなこ</td>
-							<td>クルー週２</td>
-							<td>2017/04/10</td>
-							<td>06/01</td>
-							<td>0日</td>
-							<td></td>
-							<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>
-							<td><a th:href="@{/admin/staff/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>
-						</tr>
-						<tr>
-							<td>CRチーム</td>
-							<td>テスト桃子</td>
-							<td>てすとももこ</td>
-							<td>正社員</td>
-							<td>2015/06/01</td>
-							<td>06/01</td>
-							<td>15日</td>
-							<td>○</td>
-							<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>
-							<td><a th:href="@{/admin/staff/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>
-						</tr>
-						<tr>
-							<td>FFチーム</td>
-							<td>テスト二郎</td>
-							<td>てすとじろう</td>
-							<td>クルー週３</td>
-							<td>2015/06/01</td>
-							<td>06/01</td>
-							<td>2日</td>
-							<td>○</td>
-							<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>
-							<td><a th:href="@{/admin/staff/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>
-						</tr>
-						<tr>
-							<td>CRチーム</td>
-							<td>テスト太郎</td>
-							<td>てすとたろう</td>
-							<td>正社員</td>
-							<td>2015/06/01</td>
-							<td>06/01</td>
-							<td>10日</td>
-							<td></td>
-							<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>
-							<td><a th:href="@{/admin/staff/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>
-						</tr>
-						<tr>
-							<td>MPチーム</td>
-							<td>テスト一郎</td>
-							<td>てすといちろう</td>
-							<td>正社員</td>
-							<td>2013/01/01</td>
-							<td>06/01</td>
-							<td>23日</td>
-							<td></td>
-							<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>
-							<td><a th:href="@{/admin/staff/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>
-						</tr>
-						<tr>
-							<td>事推</td>
-							<td>テスト花子</td>
-							<td>てすとはなこ</td>
-							<td>クルー週４</td>
-							<td>2017/04/10</td>
-							<td>06/01</td>
-							<td>0日</td>
-							<td>○</td>
-							<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>
-							<td><a th:href="@{/admin/staff/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>
-						</tr>
-						<tr>
-							<td>CRチーム</td>
-							<td>テスト桃子</td>
-							<td>てすとももこ</td>
-							<td>正社員</td>
-							<td>2015/06/01</td>
-							<td>06/01</td>
-							<td>15日</td>
-							<td></td>
-							<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>
-							<td><a th:href="@{/admin/staff/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>
-						</tr>
-						<tr>
-							<td>FFチーム</td>
-							<td>テスト二郎</td>
-							<td>てすとじろう</td>
-							<td>クルー週２</td>
-							<td>2015/06/01</td>
-							<td>06/01</td>
-							<td>2日</td>
-							<td></td>
-							<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>
-							<td><a th:href="@{/admin/staff/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>
-						</tr>
+						<!--<tr>-->
+							<!--<td>MPチーム</td>-->
+							<!--<td>テスト一郎</td>-->
+							<!--<td>てすといちろう</td>-->
+							<!--<td>正社員</td>-->
+							<!--<td>2013/01/01</td>-->
+							<!--<td>06/01</td>-->
+							<!--<td>23日</td>-->
+							<!--<td></td>-->
+							<!--<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>-->
+							<!--<td><a th:href="@{/admin/staff/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>-->
+						<!--</tr>-->
+						<!--<tr>-->
+							<!--<td>事推</td>-->
+							<!--<td>テスト花子</td>-->
+							<!--<td>てすとはなこ</td>-->
+							<!--<td>クルー週２</td>-->
+							<!--<td>2017/04/10</td>-->
+							<!--<td>06/01</td>-->
+							<!--<td>0日</td>-->
+							<!--<td></td>-->
+							<!--<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>-->
+							<!--<td><a th:href="@{/admin/staff/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>-->
+						<!--</tr>-->
+						<!--<tr>-->
+							<!--<td>CRチーム</td>-->
+							<!--<td>テスト桃子</td>-->
+							<!--<td>てすとももこ</td>-->
+							<!--<td>正社員</td>-->
+							<!--<td>2015/06/01</td>-->
+							<!--<td>06/01</td>-->
+							<!--<td>15日</td>-->
+							<!--<td>○</td>-->
+							<!--<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>-->
+							<!--<td><a th:href="@{/admin/staff/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>-->
+						<!--</tr>-->
+						<!--<tr>-->
+							<!--<td>FFチーム</td>-->
+							<!--<td>テスト二郎</td>-->
+							<!--<td>てすとじろう</td>-->
+							<!--<td>クルー週３</td>-->
+							<!--<td>2015/06/01</td>-->
+							<!--<td>06/01</td>-->
+							<!--<td>2日</td>-->
+							<!--<td>○</td>-->
+							<!--<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>-->
+							<!--<td><a th:href="@{/admin/staff/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>-->
+						<!--</tr>-->
+						<!--<tr>-->
+							<!--<td>CRチーム</td>-->
+							<!--<td>テスト太郎</td>-->
+							<!--<td>てすとたろう</td>-->
+							<!--<td>正社員</td>-->
+							<!--<td>2015/06/01</td>-->
+							<!--<td>06/01</td>-->
+							<!--<td>10日</td>-->
+							<!--<td></td>-->
+							<!--<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>-->
+							<!--<td><a th:href="@{/admin/staff/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>-->
+						<!--</tr>-->
+						<!--<tr>-->
+							<!--<td>MPチーム</td>-->
+							<!--<td>テスト一郎</td>-->
+							<!--<td>てすといちろう</td>-->
+							<!--<td>正社員</td>-->
+							<!--<td>2013/01/01</td>-->
+							<!--<td>06/01</td>-->
+							<!--<td>23日</td>-->
+							<!--<td></td>-->
+							<!--<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>-->
+							<!--<td><a th:href="@{/admin/staff/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>-->
+						<!--</tr>-->
+						<!--<tr>-->
+							<!--<td>事推</td>-->
+							<!--<td>テスト花子</td>-->
+							<!--<td>てすとはなこ</td>-->
+							<!--<td>クルー週４</td>-->
+							<!--<td>2017/04/10</td>-->
+							<!--<td>06/01</td>-->
+							<!--<td>0日</td>-->
+							<!--<td>○</td>-->
+							<!--<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>-->
+							<!--<td><a th:href="@{/admin/staff/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>-->
+						<!--</tr>-->
+						<!--<tr>-->
+							<!--<td>CRチーム</td>-->
+							<!--<td>テスト桃子</td>-->
+							<!--<td>てすとももこ</td>-->
+							<!--<td>正社員</td>-->
+							<!--<td>2015/06/01</td>-->
+							<!--<td>06/01</td>-->
+							<!--<td>15日</td>-->
+							<!--<td></td>-->
+							<!--<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>-->
+							<!--<td><a th:href="@{/admin/staff/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>-->
+						<!--</tr>-->
+						<!--<tr>-->
+							<!--<td>FFチーム</td>-->
+							<!--<td>テスト二郎</td>-->
+							<!--<td>てすとじろう</td>-->
+							<!--<td>クルー週２</td>-->
+							<!--<td>2015/06/01</td>-->
+							<!--<td>06/01</td>-->
+							<!--<td>2日</td>-->
+							<!--<td></td>-->
+							<!--<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>-->
+							<!--<td><a th:href="@{/admin/staff/edit/1}"><i class="glyphicon glyphicon-pencil"></i></a></td>-->
+						<!--</tr>-->
 						</tbody>
 					</table>
 				</div>

@@ -1,6 +1,6 @@
 package jp.co.waja.app.controller.admin.team;
 
-import jp.co.waja.core.model.TeamSearchRequest;
+import jp.co.waja.core.model.team.TeamSearchRequest;
 import lombok.Getter;
 import lombok.Setter;
 

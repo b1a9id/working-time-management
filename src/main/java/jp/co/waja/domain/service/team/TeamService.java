@@ -1,8 +1,8 @@
 package jp.co.waja.domain.service.team;
 
 import jp.co.waja.core.entity.Team;
-import jp.co.waja.core.model.TeamCreateRequest;
-import jp.co.waja.core.model.TeamSearchRequest;
+import jp.co.waja.core.model.team.TeamCreateRequest;
+import jp.co.waja.core.model.team.TeamSearchRequest;
 import jp.co.waja.domain.repository.team.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

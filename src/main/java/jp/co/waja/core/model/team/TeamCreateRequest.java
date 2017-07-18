@@ -1,4 +1,4 @@
-package jp.co.waja.core.model;
+package jp.co.waja.core.model.team;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
