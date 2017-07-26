@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.SortNatural;
-import org.hibernate.validator.constraints.Email;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -25,12 +24,12 @@ import java.util.TreeSet;
 @EntityListeners(AuditingEntityListener.class)
 public class Staff extends AbstractEntity<Long> implements Serializable {
 
-	enum Gender {
+	public enum Gender {
 		MAN,
 		WOMAN
 	}
 
-	enum EmploymentType {
+	public enum EmploymentType {
 		PERMANENT_STAFF,
 		CREW_ONE,
 		CREW_TWO,
@@ -56,7 +55,6 @@ public class Staff extends AbstractEntity<Long> implements Serializable {
 	private String nameFirstKana;
 
 	@Column(nullable = false, name = "email")
-	@Email
 	private String email;
 
 	@Column(nullable = false)

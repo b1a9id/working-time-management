@@ -2,6 +2,7 @@ package jp.co.waja.domain.service.staff;
 
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.entity.Team;
+import jp.co.waja.core.model.staff.StaffCreateRequest;
 import jp.co.waja.core.model.staff.StaffSearchRequest;
 import jp.co.waja.domain.repository.staff.StaffRepository;
 import jp.co.waja.domain.repository.team.TeamRepository;
@@ -28,5 +29,21 @@ public class StaffService {
 	public List<Staff> staffsByTeam(StaffSearchRequest request) {
 		Team team = teamRepository.findOneById(request.getTeamId());
 		return staffRepository.findAllByTeam(team);
+	}
+
+	public Staff create(StaffCreateRequest request) {
+		Staff staff = new Staff();
+		staff.setTeam(request.getTeam());
+		staff.setNameLast(request.getNameLast());
+		staff.setNameFirst(request.getNameFirst());
+		staff.setNameLastKana(request.getNameLastKana());
+		staff.setNameFirstKana(request.getNameFirstKana());
+		staff.setEmail(request.getEmail());
+		staff.setGender(request.getGender());
+		staff.setEmploymentType(request.getEmploymentType());
+		staff.setEnteredDate(request.getEnteredDate());
+		staff.setTelework(request.getTelework());
+		staff.setPassword(request.getPassword());
+		return staffRepository.saveAndFlush(staff);
 	}
 }

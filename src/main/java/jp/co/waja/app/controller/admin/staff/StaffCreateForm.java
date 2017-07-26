@@ -1,10 +1,9 @@
-package jp.co.waja.core.model.staff;
+package jp.co.waja.app.controller.admin.staff;
 
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.entity.Team;
-import lombok.AllArgsConstructor;
+import jp.co.waja.core.model.staff.StaffCreateRequest;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Email;
 
@@ -14,9 +13,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class StaffCreateRequest implements Serializable {
+public class StaffCreateForm implements Serializable {
 
 	@NotNull
 	private Team team;
@@ -50,4 +47,20 @@ public class StaffCreateRequest implements Serializable {
 
 	@NotNull
 	private String password;
+
+	public StaffCreateRequest toStaffCreateRequest() {
+		StaffCreateRequest request = new StaffCreateRequest();
+		request.setTeam(getTeam());
+		request.setNameLast(getNameLast());
+		request.setNameFirst(getNameFirst());
+		request.setNameLastKana(getNameLastKana());
+		request.setNameFirstKana(getNameFirstKana());
+		request.setEmail(getEmail());
+		request.setGender(getGender());
+		request.setEmploymentType(getEmploymentType());
+		request.setEnteredDate(getEnteredDate());
+		request.setTelework(getTelework());
+		request.setPassword(getPassword());
+		return request;
+	}
 }
