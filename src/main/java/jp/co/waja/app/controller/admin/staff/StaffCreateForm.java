@@ -6,6 +6,7 @@ import jp.co.waja.core.model.staff.StaffCreateRequest;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -41,6 +42,7 @@ public class StaffCreateForm implements Serializable {
 	private Staff.EmploymentType employmentType;
 
 	@NotNull
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate enteredDate;
 
 	private Boolean telework;
