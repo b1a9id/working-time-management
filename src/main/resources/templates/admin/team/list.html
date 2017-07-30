@@ -40,6 +40,15 @@
 				</div>
 			</div>
 		</div>
+		<div th:if="${updateTeam}" class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-success" role="alert">
+						<span th:text="#{update.msg(${updateTeam.name})}">TESTを更新しました。</span>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div th:if="${deletedName}" class="container">
 			<div class="row">
 				<div class="col-md-12">
@@ -107,9 +116,9 @@
 								<td th:text="${team.name}">クリエイティブチーム</td>
 								<td th:text="${team.shortName}">CR</td>
 								<td>waja太郎</td>
-								<td><a class="btn btn-link glyphicon glyphicon-pencil" th:href="@{/admin/teams/edit/{teamId}(teamId=${team.id})}"></a></td>
+								<td><a class="btn btn-link glyphicon glyphicon-pencil" th:href="@{/admin/teams/edit?id={teamId}(teamId=${team.id})}"></a></td>
 								<td>
-									<form method="post" th:action="@{/admin/teams/delete?id={id}(id=${team.id})}">
+									<form method="post" th:action="@{/admin/teams/delete?id={teamid}(teamid=${team.id})}">
 										<input type="hidden" name="_method" value="delete"/>
 										<button type="button" class="btn btn-link glyphicon glyphicon-trash"></button>
 									</form>

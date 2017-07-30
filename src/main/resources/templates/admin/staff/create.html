@@ -132,7 +132,7 @@
 							<div class="form-group" th:classappend="${#fields.hasErrors('telework')}? has-error">
 								<div class="col-sm-offset-2 col-sm-10">
 									<div class="checkbox">
-										<label><input th:field="*{telework}" type="checkbox" th:text="#{staff.field.telework}" />在宅</label>
+										<label><input th:field="*{telework}" type="checkbox" />在宅勤務可</label>
 										<p class="help-block" th:if="${#fields.hasErrors('telework')}" th:errors="*{telework}">エラーメッセージ</p>
 									</div>
 								</div>

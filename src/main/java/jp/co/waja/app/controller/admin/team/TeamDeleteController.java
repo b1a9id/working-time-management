@@ -33,7 +33,7 @@ public class TeamDeleteController {
 			return "redirect:/admin/teams";
 		}
 
-		Team savedTeam = teamService.team(form.toTeamSearchRequest());
+		Team savedTeam = teamService.findOneById(form.toTeamSearchRequest().getTeamId());
 		if (savedTeam == null) {
 			errors.reject("teamNotFound");
 			return "redirect:/admin/teams";
