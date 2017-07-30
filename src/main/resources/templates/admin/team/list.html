@@ -71,35 +71,6 @@
 		</div>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-12 text-right">
-					<ul class="pagination">
-						<li>
-							<a href="#">Prev</a>
-						</li>
-						<li>
-							<a href="#">1</a>
-						</li>
-						<li>
-							<a href="#">2</a>
-						</li>
-						<li>
-							<a href="#">3</a>
-						</li>
-						<li>
-							<a href="#">4</a>
-						</li>
-						<li>
-							<a href="#">5</a>
-						</li>
-						<li>
-							<a href="#">Next</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div class="container">
-			<div class="row">
 				<div class="col-md-12">
 					<table class="table">
 						<thead>
@@ -120,7 +91,7 @@
 								<td>
 									<form method="post" th:action="@{/admin/teams/delete?id={teamid}(teamid=${team.id})}">
 										<input type="hidden" name="_method" value="delete"/>
-										<button type="button" class="btn btn-link glyphicon glyphicon-trash"></button>
+										<button class="btn btn-link glyphicon glyphicon-trash"></button>
 									</form>
 								</td>
 							</tr>
