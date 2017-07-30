@@ -20,7 +20,7 @@ public class StaffDescribeController {
 	public String describe(
 			@RequestParam Long id,
 			Model model) {
-		Staff staff = staffService.staffByid(id);
+		Staff staff = staffService.findOneById(id);
 		model.addAttribute("staff", staff);
 		return "admin/staff/describe";
 	}

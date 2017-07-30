@@ -68,9 +68,10 @@ public class StaffCreateController {
 		}
 
 		Staff savedStaff = staffService.create(form.toStaffCreateRequest());
-		redirectAttributes.addAttribute("savedStaff", savedStaff);
+		redirectAttributes.addAttribute("id", savedStaff.getId());
+		redirectAttributes.addFlashAttribute("savedStaff", savedStaff);
 		redirectAttributes.addFlashAttribute("staffId", savedStaff.getId());
 
-		return "redirect:/admin/staffs/describe/" + savedStaff.getId();
+		return "redirect:/admin/staffs/describe";
 	}
 }

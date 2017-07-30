@@ -31,7 +31,7 @@ public class StaffService {
 		return staffRepository.findAllByTeam(team);
 	}
 
-	public Staff staffByid(long id) {
+	public Staff findOneById(long id) {
 		return staffRepository.findOne(id);
 	}
 
@@ -49,5 +49,9 @@ public class StaffService {
 		staff.setTelework(request.getTelework());
 		staff.setPassword(request.getPassword());
 		return staffRepository.saveAndFlush(staff);
+	}
+
+	public void delete(Long id) {
+		teamRepository.delete(id);
 	}
 }

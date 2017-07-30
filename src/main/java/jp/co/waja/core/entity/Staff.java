@@ -82,4 +82,12 @@ public class Staff extends AbstractEntity<Long> implements Serializable {
 
 	@OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<PaidVacation> paidVacations;
+
+	public String getName() {
+		return getNameLast() + getNameFirst();
+	}
+
+	public String getNameKana() {
+		return getNameLastKana() + getNameFirstKana();
+	}
 }
