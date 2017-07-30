@@ -31,6 +31,10 @@ public class StaffService {
 		return staffRepository.findAllByTeam(team);
 	}
 
+	public Staff staffByid(long id) {
+		return staffRepository.findOne(id);
+	}
+
 	public Staff create(StaffCreateRequest request) {
 		Staff staff = new Staff();
 		staff.setTeam(request.getTeam());
