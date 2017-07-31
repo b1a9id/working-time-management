@@ -39,6 +39,7 @@ public class StaffDeleteController {
 			return "redirect:/admin/staffs";
 		}
 
+		// TODO:Teamが参照してるから削除できない
 		staffService.delete(savedStaff);
 		redirectAttributes.addFlashAttribute("savedStaff", savedStaff.getName());
 		return "redirect:/admin/teams";
