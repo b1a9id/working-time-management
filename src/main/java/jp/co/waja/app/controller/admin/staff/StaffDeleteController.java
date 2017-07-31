@@ -33,13 +33,13 @@ public class StaffDeleteController {
 			return "redirect:/admin/staffs";
 		}
 
-		Staff savedStaff = staffService.findOneById(form.toStaffSearchRequest().getTeamId());
+		Staff savedStaff = staffService.findOneById(form.toStaffSearchRequest().getId());
 		if (savedStaff == null) {
 			errors.reject("staffNotFound");
 			return "redirect:/admin/staffs";
 		}
 
-		staffService.delete(savedStaff.getId());
+		staffService.delete(savedStaff);
 		redirectAttributes.addFlashAttribute("savedStaff", savedStaff.getName());
 		return "redirect:/admin/teams";
 	}

@@ -51,7 +51,7 @@ public class StaffService {
 		return staffRepository.saveAndFlush(staff);
 	}
 
-	public void delete(Long id) {
-		teamRepository.delete(id);
+	public void delete(Staff staff) {
+		teamRepository.delete(staff.getId());
 	}
 }
