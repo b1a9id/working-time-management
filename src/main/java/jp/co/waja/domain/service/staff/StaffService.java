@@ -3,6 +3,7 @@ package jp.co.waja.domain.service.staff;
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.entity.Team;
 import jp.co.waja.core.model.staff.StaffCreateRequest;
+import jp.co.waja.core.model.staff.StaffEditRequest;
 import jp.co.waja.core.model.staff.StaffSearchRequest;
 import jp.co.waja.domain.repository.staff.StaffRepository;
 import jp.co.waja.domain.repository.team.TeamRepository;
@@ -48,6 +49,21 @@ public class StaffService {
 		staff.setEnteredDate(request.getEnteredDate());
 		staff.setTelework(request.getTelework());
 		staff.setPassword(request.getPassword());
+		return staffRepository.saveAndFlush(staff);
+	}
+
+	public Staff edit(StaffEditRequest request) {
+		Staff staff = staffRepository.findOne(request.getId());
+		staff.setTeam(request.getTeam());
+		staff.setNameLast(request.getNameLast());
+		staff.setNameFirst(request.getNameFirst());
+		staff.setNameLastKana(request.getNameLastKana());
+		staff.setNameFirstKana(request.getNameFirstKana());
+		staff.setEmail(request.getEmail());
+		staff.setGender(request.getGender());
+		staff.setEmploymentType(request.getEmploymentType());
+		staff.setEnteredDate(request.getEnteredDate());
+		staff.setTelework(request.getTelework());
 		return staffRepository.saveAndFlush(staff);
 	}
 
