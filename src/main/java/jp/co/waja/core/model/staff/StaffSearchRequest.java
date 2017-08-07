@@ -13,7 +13,5 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class StaffSearchRequest implements Serializable {
 
-	private Long id;
-
 	private Long teamId;
 }

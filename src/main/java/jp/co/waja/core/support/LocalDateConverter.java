@@ -1,4 +1,4 @@
-package jp.co.waja.support;
+package jp.co.waja.core.support;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

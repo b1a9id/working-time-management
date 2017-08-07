@@ -1,4 +1,4 @@
-package jp.co.waja.domain.repository.staff;
+package jp.co.waja.core.repository.staff;
 
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.entity.Team;

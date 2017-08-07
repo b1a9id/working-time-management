@@ -10,11 +10,9 @@ import java.io.Serializable;
 @Setter
 public class StaffSearchForm implements Serializable {
 
-	private Long id;
-
 	private Long teamId;
 
 	public StaffSearchRequest toStaffSearchRequest() {
-		return new StaffSearchRequest(getId(), getTeamId());
+		return new StaffSearchRequest(getTeamId());
 	}
 }

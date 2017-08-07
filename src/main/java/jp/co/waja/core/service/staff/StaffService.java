@@ -1,12 +1,12 @@
-package jp.co.waja.domain.service.staff;
+package jp.co.waja.core.service.staff;
 
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.entity.Team;
 import jp.co.waja.core.model.staff.StaffCreateRequest;
 import jp.co.waja.core.model.staff.StaffEditRequest;
 import jp.co.waja.core.model.staff.StaffSearchRequest;
-import jp.co.waja.domain.repository.staff.StaffRepository;
-import jp.co.waja.domain.repository.team.TeamRepository;
+import jp.co.waja.core.repository.staff.StaffRepository;
+import jp.co.waja.core.repository.team.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,7 +67,7 @@ public class StaffService {
 		return staffRepository.saveAndFlush(staff);
 	}
 
-	public void delete(Staff staff) {
-		teamRepository.delete(staff.getId());
+	public void delete(Long id) {
+		teamRepository.delete(id);
 	}
 }

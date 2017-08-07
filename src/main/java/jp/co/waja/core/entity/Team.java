@@ -24,6 +24,6 @@ public class Team extends AbstractEntity<Long> implements Serializable {
 	@Column(nullable = false, name = "short_name")
 	private String shortName;
 
-	@OneToMany(mappedBy = "team", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Staff> staffs;
 }

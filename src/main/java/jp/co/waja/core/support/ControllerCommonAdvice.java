@@ -1,4 +1,4 @@
-package jp.co.waja.support;
+package jp.co.waja.core.support;
 
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Component;

@@ -51,7 +51,7 @@
 							<a class="btn btn-default" th:href="@{/admin/staffs/histories/1}">変更履歴</a>
 						</div>
 						<div class="btn-group">
-							<form method="post" th:action="@{/admin/staffs/delete?id={staffId}(staffId=${staff.id})}">
+							<form method="post" th:action="@{/admin/staffs/delete/{id}(id=${staff.id})}">
 								<input type="hidden" name="_method" value="delete"/>
 								<button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> 削除</button>
 							</form>

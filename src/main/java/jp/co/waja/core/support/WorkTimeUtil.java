@@ -1,4 +1,4 @@
-package jp.co.waja.support;
+package jp.co.waja.core.support;
 
 import java.util.Arrays;
 import java.util.List;

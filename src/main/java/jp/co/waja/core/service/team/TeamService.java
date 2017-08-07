@@ -1,9 +1,9 @@
-package jp.co.waja.domain.service.team;
+package jp.co.waja.core.service.team;
 
 import jp.co.waja.core.entity.Team;
 import jp.co.waja.core.model.team.TeamCreateRequest;
 import jp.co.waja.core.model.team.TeamEditRequest;
-import jp.co.waja.domain.repository.team.TeamRepository;
+import jp.co.waja.core.repository.team.TeamRepository;
 import jp.co.waja.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

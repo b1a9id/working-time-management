@@ -1,7 +1,7 @@
 package jp.co.waja.app.controller.admin.team;
 
 import jp.co.waja.core.entity.Team;
-import jp.co.waja.domain.service.team.TeamService;
+import jp.co.waja.core.service.team.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
