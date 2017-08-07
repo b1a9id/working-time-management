@@ -13,8 +13,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class TeamEditRequest implements Serializable {
 
-	private Long id;
-
 	private String name;
 
 	private String shortName;

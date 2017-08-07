@@ -37,7 +37,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
-						<form class="form-horizontal" method="post" th:action="@{/admin/teams/edit?id={teamId}(teamId=*{id})}" th:object="${form}">
+						<form class="form-horizontal" method="post" th:action="@{/admin/teams/edit/{id}(id=${team.id})}" th:object="${form}">
 							<div class="form-group" th:classappend="${#fields.hasErrors('name')}? has-error">
 								<div class="col-sm-2">
 									<label class="control-label" th:text="#{team.field.name}">チーム名</label>

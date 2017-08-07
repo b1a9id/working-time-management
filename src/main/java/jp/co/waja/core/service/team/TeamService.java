@@ -34,8 +34,8 @@ public class TeamService {
 		return teamRepository.saveAndFlush(team);
 	}
 
-	public Team edit(TeamEditRequest request) {
-		Optional<Team> teamOptional = Optional.ofNullable(teamRepository.findOneById(request.getId()));
+	public Team edit(TeamEditRequest request, Long id) {
+		Optional<Team> teamOptional = Optional.ofNullable(teamRepository.findOneById(id));
 		if (!teamOptional.isPresent()) {
 			throw new NotFoundException();
 		}

@@ -87,7 +87,7 @@
 								<td th:text="${team.name}">クリエイティブチーム</td>
 								<td th:text="${team.shortName}">CR</td>
 								<td>waja太郎</td>
-								<td><a class="btn btn-link glyphicon glyphicon-pencil" th:href="@{/admin/teams/edit?id={teamId}(teamId=${team.id})}"></a></td>
+								<td><a class="btn btn-link glyphicon glyphicon-pencil" th:href="@{/admin/teams/edit/{id}(id=${team.id})}"></a></td>
 								<td>
 									<form method="post" th:action="@{/admin/teams/delete?id={teamid}(teamid=${team.id})}">
 										<input type="hidden" name="_method" value="delete"/>
