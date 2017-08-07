@@ -27,9 +27,18 @@
 					<div class="col-md-12">
 						<ul class="breadcrumb">
 							<li><a th:href="@{/}" th:text="#{dashboard.title}">ダッシュボード</a></li>
-							<li><a th:href="@{/admin/staffs/list}" th:text="#{staff.list.title}">スタッフ一覧</a></li>
+							<li><a th:href="@{/admin/staffs}" th:text="#{staff.list.title}">スタッフ一覧</a></li>
 							<li class="active" th:text="#{staff.describe.title}">スタッフ詳細</li>
 						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:if="${savedStaff}" class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-success" role="alert">
+						<span th:text="#{registration.msg(${savedStaff.name})}">TESTを登録しました。</span>
 					</div>
 				</div>
 			</div>

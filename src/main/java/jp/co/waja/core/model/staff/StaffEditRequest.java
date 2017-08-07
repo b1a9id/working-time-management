@@ -16,8 +16,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class StaffEditRequest implements Serializable {
 
-	private Long id;
-
 	private Team team;
 
 	private String nameLast;

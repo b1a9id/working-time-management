@@ -4,6 +4,7 @@ import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.entity.Team;
 import jp.co.waja.core.model.staff.StaffEditRequest;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class StaffEditForm implements Serializable {
 
 	@NotNull

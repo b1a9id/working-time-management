@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/admin/staffs/edit")
+@RequestMapping("/admin/staffs/edit/{id}")
 public class StaffEditController {
 
 	private static final String TARGET_ENTITY_KEY = "staff";
@@ -33,7 +33,7 @@ public class StaffEditController {
 	private StaffService staffService;
 
 	@ModelAttribute(TARGET_ENTITY_KEY)
-	public Staff setupStaff(@RequestParam Long id) {
+	public Staff setupStaff(@PathVariable Long id) {
 		return staffService.findOneById(id);
 	}
 
@@ -66,6 +66,7 @@ public class StaffEditController {
 
 	@PostMapping
 	public String edit(
+			@PathVariable Long id,
 			@Validated @ModelAttribute(FORM_MODEL_KEY) StaffEditForm form,
 			BindingResult errors,
 			RedirectAttributes redirectAttributes) {
@@ -75,12 +76,11 @@ public class StaffEditController {
 			return "redirect:/admin/staffs/edit?error";
 		}
 
-		Staff savedStaff = staffService.edit(form.toStaffEditRequest());
+		Staff savedStaff = staffService.edit(form.toStaffEditRequest(), id);
 		redirectAttributes.getFlashAttributes().clear();
 		redirectAttributes.addAttribute("id", savedStaff.getId());
 		redirectAttributes.addFlashAttribute("savedStaff", savedStaff);
-		redirectAttributes.addFlashAttribute("staffId", savedStaff.getId());
 
-		return "redirect:/admin/staffs/describe";
+		return "redirect:/admin/staffs/describe/{id}";
 	}
 }

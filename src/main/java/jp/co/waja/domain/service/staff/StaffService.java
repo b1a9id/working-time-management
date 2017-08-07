@@ -52,8 +52,8 @@ public class StaffService {
 		return staffRepository.saveAndFlush(staff);
 	}
 
-	public Staff edit(StaffEditRequest request) {
-		Staff staff = staffRepository.findOne(request.getId());
+	public Staff edit(StaffEditRequest request, Long id) {
+		Staff staff = staffRepository.findOne(id);
 		staff.setTeam(request.getTeam());
 		staff.setNameLast(request.getNameLast());
 		staff.setNameFirst(request.getNameFirst());
