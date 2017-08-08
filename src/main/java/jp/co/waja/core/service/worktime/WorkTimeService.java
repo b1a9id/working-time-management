@@ -2,6 +2,7 @@ package jp.co.waja.core.service.worktime;
 
 import jp.co.waja.core.entity.WorkTime;
 import jp.co.waja.core.repository.worktime.WorkTimeRepository;
+import jp.co.waja.core.support.WorkTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,8 @@ public class WorkTimeService {
 		return thisMonthDates.stream()
 				.map(thisMonthDate -> {
 					WorkTime workTime = workTimeRepository.findOneByDate(thisMonthDate);
-					return Optional.ofNullable(workTime).orElse(new WorkTime(thisMonthDate));
+					WorkTime.workType workType = WorkTimeUtil.workType(thisMonthDate);
+					return Optional.ofNullable(workTime).orElse(new WorkTime(thisMonthDate, workType));
 				})
 				.collect(Collectors.toList());
 	}
