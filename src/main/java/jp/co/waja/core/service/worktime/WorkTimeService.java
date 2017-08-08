@@ -26,6 +26,5 @@ public class WorkTimeService {
 					return Optional.ofNullable(workTime).orElse(new WorkTime(thisMonthDate));
 				})
 				.collect(Collectors.toList());
-
 	}
 }
