@@ -1,13 +1,12 @@
 package jp.co.waja.core.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
@@ -15,10 +14,9 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class WorkTime extends AbstractEntity<Long> implements Serializable {
 
-	enum workType {
+	public enum workType {
 		NORMAL,
 		LEGAL_VACATION,
 		FULL_PAID_VACATION,
@@ -31,12 +29,16 @@ public class WorkTime extends AbstractEntity<Long> implements Serializable {
 		SPECIAL_VACATION
 	}
 
+	public WorkTime(LocalDate date) {
+		this.date = date;
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "staff_id")
 	private Staff staff;
 
 	@Column(nullable = false)
-	private LocalDateTime date;
+	private LocalDate date;
 
 	@Column(name = "work_type", nullable = false)
 	@Enumerated(EnumType.STRING)

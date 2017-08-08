@@ -54,7 +54,7 @@ engine=InnoDB;
 create table work_time (
   id bigint not null auto_increment,
   staff_id bigint,
-  date datetime not null,
+  date date not null,
   work_type varchar(50) not null,
   start_at time,
   end_at time,

@@ -9,7 +9,7 @@
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
 
-		<title>2017年07月稼働実績</title>
+		<title th:text="#{worktime.list.title(${thisYearMonth})}">2017年07月稼働実績</title>
 	</head>
 	<body>
 		<div th:replace="common/layout::navbar-layout"></div>
@@ -17,14 +17,14 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1>2017年07月稼働実績</h1>
+						<h1 th:text="#{worktime.list.title(${thisYearMonth})}">2017年07月稼働実績</h1>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<ul class="breadcrumb">
-							<li><a th:href="@{/}">ダッシュボード</a></li>
-							<li class="active">2017年07月稼働実績</li>
+							<li><a th:href="@{/}" th:text="#{dashboard.title}">ダッシュボード</a></li>
+							<li class="active" th:text="#{worktime.list.title(${thisYearMonth})}">2017年07月稼働実績</li>
 						</ul>
 					</div>
 				</div>
@@ -66,7 +66,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<table class="table table-bordered">
-							<caption>マネージャー記入欄</caption>
+							<caption th:text="#{worktime.manager.table.caption}">マネージャー記入欄</caption>
 							<thead>
 							<tr>
 								<th>内容</th>
@@ -130,7 +130,7 @@
 							<tr>
 								<td></td>
 								<td></td>
-							<td></td>
+								<td></td>
 								<td></td>
 								<td>規定労働時間</td>
 								<td>160:00</td>
