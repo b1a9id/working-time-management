@@ -10,7 +10,7 @@
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
 
-		<title>スタッフ詳細</title>
+		<title th:text="#{staff.describe.title}">スタッフ詳細</title>
 	</head>
 
 	<body>
@@ -20,16 +20,25 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1>テスト太郎</h1>
+						<h1 th:text="${staff.nameLast} + ${staff.nameFirst}">テスト太郎</h1>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<ul class="breadcrumb">
-							<li><a th:href="@{/}">ダッシュボード</a></li>
-							<li><a th:href="@{/admin/staff/list}">スタッフ一覧</a></li>
-							<li class="active">スタッフ詳細</li>
+							<li><a th:href="@{/}" th:text="#{dashboard.title}">ダッシュボード</a></li>
+							<li><a th:href="@{/admin/staffs}" th:text="#{staff.list.title}">スタッフ一覧</a></li>
+							<li class="active" th:text="#{staff.describe.title}">スタッフ詳細</li>
 						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:if="${savedStaff}" class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-success" role="alert">
+						<span th:text="#{registration.msg(${savedStaff.name})}">TESTを登録しました。</span>
 					</div>
 				</div>
 			</div>
@@ -39,17 +48,23 @@
 				<div class="row">
 					<div class="col-md-12 text-right">
 						<div class="btn-group">
-							<a class="btn btn-default" th:href="@{/admin/staff/histories/1}">変更履歴</a>
+							<a class="btn btn-default" th:href="@{/admin/staffs/histories/1}">変更履歴</a>
+						</div>
+						<div class="btn-group">
+							<form method="post" th:action="@{/admin/staffs/delete/{id}(id=${staff.id})}">
+								<input type="hidden" name="_method" value="delete"/>
+								<button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> 削除</button>
+							</form>
 						</div>
 						<div class="btn-group">
 							<a class="btn btn-success dropdown-toggle" data-toggle="dropdown"> メニュー <span class="fa fa-caret-down"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<a th:href="@{/admin/staff/edit/1}">編集</a>
-									<a href="#">削除</a>
+									<a th:href="@{/admin/staffs/edit/{staffId}(staffId=${staff.id})}">編集</a>
+									<a th:href="@{/admin/staffs/delete?id={staffId}(staffId=${staff.id})}" data-method="delete">削除</a>
 									<a href="#">有給管理</a>
 									<a th:href="@{/work-time/list}">稼働実績確認</a>
-									<a th:href="@{/admin/staff/password/edit}">パスワード変更</a>
+									<a th:href="@{/admin/staffs/password/edit}">パスワード変更</a>
 								</li>
 							</ul>
 						</div>
@@ -64,24 +79,24 @@
 						<table class="table">
 							<tbody>
 								<tr>
-									<th>チーム</th>
-									<td><a href="#">CRチーム</a></td>
+									<th th:text="#{staff.field.team}">チーム名</th>
+									<td th:text="${staff.team.name}">CRチーム</td>
 								</tr>
 								<tr>
-									<th>名前</th>
-									<td>テスト太郎</td>
+									<th th:text="#{staff.field.name}">名前</th>
+									<td th:text="${staff.nameLast} + ${staff.nameFirst}">テスト太郎</td>
 								</tr>
 								<tr>
-									<th>ふりがな</th>
-									<td>てすとたろう</td>
+									<th th:text="#{staff.field.name.kana}">ふりがな</th>
+									<td th:text="${staff.nameLastKana} + ${staff.nameFirstKana}">てすとたろう</td>
 								</tr>
 								<tr>
-									<th>性別</th>
-									<td>男</td>
+									<th th:text="#{staff.field.gender}">性別</th>
+									<td th:text="#{|gender.${staff.gender}|}">男</td>
 								</tr>
 								<tr>
-									<th>入社日</th>
-									<td>2015/06/01</td>
+									<th th:text="#{staff.field.entered.date}">入社日</th>
+									<td th:text="${staff.enteredDate}">2015/06/01</td>
 								</tr>
 								<tr>
 									<th>有給付与日</th>
@@ -90,6 +105,10 @@
 								<tr>
 									<th>残有給日数</th>
 									<td>10日</td>
+								</tr>
+								<tr>
+									<th th:text="#{staff.field.telework}">在宅</th>
+									<td><i th:if="${staff.telework}" class="glyphicon glyphicon-ok"></i></td>
 								</tr>
 							</tbody>
 						</table>
