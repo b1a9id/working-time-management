@@ -51,7 +51,7 @@ public class WorkTime extends AbstractEntity<Long> implements Serializable {
 	@Column(name = "end_at")
 	private LocalTime endAt;
 
-	@Column(name = "rest_time", nullable = false)
+	@Column(name = "rest_time")
 	private Integer restTime;
 
 	private String remarks;
