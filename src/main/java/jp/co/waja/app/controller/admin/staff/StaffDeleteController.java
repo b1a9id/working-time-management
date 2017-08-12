@@ -38,12 +38,11 @@ public class StaffDeleteController {
 		Staff savedStaff = staffService.findOneById(id);
 		if (savedStaff == null) {
 			errors.reject("staffNotFound");
-			return "redirect:/admin/staffs";
+			return "redirect:/admin/staffs?error";
 		}
 
-		// TODO:Teamが参照してるから削除できない
 		staffService.delete(id);
-		redirectAttributes.addFlashAttribute("savedStaff", savedStaff.getName());
-		return "redirect:/admin/teams";
+		redirectAttributes.addFlashAttribute("deletedName", savedStaff.getName());
+		return "redirect:/admin/staffs";
 	}
 }

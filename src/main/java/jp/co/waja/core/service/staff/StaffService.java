@@ -68,6 +68,6 @@ public class StaffService {
 	}
 
 	public void delete(Long id) {
-		teamRepository.delete(id);
+		staffRepository.delete(id);
 	}
 }

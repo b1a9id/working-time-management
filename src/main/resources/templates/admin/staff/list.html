@@ -15,7 +15,6 @@
 
 	<body>
 	<div th:replace="common/layout::navbar-layout"></div>
-	<div class="section"></div>
 	<div class="section">
 		<div class="container">
 			<div class="row">
@@ -29,6 +28,33 @@
 						<li><a th:href="@{/}" th:text="#{dashboard.title}">ダッシュボード</a></li>
 						<li class="active" th:text="#{staff.list.title}">スタッフ一覧</li>
 					</ul>
+				</div>
+			</div>
+		</div>
+		<div th:if="${savedStaff}" class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-success" role="alert">
+						<span th:text="#{registration.msg(${savedStaff.name})}">TESTを登録しました。</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:if="${updateStaff}" class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-success" role="alert">
+						<span th:text="#{update.msg(${updateStaff.name})}">TESTを更新しました。</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:if="${deletedName}" class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-success" role="alert">
+						<span th:text="#{delete.msg(${deletedName})}">TESTを削除しました。</span>
+					</div>
 				</div>
 			</div>
 		</div>

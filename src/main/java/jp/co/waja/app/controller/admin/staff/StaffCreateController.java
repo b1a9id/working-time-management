@@ -72,6 +72,6 @@ public class StaffCreateController {
 		redirectAttributes.addFlashAttribute("savedStaff", savedStaff);
 		redirectAttributes.addFlashAttribute("staffId", savedStaff.getId());
 
-		return "redirect:/admin/staffs/describe";
+		return "redirect:/admin/staffs/describe/{id}";
 	}
 }
