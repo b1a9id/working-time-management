@@ -8,6 +8,7 @@ import jp.co.waja.core.model.staff.StaffSearchRequest;
 import jp.co.waja.core.repository.staff.StaffRepository;
 import jp.co.waja.core.repository.team.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,9 @@ public class StaffService {
 
 	@Autowired
 	private TeamRepository teamRepository;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public List<Staff> staffs() {
 		return staffRepository.findAll();
@@ -48,7 +52,7 @@ public class StaffService {
 		staff.setEmploymentType(request.getEmploymentType());
 		staff.setEnteredDate(request.getEnteredDate());
 		staff.setTelework(request.getTelework());
-		staff.setPassword(request.getPassword());
+		staff.setPassword(passwordEncoder.encode(request.getPassword()));
 		return staffRepository.saveAndFlush(staff);
 	}
 

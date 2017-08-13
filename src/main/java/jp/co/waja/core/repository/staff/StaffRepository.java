@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface StaffRepository extends JpaRepository<Staff, Long> {
 
+	Staff findOneByEmail(String email);
+
 	List<Staff> findAllByTeam(Team team);
 }
