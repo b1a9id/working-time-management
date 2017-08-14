@@ -2,6 +2,7 @@ package jp.co.waja.app.controller.admin.staff;
 
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.entity.Team;
+import jp.co.waja.core.model.Role;
 import jp.co.waja.core.model.staff.StaffCreateRequest;
 import lombok.Getter;
 import lombok.Setter;
@@ -50,6 +51,9 @@ public class StaffCreateForm implements Serializable {
 	@NotNull
 	private String password;
 
+	@NotNull
+	private Role role;
+
 	public StaffCreateRequest toStaffCreateRequest() {
 		StaffCreateRequest request = new StaffCreateRequest();
 		request.setTeam(getTeam());
@@ -63,6 +67,7 @@ public class StaffCreateForm implements Serializable {
 		request.setEnteredDate(getEnteredDate());
 		request.setTelework(getTelework());
 		request.setPassword(getPassword());
+		request.setRole(getRole());
 		return request;
 	}
 }

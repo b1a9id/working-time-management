@@ -53,6 +53,7 @@ public class StaffService {
 		staff.setEnteredDate(request.getEnteredDate());
 		staff.setTelework(request.getTelework());
 		staff.setPassword(passwordEncoder.encode(request.getPassword()));
+		staff.setRole(request.getRole());
 		return staffRepository.saveAndFlush(staff);
 	}
 
@@ -68,6 +69,7 @@ public class StaffService {
 		staff.setEmploymentType(request.getEmploymentType());
 		staff.setEnteredDate(request.getEnteredDate());
 		staff.setTelework(request.getTelework());
+		staff.setRole(request.getRole());
 		return staffRepository.saveAndFlush(staff);
 	}
 

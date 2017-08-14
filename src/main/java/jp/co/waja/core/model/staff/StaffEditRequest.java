@@ -2,6 +2,7 @@ package jp.co.waja.core.model.staff;
 
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.entity.Team;
+import jp.co.waja.core.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,4 +36,6 @@ public class StaffEditRequest implements Serializable {
 	private LocalDate enteredDate;
 
 	private Boolean telework;
+
+	private Role role;
 }
