@@ -29,6 +29,7 @@ create table staff (
   entered_date date not null,
   telework bit,
   password varchar(255) not null,
+  role varchar(20) not null,
   created_at datetime,
   created_by varchar(255),
   last_modified_at datetime,
@@ -68,29 +69,22 @@ create table work_time (
 )
 engine=InnoDB;
 
-create table user_role (
-  staff_id bigint not null,
-  role varchar(20) not null,
-  primary key (staff_id, role)
-)
-engine=InnoDB;
-
 INSERT INTO team (id, name, short_name, created_at, created_by) VALUES (1, 'クリエイティブチーム', 'CR', '2017/07/01 00:00:00', '内立良介');
 INSERT INTO team (id, name, short_name, created_at, created_by) VALUES (2, 'セールス＆プロモーションチーム', 'SP', '2017/07/01 00:00:00', '内立良介');
 INSERT INTO team (id, name, short_name, created_at, created_by) VALUES (3, '事業推進室', '事推', '2017/07/01 00:00:00', '内立良介');
 INSERT INTO team (id, name, short_name, created_at, created_by) VALUES (4, 'フルフィルメントチーム', 'FF', '2017/07/01 00:00:00', '内立良介');
 INSERT INTO team (id, name, short_name, created_at, created_by) VALUES (5, 'マネジメントプランニングチーム', 'MP', '2017/07/01 00:00:00', '内立良介');
 
-INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, telework, password, created_at, created_by)
-VALUES (6, 1, '田中', '一郎', 'たなか', 'いちろう', 'tanaka_taro@waja.jp', 'MAN', 'PERMANENT_STAFF', '2015/01/01', 1, 'wajawaja', '2017/07/01 00:00:00', '内立良介');
-INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, telework, password, created_at, created_by)
-VALUES (7, 2, '田中', '二郎', 'たなか', 'じろう', 'tanaka_jiro@waja.jp', 'MAN', 'CREW_TWO', '2015/01/01', 1, 'wajawaja', '2017/07/01 00:00:00', '内立良介');
-INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, telework, password, created_at, created_by)
-VALUES (8, 3, '長澤', 'まさみ', 'ながさわ', 'まさみ', 'nagasawa_masami@waja.jp', 'WOMAN', 'CREW_THREE', '2015/01/01', 1, 'wajawaja', '2017/07/01 00:00:00', '内立良介');
-INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, telework, password, created_at, created_by)
-VALUES (9, 4, '田中', '四郎', 'たなか', 'しろう', 'tanaka_shiro@waja.jp', 'MAN', 'CREW_FOUR', '2015/01/01', 1, 'wajawaja', '2017/07/01 00:00:00', '内立良介');
-INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, telework, password, created_at, created_by)
-VALUES (10, 5, '鈴木', '花子', 'すずき', 'はなこ', 'suzuki_hanako@waja.jp', 'WOMAN', 'PERMANENT_STAFF', '2015/01/01', 1, 'wajawaja', '2017/07/01 00:00:00', '内立良介');
+INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, telework, password, role, created_at, created_by)
+VALUES (6, 1, '田中', '一郎', 'たなか', 'いちろう', 'tanaka_taro@waja.jp', 'MAN', 'PERMANENT_STAFF', '2015/01/01', 1, 'wajawaja', 'STAFF', '2017/07/01 00:00:00', '内立良介');
+INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, telework, password, role, created_at, created_by)
+VALUES (7, 2, '田中', '二郎', 'たなか', 'じろう', 'tanaka_jiro@waja.jp', 'MAN', 'CREW_TWO', '2015/01/01', 1, 'wajawaja', 'ADMIN', '2017/07/01 00:00:00', '内立良介');
+INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, telework, password, role, created_at, created_by)
+VALUES (8, 3, '長澤', 'まさみ', 'ながさわ', 'まさみ', 'nagasawa_masami@waja.jp', 'WOMAN', 'CREW_THREE', '2015/01/01', 1, 'wajawaja', 'STAFF', '2017/07/01 00:00:00', '内立良介');
+INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, telework, password, role, created_at, created_by)
+VALUES (9, 4, '田中', '四郎', 'たなか', 'しろう', 'tanaka_shiro@waja.jp', 'MAN', 'CREW_FOUR', '2015/01/01', 1, 'wajawaja', 'STAFF', '2017/07/01 00:00:00', '内立良介');
+INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, telework, password, role, created_at, created_by)
+VALUES (10, 5, '鈴木', '花子', 'すずき', 'はなこ', 'suzuki_hanako@waja.jp', 'WOMAN', 'PERMANENT_STAFF', '2015/01/01', 1, 'wajawaja', 'MANAGER', '2017/07/01 00:00:00', '内立良介');
 
 INSERT INTO paid_vacation (id, staff_id, days, provide_date, disappear_date, created_at, created_by) VALUES (11, 6, 10, '2017/07/01', '2019/06/30', '2017/07/01 00:00:00', '内立良介');
 INSERT INTO paid_vacation (id, staff_id, days, provide_date, disappear_date, created_at, created_by) VALUES (12, 7, 21, '2015/08/01', '2017/07/31', '2017/07/01 00:00:00', '内立良介');
@@ -130,13 +124,7 @@ INSERT INTO work_time (id, staff_id, date, work_type, remarks, created_at, creat
 INSERT INTO work_time (id, staff_id, date, work_type, remarks, created_at, created_by) VALUES (47, 6, '2017/07/30', 'LEGAL_VACATION', '', '2017/07/01 00:00:00', '内立良介');
 INSERT INTO work_time (id, staff_id, date, work_type, start_at, end_at, rest_time, remarks, created_at, created_by) VALUES (48, 6, '2017/07/31', 'NORMAL', '9:00:00', '18:00:00', '60', '', '2017/07/01 00:00:00', '内立良介');
 
-INSERT INTO user_role (staff_id, role) VALUES (6, 'STAFF');
-INSERT INTO user_role (staff_id, role) VALUES (7, 'ADMIN');
-INSERT INTO user_role (staff_id, role) VALUES (8, 'STAFF');
-INSERT INTO user_role (staff_id, role) VALUES (9, 'STAFF');
-INSERT INTO user_role (staff_id, role) VALUES (10, 'MANAGER');
-
+alter table staff add constraint UK_pvctx4dbua9qh4p4s3gm3scrh unique (email);
 alter table paid_vacation add constraint FKjk3lekaqd3mnn5432w6lsxtys foreign key (staff_id) references staff (id);
 alter table staff add constraint FKmdoqnc1maraqd1w8ptjpk1i9r foreign key (team_id) references team (id);
-alter table user_role add constraint FKilbm7ghgjn6sgtr1p9g138bk2 foreign key (staff_id) references staff (id);
 alter table work_time add constraint FK86tblnddtvonw25p15pap03l3 foreign key (staff_id) references staff (id);
