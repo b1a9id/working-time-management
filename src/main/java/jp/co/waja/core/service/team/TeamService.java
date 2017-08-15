@@ -47,6 +47,7 @@ public class TeamService {
 	}
 
 	public void delete(Long id) {
+		// Teamに１人でもStaffが所属していたら削除しない
 		teamRepository.delete(id);
 	}
 }
