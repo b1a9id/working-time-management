@@ -15,7 +15,6 @@ public class ProfileRestController {
 		Profile profile = new Profile();
 		profile.setName(staff.getName());
 		profile.setTeamName(staff.getTeam().getName());
-		profile.setEmail(staff.getEmail());
 		return profile;
 	}
 }

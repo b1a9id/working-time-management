@@ -10,6 +10,4 @@ public class Profile {
 	private String name;
 
 	private String teamName;
-
-	private String email;
 }
