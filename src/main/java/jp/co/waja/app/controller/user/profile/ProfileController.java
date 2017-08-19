@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/profile")
 public class ProfileController {
 
-	@GetMapping("/describe/{userId}")
-	public String describe(@RequestParam(required = false) Long userId) {
+	@GetMapping("/describe")
+	public String describe() {
 		return "user/profile/describe";
 	}
 
