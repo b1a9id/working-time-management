@@ -39,6 +39,7 @@ public class WorkTimeBulkEditController {
 
 		LocalTime startAt = LocalTime.of(form.getStartAtHour(), form.getStartAtMinute());
 		LocalTime endAt = LocalTime.of(form.getEndAtHour(), form.getEndAtMinute());
+		// TODO:開始時間の方が遅い時エラー
 
 		int updateQty = workTimeService.edit(loginUser.getStaff(), today, form.toWorkTimeBulkEditRequest(startAt, endAt));
 
