@@ -36,7 +36,7 @@ public class WorkTime extends AbstractEntity<Long> implements Serializable {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "staff_id")
+	@JoinColumn(name = "staff_id", nullable = false)
 	private Staff staff;
 
 	@Column(nullable = false)

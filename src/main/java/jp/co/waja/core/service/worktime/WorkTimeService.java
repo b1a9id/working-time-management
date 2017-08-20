@@ -24,12 +24,13 @@ public class WorkTimeService {
 	@Autowired
 	private WorkTimeRepository workTimeRepository;
 
-	public List<WorkTime> getWorkTimes(Staff staff, LocalDate localDate) {
+	private List<WorkTime> getWorkTimes(Staff staff, LocalDate localDate) {
 		LocalDate startDate = LocalDate.of(localDate.getYear(), localDate.getMonth(), 1);
 		LocalDate endDate = LocalDate.of(localDate.getYear(), localDate.getMonth(), localDate.lengthOfMonth());
+		// 今月の1日から末日まで取得
 		List<LocalDate> monthDates = WorkTimeUtils.getMonthDate();
 
-		List<WorkTime> workTimes = getWorkTimes(startDate, endDate);
+		List<WorkTime> workTimes = getWorkTimes(staff, startDate, endDate);
 		Map<LocalDate, WorkTime> workTimeMap = new HashMap<>();
 		workTimes.forEach(workTime -> workTimeMap.put(workTime.getDate(), workTime));
 
@@ -46,16 +47,15 @@ public class WorkTimeService {
 		}
 
 		create(nonInsertWorkTimes);
-		return getWorkTimes(startDate, endDate);
+		return getWorkTimes(staff, startDate, endDate);
 	}
 
-	// TODO:ログインユーザもパラメータに設定
 	public List<WorkTime> getWorkTimes(Staff staff) {
 		return getWorkTimes(staff, LocalDate.now());
 	}
 
-	private List<WorkTime> getWorkTimes(LocalDate startDate, LocalDate endDate) {
-		return workTimeRepository.findByDateBetween(startDate, endDate);
+	private List<WorkTime> getWorkTimes(Staff staff, LocalDate startDate, LocalDate endDate) {
+		return workTimeRepository.findByStaffAndDateBetween(staff, startDate, endDate);
 	}
 
 	public List<WorkTime> create(List<WorkTime> workTimes) {
@@ -81,6 +81,6 @@ public class WorkTimeService {
 		if (CollectionUtils.isEmpty(normalWorkTimes)) {
 			return 0;
 		}
-		return workTimeRepository.updateWorkTimes(request.getStartAt(), request.getEndAt(), normalWorkTimes);
+		return workTimeRepository.updateWorkTimes(staff, request.getStartAt(), request.getEndAt(), normalWorkTimes);
 	}
 }
