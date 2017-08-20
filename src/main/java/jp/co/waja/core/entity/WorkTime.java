@@ -29,7 +29,8 @@ public class WorkTime extends AbstractEntity<Long> implements Serializable {
 		SPECIAL_VACATION
 	}
 
-	public WorkTime(LocalDate date, workType workType) {
+	public WorkTime(Staff staff, LocalDate date, workType workType) {
+		this.staff = staff;
 		this.date = date;
 		this.workType = workType;
 	}

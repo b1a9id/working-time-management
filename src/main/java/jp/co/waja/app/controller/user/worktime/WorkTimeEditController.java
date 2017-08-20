@@ -1,9 +1,11 @@
 package jp.co.waja.app.controller.user.worktime;
 
 import jp.co.waja.core.entity.WorkTime;
+import jp.co.waja.core.service.staff.StaffDetails;
 import jp.co.waja.core.service.worktime.WorkTimeService;
 import jp.co.waja.core.support.WorkTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,8 +29,8 @@ public class WorkTimeEditController {
 	private WorkTimeService workTimeService;
 
 	@GetMapping
-	public String edit(Model model) {
-		List<WorkTime> workTimes = workTimeService.getWorkTimes();
+	public String edit(@AuthenticationPrincipal StaffDetails loginUser, Model model) {
+		List<WorkTime> workTimes = workTimeService.getWorkTimes(loginUser.getStaff());
 
 		model.addAttribute("workTimes", workTimes);
 		model.addAttribute("workTimeHour", WorkTimeUtil.workTimeHour());

@@ -69,22 +69,22 @@
 				</div>
 			</div>
 		</div>
-	<script>
-		new Vue({
-			el: '#describe',
-			data: {staff: []},
-			methods: {
-				getStaff() {
-					axios.get('/profile/describe-staff')
-						.then(response => {
-							this.staff = response.data;
-						});
+		<script>
+			new Vue({
+				el: '#describe',
+				data: {staff: []},
+				methods: {
+					getStaff() {
+						axios.get('/profile/describe-staff')
+							.then(response => {
+								this.staff = response.data;
+							});
+					}
+				},
+				mounted() {
+					this.getStaff();
 				}
-			},
-			mounted() {
-				this.getStaff();
-			}
-		});
-	</script>
+			});
+		</script>
 	</body>
 </html>

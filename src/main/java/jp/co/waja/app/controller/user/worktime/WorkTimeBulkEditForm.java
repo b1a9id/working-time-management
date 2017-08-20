@@ -13,20 +13,26 @@ import java.time.LocalTime;
 @Setter
 public class WorkTimeBulkEditForm implements Serializable {
 
-	@NotNull
-	private WorkTime.workType workType;
+	private WorkTime.workType workType = WorkTime.workType.NORMAL;
 
 	@NotNull
-	private LocalTime startAt;
+	private Integer startAtHour;
 
 	@NotNull
-	private LocalTime endAt;
+	private Integer startAtMinute;
 
-	public WorkTimeBulkEditRequest toWorkTimeBulkEditRequest() {
+	@NotNull
+	private Integer endAtHour;
+
+	@NotNull
+	private Integer endAtMinute;
+
+
+	public WorkTimeBulkEditRequest toWorkTimeBulkEditRequest(LocalTime startAt, LocalTime endAt) {
 		WorkTimeBulkEditRequest request = new WorkTimeBulkEditRequest();
 		request.setWorkType(getWorkType());
-		request.setStartAt(getStartAt());
-		request.setEndAt(getEndAt());
+		request.setStartAt(startAt);
+		request.setEndAt(endAt);
 		return request;
 	}
 }

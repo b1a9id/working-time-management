@@ -1,16 +1,17 @@
 package jp.co.waja.app.controller.user.worktime;
 
+import jp.co.waja.core.service.staff.StaffDetails;
 import jp.co.waja.core.service.worktime.WorkTimeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.websocket.server.PathParam;
+import java.time.LocalTime;
 
-@Controller
+@RestController
 @RequestMapping("/work-time/bulk-edit")
 public class WorkTimeBulkEditController {
 
@@ -23,16 +24,23 @@ public class WorkTimeBulkEditController {
 	@Autowired
 	private WorkTimeService workTimeService;
 
-	@PostMapping("/{yearMonth}")
+	@PostMapping("/{today}")
 	public String edit(
-			@PathParam("yearMonth") String yearMonth,
-			WorkTimeBulkEditForm form,
+			@AuthenticationPrincipal StaffDetails loginUser,
+			@PathVariable String today,
+			@RequestBody @Validated WorkTimeBulkEditForm form,
 			BindingResult errors,
 			RedirectAttributes redirectAttributes) {
+		redirectAttributes.addFlashAttribute(FORM_MODEL_KEY, form);
+		redirectAttributes.addFlashAttribute(ERRORS_MODEL_KEYS, errors);
 		if (errors.hasErrors()) {
 			return "redirect:/work-time?errors";
 		}
-		int updateQty = workTimeService.edit(yearMonth, form.toWorkTimeBulkEditRequest());
+
+		LocalTime startAt = LocalTime.of(form.getStartAtHour(), form.getStartAtMinute());
+		LocalTime endAt = LocalTime.of(form.getEndAtHour(), form.getEndAtMinute());
+
+		int updateQty = workTimeService.edit(loginUser.getStaff(), today, form.toWorkTimeBulkEditRequest(startAt, endAt));
 
 		redirectAttributes.addAttribute("updateQty", updateQty);
 		return "redirect:/work-time";
