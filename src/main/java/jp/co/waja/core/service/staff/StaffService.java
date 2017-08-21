@@ -2,11 +2,13 @@ package jp.co.waja.core.service.staff;
 
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.entity.Team;
+import jp.co.waja.core.model.staff.PasswordEditRequest;
 import jp.co.waja.core.model.staff.StaffCreateRequest;
 import jp.co.waja.core.model.staff.StaffEditRequest;
 import jp.co.waja.core.model.staff.StaffSearchRequest;
 import jp.co.waja.core.repository.staff.StaffRepository;
 import jp.co.waja.core.repository.team.TeamRepository;
+import jp.co.waja.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -70,6 +72,12 @@ public class StaffService {
 		staff.setEnteredDate(request.getEnteredDate());
 		staff.setTelework(request.getTelework());
 		staff.setRole(request.getRole());
+		return staffRepository.saveAndFlush(staff);
+	}
+
+	public Staff editPassword(Long id, PasswordEditRequest request) throws NotFoundException {
+		Staff staff = staffRepository.findOne(id);
+		staff.setPassword(passwordEncoder.encode(request.getNewPassword()));
 		return staffRepository.saveAndFlush(staff);
 	}
 
