@@ -24,16 +24,15 @@ public class WorkTimeService {
 	@Autowired
 	private WorkTimeRepository workTimeRepository;
 
-	private List<WorkTime> getWorkTimes(Staff staff, LocalDate localDate) {
+	public List<WorkTime> getWorkTimes(Staff staff, LocalDate localDate) {
 		LocalDate startDate = LocalDate.of(localDate.getYear(), localDate.getMonth(), 1);
 		LocalDate endDate = LocalDate.of(localDate.getYear(), localDate.getMonth(), localDate.lengthOfMonth());
-		// 今月の1日から末日まで取得
-		List<LocalDate> monthDates = WorkTimeUtils.getMonthDate();
 
 		List<WorkTime> workTimes = getWorkTimes(staff, startDate, endDate);
 		Map<LocalDate, WorkTime> workTimeMap = new HashMap<>();
 		workTimes.forEach(workTime -> workTimeMap.put(workTime.getDate(), workTime));
 
+		List<LocalDate> monthDates = WorkTimeUtils.getMonthDate(localDate);
 		List<WorkTime> nonInsertWorkTimes = monthDates.stream()
 				.filter(monthDate -> Objects.isNull(workTimeMap.get(monthDate)))
 				.map(monthDate -> {
@@ -79,6 +78,6 @@ public class WorkTimeService {
 		if (CollectionUtils.isEmpty(normalWorkTimes)) {
 			return 0;
 		}
-		return workTimeRepository.updateWorkTimes(staff, request.getStartAt(), request.getEndAt(), 1, normalWorkTimes);
+		return workTimeRepository.updateWorkTimes(staff, request.getStartAt(), request.getEndAt(), 60, normalWorkTimes);
 	}
 }

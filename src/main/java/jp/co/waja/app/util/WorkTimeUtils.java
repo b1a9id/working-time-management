@@ -16,12 +16,16 @@ public final class WorkTimeUtils {
 		return endAt.until(startAt, ChronoUnit.MINUTES) - restTime;
 	}
 
-	public static List<LocalDate> getMonthDate() {
-		LocalDate today = LocalDate.now();
-		int thisMonthDays = today.lengthOfMonth();
+	/**
+	 * 指定月の1日から末日まで取得
+	 * @param localDate
+	 * @return
+	 */
+	public static List<LocalDate> getMonthDate(LocalDate localDate) {
+		int thisMonthDays = localDate.lengthOfMonth();
 
 		return IntStream.rangeClosed(1, thisMonthDays)
-				.mapToObj(day -> LocalDate.of(today.getYear(), today.getMonth(), day))
+				.mapToObj(day -> LocalDate.of(localDate.getYear(), localDate.getMonth(), day))
 				.collect(Collectors.toList());
 	}
 }
