@@ -1,11 +1,14 @@
 package jp.co.waja.app.util;
 
+import jp.co.waja.core.entity.WorkTime;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -32,5 +35,14 @@ public final class WorkTimeUtils {
 		return IntStream.rangeClosed(1, thisMonthDays)
 				.mapToObj(day -> LocalDate.of(localDate.getYear(), localDate.getMonth(), day))
 				.collect(Collectors.toList());
+	}
+
+	public static BigDecimal getWorkTimeSum(List<WorkTime> workTimes) {
+		BigDecimal workTimeSum = BigDecimal.ZERO;
+		for (WorkTime workTime : workTimes) {
+			BigDecimal time = Optional.ofNullable(workTime(workTime.getStartAt(), workTime.getEndAt(), workTime.getRestTime())).orElse(BigDecimal.ZERO);
+			workTimeSum = workTimeSum.add(time);
+		}
+		return workTimeSum;
 	}
 }

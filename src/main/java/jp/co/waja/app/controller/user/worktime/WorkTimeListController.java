@@ -1,5 +1,6 @@
 package jp.co.waja.app.controller.user.worktime;
 
+import jp.co.waja.app.util.WorkTimeUtils;
 import jp.co.waja.core.entity.WorkTime;
 import jp.co.waja.core.service.staff.StaffDetails;
 import jp.co.waja.core.service.worktime.WorkTimeService;
@@ -36,6 +37,8 @@ public class WorkTimeListController {
 		model.addAttribute("workTimes", workTimes);
 		model.addAttribute("workTimeHour", WorkTimeUtil.workTimeHour());
 		model.addAttribute("workTimeMinute", WorkTimeUtil.workTimeMinute());
+		//TODO:フロントでやる
+		model.addAttribute("workTimeSum", WorkTimeUtils.getWorkTimeSum(workTimes));
 		return "user/worktime/list";
 	}
 }
