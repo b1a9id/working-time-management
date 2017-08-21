@@ -1,5 +1,7 @@
 package jp.co.waja.app.util;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -9,11 +11,14 @@ import java.util.stream.IntStream;
 
 public final class WorkTimeUtils {
 
-	public static Long workTime(LocalTime startAt, LocalTime endAt, Integer restTime) {
+	public static BigDecimal workTime(LocalTime startAt, LocalTime endAt, Integer restTime) {
 		if (startAt == null || endAt == null || restTime == null) {
 			return null;
 		}
-		return endAt.until(startAt, ChronoUnit.MINUTES) - restTime;
+
+		long workTimeMinute = startAt.until(endAt, ChronoUnit.MINUTES) - restTime;
+		BigDecimal workTime = BigDecimal.valueOf(workTimeMinute).divide(BigDecimal.valueOf(60), 2, RoundingMode.DOWN);
+		return workTime;
 	}
 
 	/**
