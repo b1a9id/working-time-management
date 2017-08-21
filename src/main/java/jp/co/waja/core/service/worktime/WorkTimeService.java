@@ -67,20 +67,18 @@ public class WorkTimeService {
 		return savedWorkTimes;
 	}
 
-	public int edit(Staff staff, String today, WorkTimeBulkEditRequest request) {
+	public int bulkEdit(Staff staff, String today, WorkTimeBulkEditRequest request) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate parsedToday = LocalDate.parse(today, formatter);
 		List<WorkTime> workTimes = getWorkTimes(staff, parsedToday);
 		List<LocalDate> normalWorkTimes = workTimes.stream()
 				.filter(workTime -> workTime.getWorkType() == NORMAL)
-				.filter(workTime -> Objects.isNull(workTime.getStartAt()))
-				.filter(workTime -> Objects.isNull(workTime.getEndAt()))
 				.map(WorkTime::getDate)
 				.collect(Collectors.toList());
 
 		if (CollectionUtils.isEmpty(normalWorkTimes)) {
 			return 0;
 		}
-		return workTimeRepository.updateWorkTimes(staff, request.getStartAt(), request.getEndAt(), normalWorkTimes);
+		return workTimeRepository.updateWorkTimes(staff, request.getStartAt(), request.getEndAt(), 1, normalWorkTimes);
 	}
 }

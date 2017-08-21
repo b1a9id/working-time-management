@@ -32,6 +32,7 @@
 					</div>
 				</div>
 			</div>
+			<!-- TODO:更新メッセージ -->
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12 text-right">
@@ -243,6 +244,8 @@
 						})
 							.then(response => {
 								this.message = response.data;
+								// TODO:Vue.jsでバインドする
+								location.reload();
 							}).catch(error => {
 								console.log(error);
 							})

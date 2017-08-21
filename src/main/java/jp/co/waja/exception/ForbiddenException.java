@@ -3,22 +3,22 @@ package jp.co.waja.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class NotFoundException extends ServiceException {
+@ResponseStatus(HttpStatus.FORBIDDEN)
+public class ForbiddenException extends ServiceException {
 
-	public NotFoundException() {
+	public ForbiddenException() {
 		super();
 	}
 
-	public NotFoundException(Throwable cause) {
+	public ForbiddenException(Throwable cause) {
 		super(cause);
 	}
 
-	public NotFoundException(String message) {
+	public ForbiddenException(String message) {
 		super(message);
 	}
 
-	public NotFoundException(String message, Throwable cause) {
+	public ForbiddenException(String message, Throwable cause) {
 		super(message, cause);
 	}
 }

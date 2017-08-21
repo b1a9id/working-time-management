@@ -2,6 +2,7 @@ package jp.co.waja.app.controller.user.worktime;
 
 import jp.co.waja.core.service.staff.StaffDetails;
 import jp.co.waja.core.service.worktime.WorkTimeService;
+import jp.co.waja.exception.ForbiddenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
@@ -39,9 +40,11 @@ public class WorkTimeBulkEditController {
 
 		LocalTime startAt = LocalTime.of(form.getStartAtHour(), form.getStartAtMinute());
 		LocalTime endAt = LocalTime.of(form.getEndAtHour(), form.getEndAtMinute());
-		// TODO:開始時間の方が遅い時エラー
+		if (startAt.isAfter(endAt)) {
+			throw new ForbiddenException("startAt is not after endAt");
+		}
 
-		int updateQty = workTimeService.edit(loginUser.getStaff(), today, form.toWorkTimeBulkEditRequest(startAt, endAt));
+		int updateQty = workTimeService.bulkEdit(loginUser.getStaff(), today, form.toWorkTimeBulkEditRequest(startAt, endAt));
 
 		redirectAttributes.addAttribute("updateQty", updateQty);
 		return "redirect:/work-time";
