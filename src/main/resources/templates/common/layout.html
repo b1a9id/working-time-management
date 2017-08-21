@@ -22,7 +22,7 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">プロフィール</a>
 						<ul class="dropdown-menu" role="menu">
 							<li>
-								<a th:href="@{/profile/describe/1}">プロフィール</a>
+								<a th:href="@{/profile/describe}">プロフィール</a>
 							</li>
 							<li>
 								<a th:href="@{/profile/password/edit/1}">パスワード変更</a>
@@ -36,7 +36,7 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">稼働実績</a>
 						<ul class="dropdown-menu" role="menu">
 							<li>
-								<a th:href="@{/work-time/list}">稼働実績照会</a>
+								<a th:href="@{/work-time}">稼働実績照会</a>
 							</li>
 						</ul>
 					</li>
@@ -52,10 +52,10 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">管理者メニュー</a>
 						<ul class="dropdown-menu" role="menu">
 							<li>
-								<a th:href="@{/admin/staff/list}">スタッフ管理</a>
+								<a th:href="@{/admin/staffs}">スタッフ管理</a>
 							</li>
 							<li>
-								<a th:href="@{/admin/team/list}">チーム管理</a>
+								<a th:href="@{/admin/teams}">チーム管理</a>
 							</li>
 							<!--<li>-->
 								<!--<a th:href="@{/admin/work-time/list}">稼働実績管理</a>-->
@@ -66,6 +66,9 @@
 						</ul>
 					</li>
 				</ul>
+				<form class="form-inline" th:action="@{/logout}" method="post">
+					<button class="btn btn-outline-danger" type="submit">ログアウト</button>
+				</form>
 			</div>
 		</div>
 	</div>
