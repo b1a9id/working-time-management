@@ -14,6 +14,8 @@ import java.util.List;
 public interface WorkTimeRepository extends JpaRepository<WorkTime, Long> {
 	List<WorkTime> findByStaffAndDateBetween(Staff staff, LocalDate startDate, LocalDate endDate);
 
+	Long countByStaff(Staff staff);
+
 	@Modifying
 	@Query("update WorkTime w set w.startAt = :startAt, w.endAt = :endAt, w.restTime = :restTime where w.date in :dates and w.staff = :staff")
 	int updateWorkTimes(@Param("staff") Staff staff, @Param("startAt")LocalTime startAt, @Param("endAt")LocalTime endAt, @Param("restTime")int restTime, @Param("dates")List<LocalDate> workTimeDates);

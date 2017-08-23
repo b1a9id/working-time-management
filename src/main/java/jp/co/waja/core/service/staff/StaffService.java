@@ -8,13 +8,17 @@ import jp.co.waja.core.model.staff.StaffEditRequest;
 import jp.co.waja.core.model.staff.StaffSearchRequest;
 import jp.co.waja.core.repository.staff.StaffRepository;
 import jp.co.waja.core.repository.team.TeamRepository;
+import jp.co.waja.core.repository.worktime.WorkTimeRepository;
 import jp.co.waja.exception.NotFoundException;
+import jp.co.waja.exception.WrongDeleteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -25,6 +29,9 @@ public class StaffService {
 
 	@Autowired
 	private TeamRepository teamRepository;
+
+	@Autowired
+	private WorkTimeRepository workTimeRepository;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -81,7 +88,18 @@ public class StaffService {
 		return staffRepository.saveAndFlush(staff);
 	}
 
-	public void delete(Long id) {
+	public Optional<String> delete(Long id) throws NotFoundException, WrongDeleteException {
+		Staff staff = staffRepository.findOne(id);
+		if (Objects.isNull(staff)) {
+			throw new NotFoundException();
+		}
+
+		Long workTimeCount = workTimeRepository.countByStaff(staff);
+		if (workTimeCount == null || workTimeCount > 0) {
+			throw new WrongDeleteException();
+		}
+
 		staffRepository.delete(id);
+		return Optional.ofNullable(staff.getName());
 	}
 }
