@@ -11,4 +11,6 @@ public interface StaffRepository extends JpaRepository<Staff, Long> {
 	Staff findOneByEmail(String email);
 
 	List<Staff> findAllByTeam(Team team);
+
+	long countByTeam(Team team);
 }

@@ -4,7 +4,6 @@ import jp.co.waja.core.service.staff.StaffService;
 import jp.co.waja.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -13,10 +12,6 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/admin/staffs/delete/{id}")
 public class StaffDeleteController {
-
-	private static final String FORM_MODEL_KEY = "form";
-
-	private static final String ERRORS_MODEL_KEYS = BindingResult.MODEL_KEY_PREFIX + FORM_MODEL_KEY;
 
 	@Autowired
 	private StaffService staffService;

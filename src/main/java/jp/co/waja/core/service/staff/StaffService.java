@@ -1,24 +1,17 @@
 package jp.co.waja.core.service.staff;
 
-import jp.co.waja.core.entity.Staff;
-import jp.co.waja.core.entity.Team;
-import jp.co.waja.core.model.staff.PasswordEditRequest;
-import jp.co.waja.core.model.staff.StaffCreateRequest;
-import jp.co.waja.core.model.staff.StaffEditRequest;
-import jp.co.waja.core.model.staff.StaffSearchRequest;
+import jp.co.waja.core.entity.*;
+import jp.co.waja.core.model.staff.*;
 import jp.co.waja.core.repository.staff.StaffRepository;
 import jp.co.waja.core.repository.team.TeamRepository;
 import jp.co.waja.core.repository.worktime.WorkTimeRepository;
-import jp.co.waja.exception.NotFoundException;
-import jp.co.waja.exception.WrongDeleteException;
+import jp.co.waja.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -94,8 +87,8 @@ public class StaffService {
 			throw new NotFoundException("Staff");
 		}
 
-		Long workTimeCount = workTimeRepository.countByStaff(staff);
-		if (workTimeCount == null || workTimeCount > 0) {
+		long workTimeCount = workTimeRepository.countByStaff(staff);
+		if (workTimeCount > 0) {
 			throw new WrongDeleteException("WorkTimeExist");
 		}
 
