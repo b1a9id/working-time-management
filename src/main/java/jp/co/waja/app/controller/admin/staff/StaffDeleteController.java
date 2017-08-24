@@ -1,16 +1,11 @@
 package jp.co.waja.app.controller.admin.staff;
 
 import jp.co.waja.core.service.staff.StaffService;
-import jp.co.waja.exception.NotFoundException;
-import jp.co.waja.exception.WrongDeleteException;
+import jp.co.waja.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
@@ -29,30 +24,25 @@ public class StaffDeleteController {
 	@DeleteMapping
 	public String delete(
 			@PathVariable Long id,
-			@Validated @ModelAttribute(FORM_MODEL_KEY) StaffSearchForm form,
-			BindingResult errors,
 			RedirectAttributes redirectAttributes) {
-		redirectAttributes.addFlashAttribute(FORM_MODEL_KEY, form);
-		redirectAttributes.addFlashAttribute(ERRORS_MODEL_KEYS, errors);
-		if (errors.hasErrors()) {
-			return "redirect:/admin/staffs/describe/{id}?error";
-		}
-
 		Optional<String> nameOptional = Optional.empty();
 		try {
 			nameOptional = staffService.delete(id);
 		} catch (NotFoundException exception) {
-			errors.reject("StaffNotFound");
+			return "redirect:/admin/staffs";
 		} catch (WrongDeleteException exception) {
-			errors.reject("RelationalDataExist");
+			Optional<String> cause = Optional.empty();
+			if ("WorkTimeExist".equals(exception.getMessage())) {
+				cause = Optional.of("稼働時間が存在する");
+			}
+			cause.ifPresent(c -> redirectAttributes.addFlashAttribute("wrongDelete", c));
 		}
 
-		if (errors.hasErrors()) {
+		if (!redirectAttributes.getFlashAttributes().isEmpty()) {
 			return "redirect:/admin/staffs/describe/{id}?error";
 		}
 
 		redirectAttributes.getFlashAttributes().clear();
-
 		nameOptional.ifPresent(name -> redirectAttributes.addFlashAttribute("deletedName", name));
 		return "redirect:/admin/staffs";
 	}

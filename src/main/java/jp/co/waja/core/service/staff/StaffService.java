@@ -91,12 +91,12 @@ public class StaffService {
 	public Optional<String> delete(Long id) throws NotFoundException, WrongDeleteException {
 		Staff staff = staffRepository.findOne(id);
 		if (Objects.isNull(staff)) {
-			throw new NotFoundException();
+			throw new NotFoundException("Staff");
 		}
 
 		Long workTimeCount = workTimeRepository.countByStaff(staff);
 		if (workTimeCount == null || workTimeCount > 0) {
-			throw new WrongDeleteException();
+			throw new WrongDeleteException("WorkTimeExist");
 		}
 
 		staffRepository.delete(id);
