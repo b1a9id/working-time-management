@@ -3,6 +3,7 @@ package jp.co.waja.core.service.worktime;
 import jp.co.waja.app.util.WorkTimeUtils;
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.entity.WorkTime;
+import jp.co.waja.core.model.worktime.WorkTimeEditRequest;
 import jp.co.waja.core.repository.worktime.WorkTimeRepository;
 import jp.co.waja.core.support.WorkTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,12 +50,12 @@ public class WorkTimeService {
 		return getWorkTimes(staff, startDate, endDate);
 	}
 
-	public List<WorkTime> getWorkTimes(Staff staff) {
-		return getWorkTimes(staff, LocalDate.now());
-	}
-
 	private List<WorkTime> getWorkTimes(Staff staff, LocalDate startDate, LocalDate endDate) {
 		return workTimeRepository.findByStaffAndDateBetween(staff, startDate, endDate);
+	}
+
+	public List<WorkTime> getWorkTimes(List<Long> ids) {
+		return workTimeRepository.findAll(ids);
 	}
 
 	public List<WorkTime> create(List<WorkTime> workTimes) {
@@ -79,5 +80,11 @@ public class WorkTimeService {
 			return 0;
 		}
 		return workTimeRepository.updateWorkTimes(staff, request.getStartAt(), request.getEndAt(), 60, normalWorkTimes);
+	}
+
+	public List<WorkTime> edit(List<WorkTimeEditRequest> requests
+
+	) {
+
 	}
 }
