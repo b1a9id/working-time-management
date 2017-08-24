@@ -66,10 +66,10 @@ public class WorkTimeService {
 		return savedWorkTimes;
 	}
 
-	public int bulkEdit(Staff staff, String today, WorkTimeBulkEditRequest request) {
+	public int bulkEdit(Staff staff, String displayDate, WorkTimeBulkEditRequest request) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate parsedToday = LocalDate.parse(today, formatter);
-		List<WorkTime> workTimes = getWorkTimes(staff, parsedToday);
+		LocalDate parsedDisplayDate = LocalDate.parse(displayDate, formatter);
+		List<WorkTime> workTimes = getWorkTimes(staff, parsedDisplayDate);
 		List<LocalDate> normalWorkTimes = workTimes.stream()
 				.filter(workTime -> workTime.getWorkType() == NORMAL)
 				.map(WorkTime::getDate)

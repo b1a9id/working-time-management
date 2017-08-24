@@ -16,8 +16,6 @@ import java.time.LocalTime;
 @RequestMapping("/work-time/bulk-edit")
 public class WorkTimeBulkEditController {
 
-	private static final String TARGET_ENTITY_KEY = "workTime";
-
 	private static final String FORM_MODEL_KEY = "form";
 
 	private static final String ERRORS_MODEL_KEYS = BindingResult.MODEL_KEY_PREFIX + FORM_MODEL_KEY;
@@ -25,10 +23,10 @@ public class WorkTimeBulkEditController {
 	@Autowired
 	private WorkTimeService workTimeService;
 
-	@PostMapping("/{today}")
+	@PostMapping("/{displayDate}")
 	public String edit(
 			@AuthenticationPrincipal StaffDetails loginUser,
-			@PathVariable String today,
+			@PathVariable String displayDate,
 			@RequestBody @Validated WorkTimeBulkEditForm form,
 			BindingResult errors,
 			RedirectAttributes redirectAttributes) {
@@ -44,7 +42,7 @@ public class WorkTimeBulkEditController {
 			throw new ForbiddenException("startAt is not after endAt");
 		}
 
-		int updateQty = workTimeService.bulkEdit(loginUser.getStaff(), today, form.toWorkTimeBulkEditRequest(startAt, endAt));
+		int updateQty = workTimeService.bulkEdit(loginUser.getStaff(), displayDate, form.toWorkTimeBulkEditRequest(startAt, endAt));
 
 		redirectAttributes.addAttribute("updateQty", updateQty);
 		return "redirect:/work-time";
