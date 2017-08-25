@@ -16,7 +16,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 public class WorkTime extends AbstractEntity<Long> implements Serializable {
 
-	public enum workType {
+	public enum WorkType {
 		NORMAL,
 		LEGAL_VACATION,
 		FULL_PAID_VACATION,
@@ -29,7 +29,7 @@ public class WorkTime extends AbstractEntity<Long> implements Serializable {
 		SPECIAL_VACATION
 	}
 
-	public WorkTime(Staff staff, LocalDate date, workType workType) {
+	public WorkTime(Staff staff, LocalDate date, WorkType workType) {
 		this.staff = staff;
 		this.date = date;
 		this.workType = workType;
@@ -44,7 +44,7 @@ public class WorkTime extends AbstractEntity<Long> implements Serializable {
 
 	@Column(name = "work_type", nullable = false)
 	@Enumerated(EnumType.STRING)
-	private workType workType;
+	private WorkType workType;
 
 	@Column(name = "start_at")
 	private LocalTime startAt;

@@ -1,9 +1,7 @@
 package jp.co.waja.core.service.worktime;
 
 import jp.co.waja.app.util.WorkTimeUtils;
-import jp.co.waja.core.entity.Staff;
-import jp.co.waja.core.entity.WorkTime;
-import jp.co.waja.core.model.worktime.WorkTimeEditRequest;
+import jp.co.waja.core.entity.*;
 import jp.co.waja.core.repository.worktime.WorkTimeRepository;
 import jp.co.waja.core.support.WorkTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static jp.co.waja.core.entity.WorkTime.workType.NORMAL;
+import static jp.co.waja.core.entity.WorkTime.WorkType.NORMAL;
 
 @Service
 @Transactional
@@ -37,7 +35,7 @@ public class WorkTimeService {
 		List<WorkTime> nonInsertWorkTimes = monthDates.stream()
 				.filter(monthDate -> Objects.isNull(workTimeMap.get(monthDate)))
 				.map(monthDate -> {
-					WorkTime.workType workType = WorkTimeUtil.workType(monthDate);
+					WorkTime.WorkType workType = WorkTimeUtil.workType(monthDate);
 					return new WorkTime(staff, monthDate, workType);
 				})
 				.sorted()
@@ -82,9 +80,9 @@ public class WorkTimeService {
 		return workTimeRepository.updateWorkTimes(staff, request.getStartAt(), request.getEndAt(), 60, normalWorkTimes);
 	}
 
-	public List<WorkTime> edit(List<WorkTimeEditRequest> requests
-
-	) {
-
-	}
+//	public List<WorkTime> edit(List<WorkTimeEditRequest> requests
+//
+//	) {
+//
+//	}
 }

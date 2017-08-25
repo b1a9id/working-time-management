@@ -22,15 +22,19 @@ public class WorkTimeUtil {
 		return Arrays.asList(0, 15, 45);
 	}
 
-	public static WorkTime.workType workType(LocalDate date) {
+	public static List<Integer> restTime() {
+		return Arrays.asList(0, 45, 60, 75, 90, 120);
+	}
+
+	public static WorkTime.WorkType workType(LocalDate date) {
 		List<LocalDate> publicHolidays = PublicHolidays.getPublicHolidays();
 		boolean isHoliday = publicHolidays.stream()
 				.anyMatch(publicHoliday -> publicHoliday.isEqual(date));
 
 		DayOfWeek dayOfWeek = date.getDayOfWeek();
 		if (isHoliday || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
-			return WorkTime.workType.LEGAL_VACATION;
+			return WorkTime.WorkType.LEGAL_VACATION;
 		}
-		return WorkTime.workType.NORMAL;
+		return WorkTime.WorkType.NORMAL;
 	}
 }

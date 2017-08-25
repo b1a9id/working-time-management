@@ -11,7 +11,7 @@ import java.time.LocalTime;
 public class WorkTimeEditRequest implements Serializable {
 	private Long id;
 
-	private WorkTime.workType workType;
+	private WorkTime.WorkType workType;
 
 	private LocalTime startAt;
 

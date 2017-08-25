@@ -13,7 +13,7 @@ import java.time.LocalTime;
 @Setter
 public class WorkTimeBulkEditForm implements Serializable {
 
-	private WorkTime.workType workType = WorkTime.workType.NORMAL;
+	private WorkTime.WorkType workType = WorkTime.WorkType.NORMAL;
 
 	@NotNull
 	private Integer startAtHour;

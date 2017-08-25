@@ -11,7 +11,7 @@ import java.time.LocalTime;
 @Setter
 public class WorkTimeBulkEditRequest implements Serializable {
 
-	private WorkTime.workType workType;
+	private WorkTime.WorkType workType;
 
 	private LocalTime startAt;
 

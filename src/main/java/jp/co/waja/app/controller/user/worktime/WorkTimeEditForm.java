@@ -6,6 +6,7 @@ import lombok.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.*;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -15,11 +16,15 @@ public class WorkTimeEditForm implements Serializable {
 	private Long id;
 
 	@NotNull
-	private WorkTime.workType workType;
+	private WorkTime.WorkType workType;
 
-	private LocalTime startAt;
+	private Integer startAtHour;
 
-	private LocalTime endAt;
+	private Integer startAtMinute;
+
+	private Integer endAtHour;
+
+	private Integer endAtMinute;
 
 	@NotNull
 	private Integer restTime;
@@ -29,8 +34,16 @@ public class WorkTimeEditForm implements Serializable {
 	public WorkTimeEditForm(WorkTime workTime) {
 		this.id = workTime.getId();
 		this.workType = workTime.getWorkType();
-		this.startAt = workTime.getStartAt();
-		this.endAt = workTime.getEndAt();
+		Optional<LocalTime> startAtOptional = Optional.ofNullable(workTime.getStartAt());
+		startAtOptional.ifPresent(startAt -> {
+			this.startAtHour = startAt.getHour();
+			this.startAtMinute = startAt.getMinute();
+		});
+		Optional<LocalTime> endAtOptional = Optional.ofNullable(workTime.getEndAt());
+		endAtOptional.ifPresent(endAt -> {
+			this.endAtHour = endAt.getHour();
+			this.endAtMinute = endAt.getMinute();
+		});
 		this.restTime = workTime.getRestTime();
 		this.remarks = workTime.getRemarks();
 	}
