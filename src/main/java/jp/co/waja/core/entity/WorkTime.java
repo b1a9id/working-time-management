@@ -14,7 +14,7 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class WorkTime extends AbstractEntity<Long> implements Serializable {
+public class WorkTime implements Serializable {
 
 	public enum WorkType {
 		NORMAL,
@@ -29,15 +29,15 @@ public class WorkTime extends AbstractEntity<Long> implements Serializable {
 		SPECIAL_VACATION
 	}
 
-	public WorkTime(Staff staff, LocalDate date, WorkType workType) {
-		this.staff = staff;
+	public WorkTime(WorkTimeYearMonth workTimeYearMonth, LocalDate date, WorkType workType) {
+		this.workTimeYearMonth = workTimeYearMonth;
 		this.date = date;
 		this.workType = workType;
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "staff_id", nullable = false)
-	private Staff staff;
+	@JoinColumn(name = "work_time_year_month_id", nullable = false)
+	private WorkTimeYearMonth workTimeYearMonth;
 
 	@Column(nullable = false)
 	private LocalDate date;
