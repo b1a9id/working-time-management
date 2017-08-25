@@ -36,7 +36,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<form class="form-horizontal" role="form" th:action="@{/work-time/edit}" method="post" th:object="${forms}">
+				<form class="form-horizontal" role="form" th:action="@{/work-time/edit/{displayDate}(displayDate=${displayDate})}" method="post" th:object="${forms}">
 					<table class="table table-bordered form-group">
 						<thead>
 						<tr>
@@ -55,7 +55,7 @@
 							<td>
 								<select class="form-control">
 									<option></option>
-									<option th:text="#{|worktime.worktype.${form.workType}|}" th:value="${form.workType}" th:selected="${form.workType}">出勤</option>
+									<option th:each="workType : ${workTypes}" th:text="#{|worktime.worktype.${workType}|}" th:value="${workType}" th:selected="${workType eq form.workType}">出勤</option>
 								</select>
 							</td>
 							<td>

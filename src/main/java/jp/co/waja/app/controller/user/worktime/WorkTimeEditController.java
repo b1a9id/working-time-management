@@ -12,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -33,7 +35,7 @@ public class WorkTimeEditController {
 	@ModelAttribute(TARGET_ENTITY_KEY)
 	public List<WorkTime> setUpWorkTime(
 			@AuthenticationPrincipal StaffDetails loginUser,
-			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate displayDate) {
+			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate displayDate) {
 		return workTimeService.getWorkTimes(loginUser.getStaff(), displayDate);
 	}
 
@@ -44,7 +46,7 @@ public class WorkTimeEditController {
 
 	@GetMapping("/{displayDate}")
 	public String edit(
-			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate displayDate,
+			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate displayDate,
 			Model model) {
 		List<WorkTime> workTimes = (List<WorkTime>) model.asMap().get(TARGET_ENTITY_KEY);
 
@@ -83,8 +85,16 @@ public class WorkTimeEditController {
 		return "user/worktime/edit";
 	}
 
-	@PostMapping
-	public String edit() {
-		return "redirect:/work-time/list";
+	@PostMapping("/{displayDate}")
+	public String edit(
+			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate displayDate,
+			@ModelAttribute(FORM_MODEL_KEY) ArrayList<WorkTimeEditForm> forms,
+			HttpServletRequest request,
+			BindingResult errors,
+			RedirectAttributes redirectAttributes) {
+		if (errors.hasErrors()) {
+			return "redirect:/work-time/edit/{displayDate}?error";
+		}
+		return "redirect:/work-time";
 	}
 }
