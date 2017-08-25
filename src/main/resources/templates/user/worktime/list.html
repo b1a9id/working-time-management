@@ -43,7 +43,7 @@
 							<a class="btn btn-success dropdown-toggle" data-toggle="dropdown"> メニュー <span class="fa fa-caret-down"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<a th:href="@{/work-time/edit}">稼働実績入力</a>
+									<a th:href="@{/work-time/edit/{displaydate}(displayDate=${displayDate})}">稼働実績入力</a>
 								</li>
 							</ul>
 						</div>
@@ -151,13 +151,13 @@
 							</tr>
 							</tfoot>
 							<tbody>
-							<tr th:each="workTime : ${workTimes}">
+							<tr th:each="workTime : ${workTimes}" th:with="dayTotal=${#workTimes.workTime(workTime.startAt, workTime.endAt, workTime.restTime)}">
 								<td th:text="${#temporals.format(workTime.date, 'MM/dd(E)')}">6/1（木）</td>
 								<td th:text="#{|worktime.worktype.${workTime.workType}|}">出勤</td>
 								<td th:text="${workTime.startAt}">9:00</td>
 								<td th:text="${workTime.endAt}">18:00</td>
 								<td th:text="${workTime.restTime}">1:00</td>
-								<td th:text="${#workTimes.workTime(workTime.startAt, workTime.endAt, workTime.restTime)}">8:00</td>
+								<td th:text="${dayTotal}">8:00</td>
 								<td></td>
 							</tr>
 							<!--<tr class="bg-danger">-->
