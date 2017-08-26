@@ -4,6 +4,8 @@ import jp.co.waja.app.util.WorkTimeUtils;
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.entity.WorkTime;
 import jp.co.waja.core.entity.WorkTimeYearMonth;
+import jp.co.waja.core.model.worktime.WorkTimeBulkEditRequest;
+import jp.co.waja.core.model.worktime.WorkTimeYearMonthEditRequest;
 import jp.co.waja.core.repository.worktime.WorkTimeYearMonthRepository;
 import jp.co.waja.core.support.WorkTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +62,23 @@ public class WorkTimeService {
 						workTime.setRestTime(60);
 					}
 				});
+		return workTimeYearMonthRepository.saveAndFlush(workTimeYearMonth);
+	}
+
+	public WorkTimeYearMonth edit(Staff staff, WorkTimeYearMonthEditRequest request) {
+		WorkTimeYearMonth workTimeYearMonth = workTimeYearMonthRepository.findOneByStaffAndId(staff, request.getId());
+		List<WorkTime> workTimes = request.getWorkTimes().stream()
+				.map(editRequest -> {
+					WorkTime workTime = new WorkTime();
+					workTime.setDate(editRequest.getDate());
+					workTime.setWorkType(editRequest.getWorkType());
+					workTime.setStartAt(editRequest.getStartAt());
+					workTime.setEndAt(editRequest.getEndAt());
+					workTime.setRestTime(editRequest.getRestTime());
+					workTime.setRemarks(editRequest.getRemarks());
+					return workTime;
+				}).collect(Collectors.toList());
+		workTimeYearMonth.setWorkTimes(workTimes);
 		return workTimeYearMonthRepository.saveAndFlush(workTimeYearMonth);
 	}
 }

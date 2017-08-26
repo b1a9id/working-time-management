@@ -6,4 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface WorkTimeYearMonthRepository extends JpaRepository<WorkTimeYearMonth, Long> {
 	WorkTimeYearMonth findOneByStaffAndWorkYearMonth(Staff staff, int yearMonth);
+
+	WorkTimeYearMonth findOneByStaffAndId(Staff staff, Long id);
+
+	long countByStaff(Staff staff);
 }

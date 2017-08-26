@@ -1,4 +1,4 @@
-package jp.co.waja.core.service.worktime;
+package jp.co.waja.core.model.worktime;
 
 import jp.co.waja.core.entity.WorkTime;
 import lombok.Getter;

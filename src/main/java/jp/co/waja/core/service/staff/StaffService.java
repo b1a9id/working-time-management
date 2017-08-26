@@ -8,6 +8,7 @@ import jp.co.waja.core.model.staff.StaffEditRequest;
 import jp.co.waja.core.model.staff.StaffSearchRequest;
 import jp.co.waja.core.repository.staff.StaffRepository;
 import jp.co.waja.core.repository.team.TeamRepository;
+import jp.co.waja.core.repository.worktime.WorkTimeYearMonthRepository;
 import jp.co.waja.exception.NotFoundException;
 import jp.co.waja.exception.WrongDeleteException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class StaffService {
 
 	@Autowired
 	private TeamRepository teamRepository;
+
+	@Autowired
+	private WorkTimeYearMonthRepository workTimeYearMonthRepository;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -90,7 +94,7 @@ public class StaffService {
 			throw new NotFoundException("Staff");
 		}
 
-		long workTimeCount = 1L;
+		long workTimeCount = workTimeYearMonthRepository.countByStaff(staff);
 		if (workTimeCount > 0) {
 			throw new WrongDeleteException("WorkTimeExist");
 		}

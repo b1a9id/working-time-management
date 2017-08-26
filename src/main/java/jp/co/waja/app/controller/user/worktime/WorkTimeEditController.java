@@ -2,6 +2,7 @@ package jp.co.waja.app.controller.user.worktime;
 
 import jp.co.waja.core.entity.WorkTime;
 import jp.co.waja.core.entity.WorkTimeYearMonth;
+import jp.co.waja.core.model.worktime.WorkTimeYearMonthEditRequest;
 import jp.co.waja.core.service.staff.StaffDetails;
 import jp.co.waja.core.service.worktime.WorkTimeService;
 import jp.co.waja.core.support.WorkTimeUtil;
@@ -14,10 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -61,16 +59,21 @@ public class WorkTimeEditController {
 		return "user/worktime/edit";
 	}
 
-	@PostMapping("/{displayDate}")
+	@PostMapping("/{displayYearMonth}")
 	public String edit(
-			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate displayDate,
-			@ModelAttribute(FORM_MODEL_KEY) ArrayList<WorkTimeEditForm> forms,
-			HttpServletRequest request,
+			@AuthenticationPrincipal StaffDetails loginUser,
+			@PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth displayYearMonth,
+			@ModelAttribute(FORM_MODEL_KEY) WorkTimeYearMonthEditForm form,
 			BindingResult errors,
 			RedirectAttributes redirectAttributes) {
 		if (errors.hasErrors()) {
 			return "redirect:/work-time/edit/{displayDate}?error";
 		}
+		WorkTimeYearMonthEditRequest request = form.toWorkTimeYearMonthEditRequest();
+		WorkTimeYearMonth updatedWorkTimeYearMonth = workTimeService.edit(loginUser.getStaff(), request);
+
+		redirectAttributes.getFlashAttributes().clear();
+		redirectAttributes.addFlashAttribute("updatedWorkTimeYearMonth", updatedWorkTimeYearMonth);
 		return "redirect:/work-time";
 	}
 }

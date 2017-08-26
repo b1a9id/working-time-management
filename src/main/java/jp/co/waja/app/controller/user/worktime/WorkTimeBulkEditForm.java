@@ -1,7 +1,7 @@
 package jp.co.waja.app.controller.user.worktime;
 
 import jp.co.waja.core.entity.WorkTime;
-import jp.co.waja.core.service.worktime.WorkTimeBulkEditRequest;
+import jp.co.waja.core.model.worktime.WorkTimeBulkEditRequest;
 import lombok.Getter;
 import lombok.Setter;
 

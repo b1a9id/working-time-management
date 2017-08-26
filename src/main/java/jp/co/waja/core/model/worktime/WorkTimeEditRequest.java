@@ -4,12 +4,13 @@ import jp.co.waja.core.entity.WorkTime;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Getter
 @Setter
 public class WorkTimeEditRequest implements Serializable {
-	private Long id;
+	private LocalDate date;
 
 	private WorkTime.WorkType workType;
 
