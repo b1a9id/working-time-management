@@ -13,7 +13,7 @@ import java.util.Optional;
 @NoArgsConstructor
 public class WorkTimeEditForm implements Serializable {
 	@NotNull
-	private Long id;
+	private LocalDate date;
 
 	@NotNull
 	private WorkTime.WorkType workType;
@@ -32,7 +32,7 @@ public class WorkTimeEditForm implements Serializable {
 	private String remarks;
 
 	public WorkTimeEditForm(WorkTime workTime) {
-		this.id = workTime.getId();
+		this.date = workTime.getDate();
 		this.workType = workTime.getWorkType();
 		Optional<LocalTime> startAtOptional = Optional.ofNullable(workTime.getStartAt());
 		startAtOptional.ifPresent(startAt -> {

@@ -1,6 +1,7 @@
 package jp.co.waja.app.controller.user.worktime;
 
 import jp.co.waja.core.entity.WorkTime;
+import jp.co.waja.core.entity.WorkTimeYearMonth;
 import jp.co.waja.core.service.staff.StaffDetails;
 import jp.co.waja.core.service.worktime.WorkTimeService;
 import jp.co.waja.core.support.WorkTimeUtil;
@@ -9,23 +10,25 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/work-time/edit")
 public class WorkTimeEditController {
 
-	private static final String TARGET_ENTITY_KEY = "workTimes";
+	private static final String TARGET_ENTITY_KEY = "workTimeYearMonth";
 
-	private static final String FORM_MODEL_KEY = "forms";
+	private static final String FORM_MODEL_KEY = "form";
 
 	private static final String ERRORS_MODEL_KEYS = BindingResult.MODEL_KEY_PREFIX + FORM_MODEL_KEY;
 
@@ -33,10 +36,10 @@ public class WorkTimeEditController {
 	private WorkTimeService workTimeService;
 
 	@ModelAttribute(TARGET_ENTITY_KEY)
-	public List<WorkTime> setUpWorkTime(
+	public WorkTimeYearMonth setUpWorkTime(
 			@AuthenticationPrincipal StaffDetails loginUser,
-			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate displayDate) {
-		return workTimeService.getWorkTimes(loginUser.getStaff(), displayDate);
+			@PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth displayYearMonth) {
+		return workTimeService.getWorkTimeYearMonth(loginUser.getStaff(), WorkTimeUtil.yearMonthToInt(displayYearMonth));
 	}
 
 	@ModelAttribute("workTypes")
@@ -44,43 +47,16 @@ public class WorkTimeEditController {
 		return Arrays.asList(WorkTime.WorkType.values());
 	}
 
-	@GetMapping("/{displayDate}")
+	@GetMapping("/{displayYearMonth}")
 	public String edit(
-			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate displayDate,
+			@PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth displayYearMonth,
 			Model model) {
-		List<WorkTime> workTimes = (List<WorkTime>) model.asMap().get(TARGET_ENTITY_KEY);
+		WorkTimeYearMonth workTimeYearMonth = (WorkTimeYearMonth) model.asMap().get(TARGET_ENTITY_KEY);
+		WorkTimeYearMonthEditForm form = (WorkTimeYearMonthEditForm) model.asMap().get(FORM_MODEL_KEY);
+		form = Optional.ofNullable(form).orElse(new WorkTimeYearMonthEditForm(workTimeYearMonth));
 
-		List<WorkTimeEditForm> workTimeEditForms = (List<WorkTimeEditForm>) model.asMap().get(FORM_MODEL_KEY);
-		List<WorkTimeEditForm> forms = workTimes.stream()
-				.map(WorkTimeEditForm::new)
-				.collect(Collectors.toList());
-		if (CollectionUtils.isEmpty(workTimeEditForms)) {
-			workTimeEditForms = forms;
-		} else {
-			Map<Long, WorkTimeEditForm> workTimeEditFormMap = new HashMap<>();
-			forms.forEach(form -> workTimeEditFormMap.put(form.getId(), form));
-			workTimeEditForms = workTimeEditForms.stream()
-					.filter(workTimeEditForm -> Objects.nonNull(workTimeEditFormMap.get(workTimeEditForm.getId())))
-					.peek(workTimeEditForm -> {
-						WorkTimeEditForm newForm = workTimeEditFormMap.get(workTimeEditForm.getId());
-						workTimeEditForm.setWorkType(newForm.getWorkType());
-						workTimeEditForm.setStartAtHour(newForm.getStartAtHour());
-						workTimeEditForm.setStartAtMinute(newForm.getStartAtMinute());
-						workTimeEditForm.setEndAtHour(newForm.getEndAtHour());
-						workTimeEditForm.setEndAtMinute(newForm.getEndAtMinute());
-						workTimeEditForm.setRestTime(newForm.getRestTime());
-						workTimeEditForm.setRemarks(newForm.getRemarks());
-					}).collect(Collectors.toList());
-		}
-
-		Map<Long, WorkTime> workTimeMap = new HashMap<>();
-		workTimes.forEach(workTime -> workTimeMap.put(workTime.getId(), workTime));
-
-		model.addAttribute(FORM_MODEL_KEY, workTimeEditForms);
-		model.addAttribute(TARGET_ENTITY_KEY, workTimeMap);
-		model.addAttribute("displayDate", displayDate);
-		model.addAttribute("workTimeHour", WorkTimeUtil.workTimeHour());
-		model.addAttribute("workTimeMinute", WorkTimeUtil.workTimeMinute());
+		model.addAttribute(FORM_MODEL_KEY, form);
+		model.addAttribute(TARGET_ENTITY_KEY, workTimeYearMonth);
 		model.addAttribute("restTimes", WorkTimeUtil.restTime());
 		return "user/worktime/edit";
 	}

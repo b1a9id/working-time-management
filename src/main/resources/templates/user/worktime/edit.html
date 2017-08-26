@@ -9,16 +9,16 @@
 	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 	<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
 
-	<title th:text="#{worktime.edit.title(${#temporals.format(displayDate, 'yyyy年MM月')})}">2017年07月稼働実績入力</title>
+	<title th:text="#{worktime.edit.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績入力</title>
 </head>
-<body>
+<body th:with="yearMonth=${#workTimes.intToYearMonth(workTimeYearMonth.workYearMonth)}">
 <div th:replace="common/layout::navbar-layout"></div>
 <div class="section"></div>
 <div class="section">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h1 th:text="#{worktime.edit.title(${#temporals.format(displayDate, 'yyyy年MM月')})}">2017年07月稼働実績入力</h1>
+				<h1 th:text="#{worktime.edit.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績入力</h1>
 			</div>
 		</div>
 		<div class="row">
@@ -26,7 +26,7 @@
 				<ul class="breadcrumb">
 					<li><a th:href="@{/}">ダッシュボード</a></li>
 					<li><a th:href="@{/work-time/list}">稼働実績照会</a></li>
-					<li th:text="#{worktime.edit.title(${#temporals.format(displayDate, 'yyyy年MM月')})}">2017年07月稼働実績入力</li>
+					<li th:text="#{worktime.edit.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績入力</li>
 				</ul>
 			</div>
 		</div>
@@ -36,7 +36,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<form class="form-horizontal" role="form" th:action="@{/work-time/edit/{displayDate}(displayDate=${displayDate})}" method="post" th:object="${forms}">
+				<form class="form-horizontal" role="form" th:action="@{/work-time/edit/{displayYearMonth}(displayYearMonth=${yearMonth})}" method="post" th:object="${form}">
 					<table class="table table-bordered form-group">
 						<thead>
 						<tr>
@@ -45,56 +45,54 @@
 							<th>始業時間</th>
 							<th>就業時間</th>
 							<th class="col-md-1">休憩時間</th>
-							<th>稼働時間</th>
 							<th>備考</th>
 						</tr>
 						</thead>
 						<tbody>
-						<tr th:each="form : ${forms}">
-							<td th:text="${#temporals.format(workTimes[form.id].date, 'MM/dd(E)')}">6/1（木）</td>
+						<tr th:each="workTime, workTimeStat : ${form.workTimes}">
+							<td th:text="${#temporals.format(workTime.date, 'MM/dd(E)')}">6/1（木）</td>
 							<td>
-								<select class="form-control">
-									<option></option>
-									<option th:each="workType : ${workTypes}" th:text="#{|worktime.worktype.${workType}|}" th:value="${workType}" th:selected="${workType eq form.workType}">出勤</option>
-								</select>
-							</td>
-							<td>
-								<div class="form-inline">
-									<select class="form-control">
-										<option></option>
-										<option th:each="hour : ${workTimeHour}" th:text="|${hour}時|" th:value="${hour}" th:selected="${hour eq form.startAtHour}">9時</option>
-									</select>
-									<select class="form-control">
-										<option></option>
-										<option th:each="minute : ${workTimeMinute}" th:text="|${minute}分|" th:value="${minute}" th:selected="${minute eq form.startAtMinute}">15分</option>
-									</select>
-								</div>
-							</td>
-							<td>
-								<div class="form-inline">
-									<select class="form-control">
-										<option></option>
-										<option th:each="hour : ${workTimeHour}" th:text="|${hour}時|" th:value="${hour}" th:selected="${hour eq form.endAtHour}">9時</option>
-									</select>
-									<select class="form-control">
-										<option></option>
-										<option th:each="minute : ${workTimeMinute}" th:text="|${minute}分|" th:value="${minute}" th:selected="${minute eq form.startAtMinute}">15分</option>
-									</select>
-								</div>
-							</td>
-							<td>
-								<select class="form-control">
+								<select class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].workType}">
 									<option value=""></option>
-									<option th:each="restTime : ${restTimes}" th:text="${restTime}" th:selected="${restTime eq form.restTime}"></option>
+									<option th:each="workType : ${workTypes}" th:text="#{|worktime.worktype.${workType}|}" th:value="${workType}" th:selected="${workType eq workTime.workType}">出勤</option>
 								</select>
 							</td>
-							<td>8:00</td>
-							<td><input type="text" class="form-control" id="" placeholder="備考" /></td>
+							<td>
+								<div class="form-inline">
+									<select class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].startAtHour}">
+										<option value=""></option>
+										<option th:each="hour : ${workTimeHour}" th:text="|${hour}時|" th:value="${hour}" th:selected="${hour eq workTime.startAtHour}">9時</option>
+									</select>
+									<select class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].startAtMinute}">
+										<option value=""></option>
+										<option th:each="minute : ${workTimeMinute}" th:text="|${minute}分|" th:value="${minute}" th:selected="${minute eq workTime.startAtMinute}">15分</option>
+									</select>
+								</div>
+							</td>
+							<td>
+								<div class="form-inline">
+									<select class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].endAtHour}">
+										<option value=""></option>
+										<option th:each="hour : ${workTimeHour}" th:text="|${hour}時|" th:value="${hour}" th:selected="${hour eq workTime.endAtHour}">9時</option>
+									</select>
+									<select class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].endAtMinute}">
+										<option value=""></option>
+										<option th:each="minute : ${workTimeMinute}" th:text="|${minute}分|" th:value="${minute}" th:selected="${minute eq workTime.startAtMinute}">15分</option>
+									</select>
+								</div>
+							</td>
+							<td>
+								<select class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].restTime}">
+									<option value=""></option>
+									<option th:each="restTime : ${restTimes}" th:text="${restTime}" th:value="${restTime}" th:selected="${restTime eq workTime.restTime}"></option>
+								</select>
+							</td>
+							<td><input class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].remarks}" type="text" placeholder="備考" /></td>
 						</tr>
 						</tbody>
 					</table>
 					<div class="form-group">
-						<a th:href="@{/work-time/list}" type="button" class="btn btn-default col-md-offset-5">戻る</a>
+						<a th:href="@{/work-time}" type="button" class="btn btn-default col-md-offset-5">戻る</a>
 						<button type="submit" class="btn btn-success">保存</button>
 					</div>
 				</form>
