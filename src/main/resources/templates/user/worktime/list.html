@@ -12,7 +12,7 @@
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
 
-		<title th:text="#{worktime.list.title(${#temporals.format(displayDate, 'yyyy年MM月')})}">2017年07月稼働実績</title>
+		<title th:text="#{worktime.list.title(${#temporals.format(workTimeYearMonth.workYearMonth, 'yyyy年MM月')})}">2017年07月稼働実績</title>
 	</head>
 	<body>
 		<div th:replace="common/layout::navbar-layout"></div>
@@ -20,14 +20,14 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1 th:text="#{worktime.list.title(${#temporals.format(displayDate, 'yyyy年MM月')})}">2017年07月稼働実績</h1>
+						<h1 th:text="#{worktime.list.title(${#temporals.format(workTimeYearMonth.workYearMonth, 'yyyy年MM月')})}">2017年07月稼働実績</h1>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<ul class="breadcrumb">
 							<li><a th:href="@{/}" th:text="#{dashboard.title}">ダッシュボード</a></li>
-							<li class="active" th:text="#{worktime.list.title(${#temporals.format(displayDate, 'yyyy年MM月')})}">2017年07月稼働実績</li>
+							<li class="active" th:text="#{worktime.list.title(${#temporals.format(workTimeYearMonth.workYearMonth, 'yyyy年MM月')})}">2017年07月稼働実績</li>
 						</ul>
 					</div>
 				</div>
@@ -43,7 +43,7 @@
 							<a class="btn btn-success dropdown-toggle" data-toggle="dropdown"> メニュー <span class="fa fa-caret-down"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<a th:href="@{/work-time/edit/{displayDate}(displayDate=${displayDate})}">稼働実績入力</a>
+									<a th:href="@{/work-time/edit/{displayDate}(displayDate=${workTimeYearMonth.workYearMonth})}">稼働実績入力</a>
 								</li>
 							</ul>
 						</div>
@@ -55,10 +55,10 @@
 					<div class="col-md-12">
 						<ul class="pager">
 							<li>
-								<a th:href="@{/work-time?displayDate={displayDate}(displayDate=${displayDate.minusMonths(1)})}" th:text="'←  ' + ${#temporals.format(displayDate.minusMonths(1), 'yyyy年MM月')}">←  2017年6月</a>
+								<a th:href="@{/work-time?displayDate={displayDate}(displayDate=${workTimeYearMonth.workYearMonth.minusMonths(1)})}" th:text="'←  ' + ${#temporals.format(workTimeYearMonth.workYearMonth.minusMonths(1), 'yyyy年MM月')}">←  2017年6月</a>
 							</li>
 							<li>
-								<a th:href="@{/work-time?displayDate={displayDate}(displayDate=${displayDate.plusMonths(1)})}" th:text="${#temporals.format(displayDate.plusMonths(1), 'yyyy年MM月')} + '  →'">2017年8月  →</a>
+								<a th:href="@{/work-time?displayDate={displayDate}(displayDate=${workTimeYearMonth.workYearMonth.plusMonths(1)})}" th:text="${#temporals.format(workTimeYearMonth.workYearMonth.plusMonths(1), 'yyyy年MM月')} + '  →'">2017年8月  →</a>
 							</li>
 						</ul>
 					</div>
@@ -151,7 +151,7 @@
 							</tr>
 							</tfoot>
 							<tbody>
-							<tr th:each="workTime : ${workTimes}" th:with="dayTotal=${#workTimes.workTime(workTime.startAt, workTime.endAt, workTime.restTime)}">
+							<tr th:each="workTime : ${workTimeYearMonth.workTimes}" th:with="dayTotal=${#workTimes.workTime(workTime.startAt, workTime.endAt, workTime.restTime)}">
 								<td th:text="${#temporals.format(workTime.date, 'MM/dd(E)')}">6/1（木）</td>
 								<td th:text="#{|worktime.worktype.${workTime.workType}|}">出勤</td>
 								<td th:text="${workTime.startAt}">9:00</td>
@@ -233,7 +233,7 @@
 				},
 				methods: {
 					save() {
-						const displayDate = '[[${displayDate}]]';
+						const displayDate = '[[${workTimeYearMonth.workYearMonth}]]';
 
 						axios.post('/work-time/bulk-edit/' + displayDate, {
 							workType: 'NORMAL',

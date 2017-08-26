@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.YearMonth;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
@@ -26,14 +27,14 @@ public final class WorkTimeUtils {
 
 	/**
 	 * 指定月の1日から末日まで取得
-	 * @param localDate
+	 * @param yearMonth
 	 * @return
 	 */
-	public static List<LocalDate> getMonthDate(LocalDate localDate) {
-		int thisMonthDays = localDate.lengthOfMonth();
+	public static List<LocalDate> getMonthDate(YearMonth yearMonth) {
+		int thisMonthDays = yearMonth.lengthOfMonth();
 
 		return IntStream.rangeClosed(1, thisMonthDays)
-				.mapToObj(day -> LocalDate.of(localDate.getYear(), localDate.getMonth(), day))
+				.mapToObj(day -> LocalDate.of(yearMonth.getYear(), yearMonth.getMonth(), day))
 				.collect(Collectors.toList());
 	}
 
