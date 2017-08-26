@@ -1,10 +1,12 @@
 package jp.co.waja.core.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.*;
+import java.time.YearMonth;
 import java.util.List;
 
 @Entity
@@ -14,18 +16,23 @@ import java.util.List;
 @NoArgsConstructor
 public class WorkTimeYearMonth extends AbstractEntity<Long> implements Serializable {
 
-	public WorkTimeYearMonth(Staff staff, YearMonth yearMonth) {
+	public WorkTimeYearMonth(Staff staff, YearMonth workYearMonth) {
 		this.staff = staff;
-		this.yearMonth = yearMonth;
+		this.workYearMonth = workYearMonth;
 	}
 
 	@ManyToOne
 	@JoinColumn(name = "staff_id", nullable = false)
 	private Staff staff;
 
-	@Column(nullable = false)
-	private YearMonth yearMonth;
+	@Column(name = "work_year_month", nullable = false)
+	private YearMonth workYearMonth;
 
-	@OneToMany(mappedBy = "workTimeYearMonth", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<WorkTime> workTime;
+	@Embedded
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(
+			name = "work_time",
+			joinColumns = @JoinColumn(name = "work_time_year_month_id")
+	)
+	private List<WorkTime> workTimes;
 }
