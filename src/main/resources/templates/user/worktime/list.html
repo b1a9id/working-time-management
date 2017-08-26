@@ -43,7 +43,7 @@
 							<a class="btn btn-success dropdown-toggle" data-toggle="dropdown"> メニュー <span class="fa fa-caret-down"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<a th:href="@{/work-time/edit/{displayDate}(displayDate=${workTimeYearMonth.workYearMonth})}">稼働実績入力</a>
+									<a th:href="@{/work-time/edit/{displayYearMonth}(displayYearMonth=${workTimeYearMonth.workYearMonth})}">稼働実績入力</a>
 								</li>
 							</ul>
 						</div>
@@ -55,10 +55,10 @@
 					<div class="col-md-12">
 						<ul class="pager">
 							<li>
-								<a th:href="@{/work-time?displayDate={displayDate}(displayDate=${yearMonth.minusMonths(1)})}" th:text="'←  ' + ${#temporals.format(yearMonth.minusMonths(1), 'yyyy年MM月')}">←  2017年6月</a>
+								<a th:href="@{/work-time?displayYearMonth={displayYearMonth}(displayYearMonth=${yearMonth.minusMonths(1)})}" th:text="'←  ' + ${#temporals.format(yearMonth.minusMonths(1), 'yyyy年MM月')}">←  2017年6月</a>
 							</li>
 							<li>
-								<a th:href="@{/work-time?displayDate={displayDate}(displayDate=${yearMonth.plusMonths(1)})}" th:text="${#temporals.format(yearMonth.plusMonths(1), 'yyyy年MM月')} + '  →'">2017年8月  →</a>
+								<a th:href="@{/work-time?displayYearMonth={displayYearMonth}(displayYearMonth=${yearMonth.plusMonths(1)})}" th:text="${#temporals.format(yearMonth.plusMonths(1), 'yyyy年MM月')} + '  →'">2017年8月  →</a>
 							</li>
 						</ul>
 					</div>
@@ -233,9 +233,9 @@
 				},
 				methods: {
 					save() {
-						const displayDate = '[[${workTimeYearMonth.workYearMonth}]]';
+						const displayYearMonth = '[[${workTimeYearMonth.workYearMonth}]]';
 
-						axios.post('/work-time/bulk-edit/' + displayDate, {
+						axios.post('/work-time/bulk-edit/' + displayYearMonth, {
 							workType: 'NORMAL',
 							startAtHour: this.startAtHour,
 							startAtMinute: this.startAtMinute,
