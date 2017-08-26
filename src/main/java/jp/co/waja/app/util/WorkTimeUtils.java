@@ -1,12 +1,14 @@
 package jp.co.waja.app.util;
 
 import jp.co.waja.core.entity.WorkTime;
+import jp.co.waja.core.support.WorkTimeUtil;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +25,12 @@ public final class WorkTimeUtils {
 		long workTimeMinute = startAt.until(endAt, ChronoUnit.MINUTES) - restTime;
 		BigDecimal workTime = BigDecimal.valueOf(workTimeMinute).divide(BigDecimal.valueOf(60), 2, RoundingMode.DOWN);
 		return workTime;
+	}
+
+	public static String formattedYearMonth(Integer yearMonthInt) {
+		YearMonth yearMonth = WorkTimeUtil.intToYearMonth(yearMonthInt);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy年MM月");
+		return formatter.format(yearMonth);
 	}
 
 	/**

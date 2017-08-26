@@ -4,8 +4,10 @@ import jp.co.waja.core.entity.WorkTime;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -36,5 +38,18 @@ public class WorkTimeUtil {
 			return WorkTime.WorkType.LEGAL_VACATION;
 		}
 		return WorkTime.WorkType.NORMAL;
+	}
+
+	public static int yearMonthToInt(YearMonth yearMonth) {
+		Integer year = yearMonth.getYear();
+		Integer month = yearMonth.getMonthValue();
+		return Integer.valueOf(year.toString() + month.toString());
+	}
+
+	public static YearMonth intToYearMonth(Integer yearMonth) {
+		String year = yearMonth.toString().substring(0, 4);
+		String month = "0" + yearMonth.toString().substring(4);
+		StringJoiner joiner = new StringJoiner("-");
+		return YearMonth.parse(joiner.add(year).add(month).toString());
 	}
 }

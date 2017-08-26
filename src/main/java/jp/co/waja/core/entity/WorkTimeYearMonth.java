@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.YearMonth;
 import java.util.List;
 
 @Entity
@@ -16,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class WorkTimeYearMonth extends AbstractEntity<Long> implements Serializable {
 
-	public WorkTimeYearMonth(Staff staff, YearMonth workYearMonth) {
+	public WorkTimeYearMonth(Staff staff, Integer workYearMonth) {
 		this.staff = staff;
 		this.workYearMonth = workYearMonth;
 	}
@@ -26,7 +25,7 @@ public class WorkTimeYearMonth extends AbstractEntity<Long> implements Serializa
 	private Staff staff;
 
 	@Column(name = "work_year_month", nullable = false)
-	private YearMonth workYearMonth;
+	private Integer workYearMonth;
 
 	@Embedded
 	@ElementCollection(fetch = FetchType.EAGER)

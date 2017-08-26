@@ -5,6 +5,7 @@ import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.entity.WorkTimeYearMonth;
 import jp.co.waja.core.service.staff.StaffDetails;
 import jp.co.waja.core.service.worktime.WorkTimeService;
+import jp.co.waja.core.support.WorkTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,13 +29,14 @@ public class WorkTimeListController {
 	@GetMapping
 	public String list(
 			@AuthenticationPrincipal StaffDetails loginUser,
-			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") YearMonth displayYearMonth,
+			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM") YearMonth displayYearMonth,
 			Model model) {
 		displayYearMonth = Optional.ofNullable(displayYearMonth).orElse(YearMonth.now());
+		int yearMonth = WorkTimeUtil.yearMonthToInt(displayYearMonth);
 		Staff staff = loginUser.getStaff();
-		WorkTimeYearMonth workTimeYearMonth = workTimeService.getWorkTimeYearMonth(staff, displayYearMonth);
+		WorkTimeYearMonth workTimeYearMonth = workTimeService.getWorkTimeYearMonth(staff, yearMonth);
 		if (Objects.isNull(workTimeYearMonth)) {
-			workTimeYearMonth = workTimeService.createWorkTimeYearMonth(staff, displayYearMonth);
+			workTimeYearMonth = workTimeService.createWorkTimeYearMonth(staff, yearMonth);
 		}
 
 		model.addAttribute("workTimeYearMonth", workTimeYearMonth);

@@ -12,22 +12,22 @@
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
 
-		<title th:text="#{worktime.list.title(${#temporals.format(workTimeYearMonth.workYearMonth, 'yyyy年MM月')})}">2017年07月稼働実績</title>
+		<title th:text="#{worktime.list.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績</title>
 	</head>
-	<body>
+	<body th:with="yearMonth=${#workTimes.intToYearMonth(workTimeYearMonth.workYearMonth)}">
 		<div th:replace="common/layout::navbar-layout"></div>
 		<div class="section">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1 th:text="#{worktime.list.title(${#temporals.format(workTimeYearMonth.workYearMonth, 'yyyy年MM月')})}">2017年07月稼働実績</h1>
+						<h1 th:text="#{worktime.list.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績</h1>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<ul class="breadcrumb">
 							<li><a th:href="@{/}" th:text="#{dashboard.title}">ダッシュボード</a></li>
-							<li class="active" th:text="#{worktime.list.title(${#temporals.format(workTimeYearMonth.workYearMonth, 'yyyy年MM月')})}">2017年07月稼働実績</li>
+							<li class="active" th:text="#{worktime.list.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績</li>
 						</ul>
 					</div>
 				</div>
@@ -55,10 +55,10 @@
 					<div class="col-md-12">
 						<ul class="pager">
 							<li>
-								<a th:href="@{/work-time?displayDate={displayDate}(displayDate=${workTimeYearMonth.workYearMonth.minusMonths(1)})}" th:text="'←  ' + ${#temporals.format(workTimeYearMonth.workYearMonth.minusMonths(1), 'yyyy年MM月')}">←  2017年6月</a>
+								<a th:href="@{/work-time?displayDate={displayDate}(displayDate=${yearMonth.minusMonths(1)})}" th:text="'←  ' + ${#temporals.format(yearMonth.minusMonths(1), 'yyyy年MM月')}">←  2017年6月</a>
 							</li>
 							<li>
-								<a th:href="@{/work-time?displayDate={displayDate}(displayDate=${workTimeYearMonth.workYearMonth.plusMonths(1)})}" th:text="${#temporals.format(workTimeYearMonth.workYearMonth.plusMonths(1), 'yyyy年MM月')} + '  →'">2017年8月  →</a>
+								<a th:href="@{/work-time?displayDate={displayDate}(displayDate=${yearMonth.plusMonths(1)})}" th:text="${#temporals.format(yearMonth.plusMonths(1), 'yyyy年MM月')} + '  →'">2017年8月  →</a>
 							</li>
 						</ul>
 					</div>
