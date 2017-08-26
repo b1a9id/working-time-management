@@ -48,9 +48,9 @@ public class WorkTimeService {
 				}).collect(Collectors.toList());
 	}
 
-	public WorkTimeYearMonth bulkEdit(Staff staff, String displayDate, WorkTimeBulkEditRequest request) {
+	public WorkTimeYearMonth bulkEdit(Staff staff, String displayYearMonth, WorkTimeBulkEditRequest request) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
-		YearMonth parsedDisplayYearMonth = YearMonth.parse(displayDate, formatter);
+		YearMonth parsedDisplayYearMonth = YearMonth.parse(displayYearMonth, formatter);
 		WorkTimeYearMonth workTimeYearMonth = getWorkTimeYearMonth(staff, WorkTimeUtil.yearMonthToInt(parsedDisplayYearMonth));
 		workTimeYearMonth.getWorkTimes().forEach(
 				workTime -> {

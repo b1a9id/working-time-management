@@ -233,7 +233,7 @@
 				},
 				methods: {
 					save() {
-						const displayYearMonth = '[[${workTimeYearMonth.workYearMonth}]]';
+						const displayYearMonth = '[[${yearMonth}]]';
 
 						axios.post('/work-time/bulk-edit/' + displayYearMonth, {
 							workType: 'NORMAL',

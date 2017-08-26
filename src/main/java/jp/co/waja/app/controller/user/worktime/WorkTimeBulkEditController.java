@@ -1,5 +1,6 @@
 package jp.co.waja.app.controller.user.worktime;
 
+import jp.co.waja.core.entity.WorkTimeYearMonth;
 import jp.co.waja.core.service.staff.StaffDetails;
 import jp.co.waja.core.service.worktime.WorkTimeService;
 import jp.co.waja.exception.ForbiddenException;
@@ -23,10 +24,10 @@ public class WorkTimeBulkEditController {
 	@Autowired
 	private WorkTimeService workTimeService;
 
-	@PostMapping("/{displayDate}")
+	@PostMapping("/{displayYearMonth}")
 	public String edit(
 			@AuthenticationPrincipal StaffDetails loginUser,
-			@PathVariable String displayDate,
+			@PathVariable String displayYearMonth,
 			@RequestBody @Validated WorkTimeBulkEditForm form,
 			BindingResult errors,
 			RedirectAttributes redirectAttributes) {
@@ -42,9 +43,7 @@ public class WorkTimeBulkEditController {
 			throw new ForbiddenException("startAt is not after endAt");
 		}
 
-		int updateQty = workTimeService.bulkEdit(loginUser.getStaff(), displayDate, form.toWorkTimeBulkEditRequest(startAt, endAt));
-
-		redirectAttributes.addAttribute("updateQty", updateQty);
+		WorkTimeYearMonth workTimeYearMonth = workTimeService.bulkEdit(loginUser.getStaff(), displayYearMonth, form.toWorkTimeBulkEditRequest(startAt, endAt));
 		return "redirect:/work-time";
 	}
 }
