@@ -41,13 +41,8 @@ public class WorkTimeService {
 		List<LocalDate> monthDates = WorkTimeUtils.getMonthDate(WorkTimeUtil.intToYearMonth(yearMonthInt));
 
 		return monthDates.stream()
-				.map(monthDate -> {
-					WorkTime workTime = new WorkTime();
-					workTime.setDate(monthDate);
-					WorkTime.WorkType workType = WorkTimeUtil.workType(monthDate);
-					workTime.setWorkType(workType);
-					return workTime;
-				}).collect(Collectors.toList());
+				.map(monthDate -> new WorkTime(monthDate, WorkTimeUtil.workType(monthDate)))
+				.collect(Collectors.toList());
 	}
 
 	public WorkTimeYearMonth bulkEdit(Staff staff, String displayYearMonth, WorkTimeBulkEditRequest request) {
@@ -69,9 +64,7 @@ public class WorkTimeService {
 		WorkTimeYearMonth workTimeYearMonth = workTimeYearMonthRepository.findOneByStaffAndId(staff, request.getId());
 		List<WorkTime> workTimes = request.getWorkTimes().stream()
 				.map(editRequest -> {
-					WorkTime workTime = new WorkTime();
-					workTime.setDate(editRequest.getDate());
-					workTime.setWorkType(editRequest.getWorkType());
+					WorkTime workTime = new WorkTime(editRequest.getDate(), editRequest.getWorkType());
 					workTime.setStartAt(editRequest.getStartAt());
 					workTime.setEndAt(editRequest.getEndAt());
 					workTime.setRestTime(editRequest.getRestTime());

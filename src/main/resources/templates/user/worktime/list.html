@@ -49,12 +49,7 @@
 							<a class="btn btn-default" href="#bulk-input" data-toggle="modal">一括入力</a>
 						</div>
 						<div class="btn-group">
-							<a class="btn btn-success dropdown-toggle" data-toggle="dropdown"> メニュー <span class="fa fa-caret-down"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li>
-									<a th:href="@{/work-time/edit/{displayYearMonth}(displayYearMonth=${yearMonth})}">稼働実績入力</a>
-								</li>
-							</ul>
+							<a class="btn btn-success" th:href="@{/work-time/edit/{displayYearMonth}(displayYearMonth=${yearMonth})}">稼働実績入力</a>
 						</div>
 					</div>
 				</div>
@@ -160,14 +155,14 @@
 							</tr>
 							</tfoot>
 							<tbody>
-							<tr th:each="workTime : ${workTimeYearMonth.workTimes}" th:with="dayTotal=${#workTimes.workTime(workTime.startAt, workTime.endAt, workTime.restTime)}">
+							<tr th:classappend="${dayTotal}" th:each="workTime : ${workTimeYearMonth.workTimes}" th:with="dayTotal=${#workTimes.workTime(workTime.startAt, workTime.endAt, workTime.restTime)}">
 								<td th:text="${#temporals.format(workTime.date, 'MM/dd(E)')}">6/1（木）</td>
 								<td th:text="#{|worktime.worktype.${workTime.workType}|}">出勤</td>
 								<td th:text="${workTime.startAt}">9:00</td>
 								<td th:text="${workTime.endAt}">18:00</td>
 								<td th:text="${workTime.restTime}">1:00</td>
-								<td th:text="${dayTotal}">8:00</td>
-								<td></td>
+								<td th:text="${dayTotal}">8.00</td>
+								<td th:text="${workTime.remarks}"></td>
 							</tr>
 							<!--<tr class="bg-danger">-->
 								<!--<td>6/2（金）</td>-->
