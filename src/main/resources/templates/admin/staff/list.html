@@ -220,7 +220,7 @@
 							<td>06/01</td>
 							<td>10日</td>
 							<td><i th:class="${staff.telework} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
-							<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>
+							<td><a th:href="@{/admin/work-time/{id}(id=${staff.id})}">稼働実績</a></td>
 							<td><a th:href="@{/admin/staffs/edit/{id}(id=${staff.id})}"><i class="glyphicon glyphicon-pencil"></i></a></td>
 						</tr>
 						</tbody>
