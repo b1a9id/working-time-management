@@ -74,4 +74,8 @@ public class WorkTimeService {
 		workTimeYearMonth.setWorkTimes(workTimes);
 		return workTimeYearMonthRepository.saveAndFlush(workTimeYearMonth);
 	}
+
+	public long countByStaff(Staff staff) {
+		return workTimeYearMonthRepository.countByStaff(staff);
+	}
 }

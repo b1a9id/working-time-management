@@ -1,24 +1,17 @@
 package jp.co.waja.core.service.staff;
 
-import jp.co.waja.core.entity.Staff;
-import jp.co.waja.core.entity.Team;
-import jp.co.waja.core.model.staff.PasswordEditRequest;
-import jp.co.waja.core.model.staff.StaffCreateRequest;
-import jp.co.waja.core.model.staff.StaffEditRequest;
-import jp.co.waja.core.model.staff.StaffSearchRequest;
+import jp.co.waja.core.entity.*;
+import jp.co.waja.core.model.staff.*;
 import jp.co.waja.core.repository.staff.StaffRepository;
-import jp.co.waja.core.repository.team.TeamRepository;
-import jp.co.waja.core.repository.worktime.WorkTimeYearMonthRepository;
-import jp.co.waja.exception.NotFoundException;
-import jp.co.waja.exception.WrongDeleteException;
+import jp.co.waja.core.service.team.TeamService;
+import jp.co.waja.core.service.worktime.WorkTimeService;
+import jp.co.waja.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -28,10 +21,10 @@ public class StaffService {
 	private StaffRepository staffRepository;
 
 	@Autowired
-	private TeamRepository teamRepository;
+	private TeamService teamService;
 
 	@Autowired
-	private WorkTimeYearMonthRepository workTimeYearMonthRepository;
+	private WorkTimeService workTimeService;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -41,7 +34,7 @@ public class StaffService {
 	}
 
 	public List<Staff> staffsByTeam(StaffSearchRequest request) {
-		Team team = teamRepository.findOneById(request.getTeamId());
+		Team team = teamService.findOneById(request.getTeamId());
 		return staffRepository.findAllByTeam(team);
 	}
 
@@ -94,7 +87,7 @@ public class StaffService {
 			throw new NotFoundException("Staff");
 		}
 
-		long workTimeCount = workTimeYearMonthRepository.countByStaff(staff);
+		long workTimeCount = workTimeService.countByStaff(staff);
 		if (workTimeCount > 0) {
 			throw new WrongDeleteException("WorkTimeExist");
 		}
