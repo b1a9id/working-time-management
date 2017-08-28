@@ -200,7 +200,7 @@
 						<tr>
 							<th th:text="#{staff.field.team}">チーム名</th>
 							<th th:text="#{staff.field.name}">名前</th>
-							<th th:text="#{staff.field.name.kana}">ふりがな</th>
+							<th th:text="#{role.label}">権限</th>
 							<th th:text="#{staff.field.employment.type}">雇用形態</th>
 							<th th:text="#{staff.field.entereddate}">入社日</th>
 							<th>有給付与日</th>
@@ -216,7 +216,7 @@
 							<td><a th:href="@{/admin/staffs/describe/{id}(id=${staff.id})}" th:text="${staff.nameLast} + ${staff.nameFirst}">テスト太郎</a></td>
 							<td th:text="|#{|role.${staff.role}|}">スタッフ</td>
 							<td th:text="#{|staff.employmenttype.${staff.employmentType}|}">正社員</td>
-							<td th:text="${staff.enteredDate}">2015/06/01</td>
+							<td th:text="${#temporals.format(staff.enteredDate, 'yyyy/MM/dd')}">2015/06/01</td>
 							<td>06/01</td>
 							<td>10日</td>
 							<td><i th:class="${staff.telework} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
