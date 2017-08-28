@@ -1,6 +1,6 @@
 package jp.co.waja.app.util;
 
-import jp.co.waja.core.entity.WorkTime;
+import jp.co.waja.core.entity.*;
 import jp.co.waja.core.support.WorkTimeUtil;
 
 import java.math.BigDecimal;
@@ -10,8 +10,7 @@ import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -53,5 +52,21 @@ public final class WorkTimeUtils {
 			workTimeSum = workTimeSum.add(time);
 		}
 		return workTimeSum;
+	}
+
+	public static Map<WorkTime.WorkType, Long> workTypeCount(List<WorkTime> workTimes) {
+		List<WorkTime.WorkType> workTypes =workTimes.stream()
+				.map(WorkTime::getWorkType)
+				.collect(Collectors.toList());
+
+		Map<WorkTime.WorkType, Long> workTypeCountMap = new HashMap<>();
+		workTypes.forEach(workType -> workTypeCountMap.put(workType, workTypeCount(workTimes, workType)));
+		return workTypeCountMap;
+	}
+
+	public static long workTypeCount(List<WorkTime> workTimes, WorkTime.WorkType workType) {
+		return workTimes.stream()
+				.filter(workTime -> workTime.getWorkType() == workType)
+				.count();
 	}
 }
