@@ -6,6 +6,7 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.thymeleaf.dialect.IDialect;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
@@ -36,6 +37,7 @@ public class ThymeleafConfig extends WebMvcConfigurerAdapter {
 		Set<IDialect> iDialects = new HashSet<>();
 		iDialects.add(new ThymeleafObjectDialect());
 		iDialects.add(new Java8TimeDialect());
+		iDialects.add(new SpringSecurityDialect());
 		templateEngine.setAdditionalDialects(iDialects);
 
 		return templateEngine;
