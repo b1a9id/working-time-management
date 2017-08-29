@@ -34,9 +34,9 @@ public class WorkTimeCompleteController {
 			redirectAttributes.addFlashAttribute("notModify", "notModify");
 			return "redirect:/work-time?error";
 		}
-		WorkTimeYearMonth updatedWorkTimeYearMonth =
+		WorkTimeYearMonth completeWorkTimeYearMonth =
 				workTimeService.complete(loginUser.getStaff(), displayYearMonth, complete);
-		redirectAttributes.addFlashAttribute("updatedWorkTimeYearMonth", updatedWorkTimeYearMonth);
+		redirectAttributes.addFlashAttribute("completeWorkTimeYearMonth", completeWorkTimeYearMonth);
 		return "redirect:/work-time";
 	}
 }
