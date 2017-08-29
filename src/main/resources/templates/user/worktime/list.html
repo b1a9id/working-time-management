@@ -14,7 +14,7 @@
 
 		<title th:text="#{worktime.list.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績</title>
 	</head>
-	<body th:with="yearMonth=${#workTimes.intToYearMonth(workTimeYearMonth.workYearMonth)}">
+	<body th:with="yearMonth=${#workTimes.intToYearMonth(workTimeYearMonth.workYearMonth)}, today=${#temporals.createToday()}, thisMonth=${#temporals.month(today)}">
 		<div th:replace="common/layout::navbar-layout"></div>
 		<div class="section">
 			<div class="container">
@@ -89,7 +89,7 @@
 							<li>
 								<a th:href="@{/work-time?displayYearMonth={displayYearMonth}(displayYearMonth=${yearMonth.minusMonths(1)})}" th:text="'←  ' + ${#temporals.format(yearMonth.minusMonths(1), 'yyyy年MM月')}">←  2017年6月</a>
 							</li>
-							<li>
+							<li th:unless="${yearMonth.plusMonths(1).getMonthValue() > thisMonth}">
 								<a th:href="@{/work-time?displayYearMonth={displayYearMonth}(displayYearMonth=${yearMonth.plusMonths(1)})}" th:text="${#temporals.format(yearMonth.plusMonths(1), 'yyyy年MM月')} + '  →'">2017年8月  →</a>
 							</li>
 						</ul>
