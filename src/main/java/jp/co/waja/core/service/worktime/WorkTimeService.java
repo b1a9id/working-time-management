@@ -83,6 +83,14 @@ public class WorkTimeService {
 		return workTimeYearMonthRepository.saveAndFlush(workTimeYearMonth);
 	}
 
+	public WorkTimeYearMonth approve1(Staff staff, String displayYearMonth, boolean approve1) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+		YearMonth parsedDisplayYearMonth = YearMonth.parse(displayYearMonth, formatter);
+		WorkTimeYearMonth workTimeYearMonth = getWorkTimeYearMonth(staff, WorkTimeUtil.yearMonthToInt(parsedDisplayYearMonth));
+		workTimeYearMonth.setApprove1(approve1);
+		return workTimeYearMonthRepository.saveAndFlush(workTimeYearMonth);
+	}
+
 	public long countByStaff(Staff staff) {
 		return workTimeYearMonthRepository.countByStaff(staff);
 	}
