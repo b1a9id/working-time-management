@@ -41,6 +41,24 @@
 					</div>
 				</div>
 			</div>
+			<div th:if="${notModify}" class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="alert alert-danger" role="alert">
+							<span>修正できません。</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div th:if="${updatedWorkTimeYearMonth}" class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="alert alert-danger" role="alert">
+							<span>完了報告しました。</span>
+						</div>
+					</div>
+				</div>
+			</div>
 			<!-- TODO:更新メッセージ -->
 			<div class="container">
 				<div class="row">
