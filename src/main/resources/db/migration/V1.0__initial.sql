@@ -56,6 +56,8 @@ create table work_time_year_month (
   id bigint not null auto_increment,
   staff_id bigint not null,
   work_year_month int not null,
+  approve1 bit,
+  approve2 bit,
   created_at datetime,
   created_by varchar(255),
   last_modified_at datetime,

@@ -27,6 +27,18 @@ public class WorkTimeYearMonth extends AbstractEntity<Long> implements Serializa
 	@Column(name = "work_year_month", nullable = false)
 	private Integer workYearMonth;
 
+	/**
+	 * マネージャ承認フラグ
+	 */
+	@Column(name = "approve1")
+	private boolean approve1;
+
+	/**
+	 * MP承認フラグ
+	 */
+	@Column(name = "approve2")
+	private boolean approve2;
+
 	@Embedded
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(
