@@ -28,6 +28,12 @@ public class WorkTimeYearMonth extends AbstractEntity<Long> implements Serializa
 	private Integer workYearMonth;
 
 	/**
+	 * 入力完了フラグ
+	 */
+	@Column(name = "complete")
+	private boolean complete;
+
+	/**
 	 * マネージャ承認フラグ
 	 */
 	@Column(name = "approve1")
