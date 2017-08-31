@@ -112,23 +112,11 @@
 							<tbody>
 							<tr>
 								<th>出勤日数</th>
-								<td>22日</td>
+								<td th:text="${workTypeCountMap.get('NORMAL')} ? ${workTypeCountMap.get('NORMAL')} + '日' : '0日'">22日</td>
 							</tr>
 							<tr>
-								<th>有給取得回数</th>
-								<td>0日</td>
-							</tr>
-							<tr>
-								<th>事後休・半有休取得回数</th>
-								<td>0日</td>
-							</tr>
-							<tr>
-								<th>遅延遅刻回数</th>
-								<td>0日</td>
-							</tr>
-							<tr>
-								<th>欠勤回数</th>
-								<td>0日</td>
+								<th>欠勤日数</th>
+								<td th:text="${workTypeCountMap.get('ABSENCE')} ? ${workTypeCountMap.get('ABSENCE')} + '日' : '0日'">0日</td>
 							</tr>
 							</tbody>
 						</table>

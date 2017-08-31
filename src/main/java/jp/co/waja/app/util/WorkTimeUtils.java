@@ -54,13 +54,13 @@ public final class WorkTimeUtils {
 		return workTimeSum;
 	}
 
-	public static Map<WorkTime.WorkType, Long> workTypeCount(List<WorkTime> workTimes) {
+	public static Map<String, Long> workTypeCount(List<WorkTime> workTimes) {
 		List<WorkTime.WorkType> workTypes =workTimes.stream()
 				.map(WorkTime::getWorkType)
 				.collect(Collectors.toList());
 
-		Map<WorkTime.WorkType, Long> workTypeCountMap = new HashMap<>();
-		workTypes.forEach(workType -> workTypeCountMap.put(workType, workTypeCount(workTimes, workType)));
+		Map<String, Long> workTypeCountMap = new HashMap<>();
+		workTypes.forEach(workType -> workTypeCountMap.put(workType.name(), workTypeCount(workTimes, workType)));
 		return workTypeCountMap;
 	}
 
