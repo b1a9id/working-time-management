@@ -50,6 +50,6 @@ public class AdminWorkTimeListController {
 		model.addAttribute("workTypeCountMap", workTypeCountMap);
 		//TODO:フロントでやる
 		model.addAttribute("workTimeSum", WorkTimeUtils.getWorkTimeSum(workTimeYearMonth.getWorkTimes()));
-			return "admin/worktime/list";
+		return "admin/worktime/list";
 	}
 }

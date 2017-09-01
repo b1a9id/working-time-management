@@ -20,7 +20,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h1 th:text="#{worktime.list.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績</h1>
+				<h1 th:text="#{worktime.list.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})} +  ' ' + ${workTimeYearMonth.staff.name}">2017年07月稼働実績</h1>
 			</div>
 		</div>
 		<div class="row">
