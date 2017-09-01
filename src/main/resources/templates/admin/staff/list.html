@@ -206,6 +206,7 @@
 							<th>有給付与日</th>
 							<th>残有給日数</th>
 							<th th:text="#{staff.field.telework}">在宅</th>
+							<th>無効</th>
 							<th></th>
 							<th></th>
 							<th></th>
@@ -221,6 +222,7 @@
 							<td>06/01</td>
 							<td>10日</td>
 							<td><i th:class="${staff.telework} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
+							<td><i th:class="${staff.disabled} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
 							<td><a th:href="@{/admin/work-time/{id}(id=${staff.id})}"><i class="glyphicon glyphicon-time"></i></a></td>
 							<td><a th:href="@{/admin/staffs/edit/{id}(id=${staff.id})}"><i class="glyphicon glyphicon-pencil"></i></a></td>
 							<td><a th:href="@{/admin/staffs/delete/{id}(id=${staff.id})}"><i class="glyphicon glyphicon-trash"></i></a></td>

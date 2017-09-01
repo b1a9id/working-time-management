@@ -29,8 +29,8 @@ public class StaffService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	public List<Staff> staffs() {
-		return staffRepository.findAll();
+	public List<Staff> enableStaffs() {
+		return staffRepository.findAllByDisabled(false);
 	}
 
 	public List<Staff> staffsByTeam(StaffSearchRequest request) {
@@ -54,6 +54,7 @@ public class StaffService {
 		staff.setEmploymentType(request.getEmploymentType());
 		staff.setEnteredDate(request.getEnteredDate());
 		staff.setTelework(request.getTelework());
+		staff.setDisabled(request.getDisabled());
 		staff.setPassword(passwordEncoder.encode(request.getPassword()));
 		staff.setRole(request.getRole());
 		return staffRepository.saveAndFlush(staff);
@@ -71,6 +72,7 @@ public class StaffService {
 		staff.setEmploymentType(request.getEmploymentType());
 		staff.setEnteredDate(request.getEnteredDate());
 		staff.setTelework(request.getTelework());
+		staff.setDisabled(request.getDisabled());
 		staff.setRole(request.getRole());
 		return staffRepository.saveAndFlush(staff);
 	}

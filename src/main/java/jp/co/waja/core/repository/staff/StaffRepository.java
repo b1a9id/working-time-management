@@ -10,6 +10,8 @@ public interface StaffRepository extends JpaRepository<Staff, Long> {
 
 	Staff findOneByEmail(String email);
 
+	List<Staff> findAllByDisabled(boolean disabled);
+
 	List<Staff> findAllByTeam(Team team);
 
 	long countByTeam(Team team);

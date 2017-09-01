@@ -48,6 +48,8 @@ public class StaffCreateForm implements Serializable {
 
 	private Boolean telework;
 
+	private Boolean disabled;
+
 	@NotNull
 	private String password;
 
@@ -66,6 +68,7 @@ public class StaffCreateForm implements Serializable {
 		request.setEmploymentType(getEmploymentType());
 		request.setEnteredDate(getEnteredDate());
 		request.setTelework(getTelework());
+		request.setDisabled(getDisabled());
 		request.setPassword(getPassword());
 		request.setRole(getRole());
 		return request;

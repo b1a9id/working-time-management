@@ -37,5 +37,7 @@ public class StaffEditRequest implements Serializable {
 
 	private Boolean telework;
 
+	private Boolean disabled;
+
 	private Role role;
 }

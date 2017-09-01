@@ -6,9 +6,7 @@ import jp.co.waja.core.service.worktime.WorkTimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -24,7 +22,7 @@ public class StaffListController {
 
 	@GetMapping
 	public String list(Model model) {
-		List<Staff> staffs = staffService.staffs();
+		List<Staff> staffs = staffService.enableStaffs();
 		Map<Long, Boolean> existWorkTimeMap = new HashMap<>();
 		staffs.forEach(staff -> existWorkTimeMap.put(staff.getId(), workTimeService.countByStaff(staff) > 0));
 

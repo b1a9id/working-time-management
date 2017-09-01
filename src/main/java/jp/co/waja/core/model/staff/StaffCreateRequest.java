@@ -33,6 +33,8 @@ public class StaffCreateRequest implements Serializable {
 
 	private Boolean telework;
 
+	private Boolean disabled;
+
 	private String password;
 
 	private Role role;

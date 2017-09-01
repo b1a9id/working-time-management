@@ -50,6 +50,8 @@ public class StaffEditForm implements Serializable {
 
 	private Boolean telework;
 
+	private Boolean disabled;
+
 	@NotNull
 	private Role role;
 
@@ -63,7 +65,8 @@ public class StaffEditForm implements Serializable {
 		this.gender = staff.getGender();
 		this.employmentType = staff.getEmploymentType();
 		this.enteredDate = staff.getEnteredDate();
-		this.telework = staff.getTelework();
+		this.telework = staff.isTelework();
+		this.disabled = staff.isDisabled();
 		this.role = staff.getRole();
 	}
 
@@ -79,6 +82,7 @@ public class StaffEditForm implements Serializable {
 		request.setEmploymentType(getEmploymentType());
 		request.setEnteredDate(getEnteredDate());
 		request.setTelework(getTelework());
+		request.setDisabled(getDisabled());
 		request.setRole(getRole());
 		return request;
 	}

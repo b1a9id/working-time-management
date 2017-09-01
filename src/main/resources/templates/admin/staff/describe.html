@@ -120,6 +120,10 @@
 									<td><i th:if="${staff.telework}" class="glyphicon glyphicon-ok"></i></td>
 								</tr>
 								<tr>
+									<th th:text="#{staff.field.disabled}">アカウント無効</th>
+									<td><i th:if="${staff.disabled}" class="glyphicon glyphicon-ok"></i></td>
+								</tr>
+								<tr>
 									<th th:text="#{role.label}">権限</th>
 									<td th:text="|#{|role.${staff.role}|}">スタッフ</td>
 								</tr>
