@@ -112,11 +112,27 @@
 							<tbody>
 							<tr>
 								<th>出勤日数</th>
-								<td th:text="${workTypeCountMap.get('NORMAL')} ? ${workTypeCountMap.get('NORMAL')} + '日' : '0日'">22日</td>
+								<td>
+									<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'NORMAL')}">22</span><span>日</span>
+								</td>
 							</tr>
 							<tr>
-								<th>欠勤日数</th>
-								<td th:text="${workTypeCountMap.get('ABSENCE')} ? ${workTypeCountMap.get('ABSENCE')} + '日' : '0日'">0日</td>
+								<th>欠勤/半欠勤日数</th>
+								<td>
+									<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'ABSENCE')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_ABSENCE')}">22</span><span>日</span>
+								</td>
+							</tr>
+							<tr>
+								<th>有給/半休取得日数</th>
+								<td>
+									<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION')}">22</span><span>日</span>
+								</td>
+							</tr>
+							<tr>
+								<th>事後有給/事後半休取得日数</th>
+								<td>
+									<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION_AFTER')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION_AFTER')}">22</span><span>日</span>
+								</td>
 							</tr>
 							</tbody>
 						</table>

@@ -32,6 +32,12 @@ public final class WorkTimeUtils {
 		return formatter.format(yearMonth);
 	}
 
+	public static long workTypeDays(WorkTimeYearMonth workTimeYearMonth, String workType) {
+		return workTimeYearMonth.getWorkTimes().stream()
+				.filter(workTime -> workTime.getWorkType() == WorkTime.WorkType.valueOf(workType))
+				.count();
+	}
+
 	/**
 	 * 指定月の1日から末日まで取得
 	 * @param yearMonth
@@ -52,16 +58,6 @@ public final class WorkTimeUtils {
 			workTimeSum = workTimeSum.add(time);
 		}
 		return workTimeSum;
-	}
-
-	public static Map<String, Long> workTypeCount(List<WorkTime> workTimes) {
-		List<WorkTime.WorkType> workTypes =workTimes.stream()
-				.map(WorkTime::getWorkType)
-				.collect(Collectors.toList());
-
-		Map<String, Long> workTypeCountMap = new HashMap<>();
-		workTypes.forEach(workType -> workTypeCountMap.put(workType.name(), workTypeCount(workTimes, workType)));
-		return workTypeCountMap;
 	}
 
 	public static long workTypeCount(List<WorkTime> workTimes, WorkTime.WorkType workType) {

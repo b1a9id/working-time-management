@@ -61,7 +61,7 @@
 					<li>
 						<a th:href="@{/work-time?displayYearMonth={displayYearMonth}(displayYearMonth=${yearMonth.minusMonths(1)})}" th:text="'←  ' + ${#temporals.format(yearMonth.minusMonths(1), 'yyyy年MM月')}">←  2017年6月</a>
 					</li>
-					<li>
+					<li th:unless="${yearMonth.plusMonths(1).getMonthValue() > thisMonth}">
 						<a th:href="@{/work-time?displayYearMonth={displayYearMonth}(displayYearMonth=${yearMonth.plusMonths(1)})}" th:text="${#temporals.format(yearMonth.plusMonths(1), 'yyyy年MM月')} + '  →'">2017年8月  →</a>
 					</li>
 				</ul>
@@ -84,23 +84,27 @@
 					<tbody>
 					<tr>
 						<th>出勤日数</th>
-						<td>22日</td>
+						<td>
+							<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'NORMAL')}">22</span><span>日</span>
+						</td>
 					</tr>
 					<tr>
-						<th>有給取得回数</th>
-						<td>0日</td>
+						<th>欠勤/半欠勤日数</th>
+						<td>
+							<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'ABSENCE')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_ABSENCE')}">22</span><span>日</span>
+						</td>
 					</tr>
 					<tr>
-						<th>事後休・半有休取得回数</th>
-						<td>0日</td>
+						<th>有給/半休取得日数</th>
+						<td>
+							<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION')}">22</span><span>日</span>
+						</td>
 					</tr>
 					<tr>
-						<th>遅延遅刻回数</th>
-						<td>0日</td>
-					</tr>
-					<tr>
-						<th>欠勤回数</th>
-						<td>0日</td>
+						<th>事後有給/事後半休取得日数</th>
+						<td>
+							<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION_AFTER')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION_AFTER')}">22</span><span>日</span>
+						</td>
 					</tr>
 					</tbody>
 				</table>

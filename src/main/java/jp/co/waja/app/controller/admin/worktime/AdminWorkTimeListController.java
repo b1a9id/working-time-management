@@ -44,10 +44,7 @@ public class AdminWorkTimeListController {
 			workTimeYearMonth = workTimeService.createWorkTimeYearMonth(staff, yearMonth);
 		}
 
-		Map<String, Long> workTypeCountMap = WorkTimeUtils.workTypeCount(workTimeYearMonth.getWorkTimes());
-
 		model.addAttribute("workTimeYearMonth", workTimeYearMonth);
-		model.addAttribute("workTypeCountMap", workTypeCountMap);
 		//TODO:フロントでやる
 		model.addAttribute("workTimeSum", WorkTimeUtils.getWorkTimeSum(workTimeYearMonth.getWorkTimes()));
 		return "admin/worktime/list";
