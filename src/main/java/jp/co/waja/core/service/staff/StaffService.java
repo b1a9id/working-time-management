@@ -1,6 +1,6 @@
 package jp.co.waja.core.service.staff;
 
-import jp.co.waja.core.entity.*;
+import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.model.staff.*;
 import jp.co.waja.core.repository.staff.StaffRepository;
 import jp.co.waja.core.service.team.TeamService;
@@ -33,13 +33,12 @@ public class StaffService {
 		return staffRepository.findAllByDisabled(false);
 	}
 
-	public List<Staff> staffsByTeam(StaffSearchRequest request) {
-		Team team = teamService.findOneById(request.getTeamId());
-		return staffRepository.findAllByTeam(team);
+	public Staff getStaff(long id) {
+		return staffRepository.findOne(id);
 	}
 
-	public Staff findOneById(long id) {
-		return staffRepository.findOne(id);
+	public List<Staff> getStaffs(StaffSearchRequest request) {
+		return staffRepository.search(request);
 	}
 
 	public Staff create(StaffCreateRequest request) {

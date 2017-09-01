@@ -37,7 +37,7 @@ public class AdminWorkTimeListController {
 			Model model) {
 		displayYearMonth = Optional.ofNullable(displayYearMonth).orElse(YearMonth.now());
 		int yearMonth = WorkTimeUtil.yearMonthToInt(displayYearMonth);
-		Staff staff = staffService.findOneById(id);
+		Staff staff = staffService.getStaff(id);
 
 		WorkTimeYearMonth workTimeYearMonth = workTimeService.getWorkTimeYearMonth(staff, yearMonth);
 		if (Objects.isNull(workTimeYearMonth)) {

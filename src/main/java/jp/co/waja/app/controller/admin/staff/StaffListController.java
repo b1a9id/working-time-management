@@ -31,14 +31,11 @@ public class StaffListController {
 		return "admin/staff/list";
 	}
 
-	@GetMapping("/{teamId}")
+	@PostMapping
 	public String list(
-			@PathVariable Long teamId,
+			@ModelAttribute StaffSearchForm form,
 			Model model) {
-		StaffSearchForm form = new StaffSearchForm();
-		form.setTeamId(teamId);
-		List<Staff> staffs = staffService.staffsByTeam(form.toStaffSearchRequest());
-		model.addAttribute("staffs", staffs);
+		List<Staff> staffs = staffService.getStaffs(form.toStaffSearchRequest());
 		return "admin/staff/list";
 	}
 }

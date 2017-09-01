@@ -35,7 +35,7 @@ public class StaffEditController {
 
 	@ModelAttribute(TARGET_ENTITY_KEY)
 	public Staff setupStaff(@PathVariable Long id) {
-		return staffService.findOneById(id);
+		return staffService.getStaff(id);
 	}
 
 	@ModelAttribute("teams")
