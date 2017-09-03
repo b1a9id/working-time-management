@@ -305,9 +305,9 @@
 				el:'#modal-complete',
 				methods: {
 					complete() {
-						const displayYearMonth = '[[${yearMonth}]]';
+						const id = '[[${workTimeYearMonth.id}]]';
 
-						axios.post('/work-time/complete/' + displayYearMonth + '?complete=true')
+						axios.post('/work-time/complete/' + id + '?complete=true')
 							.then(response => {
 								console.log(response.data);
 								// TODO:Vue.jsでバインドする

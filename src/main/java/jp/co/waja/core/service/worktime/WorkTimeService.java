@@ -8,7 +8,9 @@ import jp.co.waja.core.model.worktime.WorkTimeBulkEditRequest;
 import jp.co.waja.core.model.worktime.WorkTimeYearMonthEditRequest;
 import jp.co.waja.core.repository.worktime.WorkTimeYearMonthRepository;
 import jp.co.waja.core.support.WorkTimeUtil;
+import jp.co.waja.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,7 @@ import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +28,14 @@ public class WorkTimeService {
 
 	@Autowired
 	private WorkTimeYearMonthRepository workTimeYearMonthRepository;
+
+	public WorkTimeYearMonth getWorkTimeYearMonth(Long id) {
+		return workTimeYearMonthRepository.findOne(id);
+	}
+
+	public WorkTimeYearMonth getWorkTimeYearMonth(Staff staff, Long id) {
+		return workTimeYearMonthRepository.findOneByStaffAndId(staff, id);
+	}
 
 	public WorkTimeYearMonth getWorkTimeYearMonth(Staff staff, int yearMonth) {
 		return workTimeYearMonthRepository.findOneByStaffAndWorkYearMonth(staff, yearMonth);
@@ -76,12 +87,13 @@ public class WorkTimeService {
 		return workTimeYearMonthRepository.saveAndFlush(workTimeYearMonth);
 	}
 
-	public WorkTimeYearMonth complete(Staff staff, String displayYearMonth, boolean complete) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
-		YearMonth parsedDisplayYearMonth = YearMonth.parse(displayYearMonth, formatter);
-		WorkTimeYearMonth workTimeYearMonth = getWorkTimeYearMonth(staff, WorkTimeUtil.yearMonthToInt(parsedDisplayYearMonth));
+	public WorkTimeYearMonth complete(Staff completedtaff, Long id, boolean complete) throws NotFoundException {
+		WorkTimeYearMonth workTimeYearMonth = getWorkTimeYearMonth(completedtaff, id);
+		if (Objects.isNull(workTimeYearMonth)) {
+			throw new NotFoundException();
+		}
 
-		Staff completedBy = complete ? staff : null;
+		Staff completedBy = complete ? completedtaff : null;
 		workTimeYearMonth.setCompletedBy(completedBy.getName());
 		LocalDateTime completedAt = complete ? LocalDateTime.now() : null;
 		workTimeYearMonth.setCompletedAt(completedAt);
@@ -89,12 +101,14 @@ public class WorkTimeService {
 		return workTimeYearMonthRepository.saveAndFlush(workTimeYearMonth);
 	}
 
-	public WorkTimeYearMonth approve1(Staff staff, String displayYearMonth, boolean approve1) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
-		YearMonth parsedDisplayYearMonth = YearMonth.parse(displayYearMonth, formatter);
-		WorkTimeYearMonth workTimeYearMonth = getWorkTimeYearMonth(staff, WorkTimeUtil.yearMonthToInt(parsedDisplayYearMonth));
+	@PreAuthorize("hasRole('MANAGER')")
+	public WorkTimeYearMonth approve1(Staff approve1Staff, Long id, boolean approve1) throws NotFoundException {
+		WorkTimeYearMonth workTimeYearMonth = getWorkTimeYearMonth(id);
+		if (Objects.isNull(workTimeYearMonth)) {
+			throw new NotFoundException();
+		}
 
-		Staff approvedBy = approve1 ? staff : null;
+		Staff approvedBy = approve1 ? approve1Staff : null;
 		workTimeYearMonth.setApproved1By(approvedBy.getName());
 		LocalDateTime approvedAt = approve1 ? LocalDateTime.now() : null;
 		workTimeYearMonth.setApproved1At(approvedAt);

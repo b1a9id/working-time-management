@@ -46,10 +46,10 @@
 		<div class="row">
 			<div class="col-md-12 text-right">
 				<div class="btn-group">
-					<a class="btn btn-default" href="#approve-modal" data-toggle="modal" th:disabled="!${workTimeYearMonth.completedAt}" th:style="!${workTimeYearMonth.completedAt} ? 'pointer-events : none;'">承認</a>
+					<a class="btn btn-default" href="#modal-approve" data-toggle="modal" th:disabled="!${workTimeYearMonth.completedAt}" th:style="!${workTimeYearMonth.completedAt} ? 'pointer-events : none;'">承認</a>
 				</div>
 				<div class="btn-group">
-					<a class="btn btn-default" href="#modify-modal" data-toggle="modal" th:disabled="!${workTimeYearMonth.completedAt}" th:style="!${workTimeYearMonth.completedAt} ? 'pointer-events : none;'">修正</a>
+					<a class="btn btn-default" href="#modal-modify" data-toggle="modal" th:disabled="!${workTimeYearMonth.completedAt}" th:style="!${workTimeYearMonth.completedAt} ? 'pointer-events : none;'">修正</a>
 				</div>
 			</div>
 		</div>
@@ -181,7 +181,7 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="approve-modal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
+<div class="modal fade" id="modal-approve" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
 	<div class="modal-dialog">
 		<div class="modal-content" id="modal-complete">
 			<div class="modal-header">
@@ -195,7 +195,7 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="modify-modal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
+<div class="modal fade" id="modal-modify" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
 	<div class="modal-dialog">
 		<div class="modal-content" id="modal-complete">
 			<div class="modal-header">
@@ -211,12 +211,12 @@
 </div>
 <script>
 	new Vue({
-		el:'#approve-complete',
+		el:'#modal-approve',
 		methods: {
 			approve() {
-				const displayYearMonth = '[[${yearMonth}]]';
+				const id = '[[${workTimeYearMonth.id}]]';
 
-				axios.post('/work-time/approve/' + displayYearMonth + '?approve1=true')
+				axios.post('/work-time/approve/' + id + '?approve1=true')
 					.then(response => {
 					console.log(response.data);
 				// TODO:Vue.jsでバインドする
@@ -228,12 +228,12 @@
 		}
 	});
 	new Vue({
-		el:'#modify-complete',
+		el:'#modal-modify',
 		methods: {
 			modify() {
-				const displayYearMonth = '[[${yearMonth}]]';
+				const id = '[[${workTimeYearMonth.id}]]';
 
-				axios.post('/work-time/approve/' + displayYearMonth + '?approve1=false')
+				axios.post('/work-time/approve/' + id + '?approve1=false')
 					.then(response => {
 					console.log(response.data);
 				// TODO:Vue.jsでバインドする
