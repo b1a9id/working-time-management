@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin/staffs")
@@ -27,12 +26,21 @@ public class StaffListController {
 	@Autowired
 	private WorkTimeService workTimeService;
 
-	@ModelAttribute("form")
+	@ModelAttribute(FORM_MODEL_KEY)
+	public StaffSearchForm setUpStaffSearchForm() {
+		return new StaffSearchForm();
+	}
 
+	@ModelAttribute("employmentTypes")
+	public List<Staff.EmploymentType> setUpWorkTypes() {
+		return Arrays.asList(Staff.EmploymentType.values());
+	}
 
 	@GetMapping
 	public String list(Model model) {
-		List<Staff> staffs = staffService.enableStaffs();
+		StaffSearchForm form = (StaffSearchForm) model.asMap().get(FORM_MODEL_KEY);
+		form = Optional.ofNullable(form).orElse(new StaffSearchForm());
+		List<Staff> staffs = staffService.getStaffs(form.toStaffSearchRequest());
 		Map<Long, Boolean> existWorkTimeMap = new HashMap<>();
 		staffs.forEach(staff -> existWorkTimeMap.put(staff.getId(), workTimeService.countByStaff(staff) > 0));
 
@@ -43,9 +51,9 @@ public class StaffListController {
 
 	@PostMapping
 	public String list(
-			@ModelAttribute StaffSearchForm form,
-			Model model) {
-		List<Staff> staffs = staffService.getStaffs(form.toStaffSearchRequest());
-		return "admin/staff/list";
+			@ModelAttribute(FORM_MODEL_KEY) StaffSearchForm form,
+			RedirectAttributes redirectAttributes) {
+		redirectAttributes.addFlashAttribute(FORM_MODEL_KEY, form);
+		return "redirect:/admin/staffs";
 	}
 }

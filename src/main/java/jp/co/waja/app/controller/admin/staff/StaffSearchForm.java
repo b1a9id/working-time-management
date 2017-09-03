@@ -1,6 +1,6 @@
 package jp.co.waja.app.controller.admin.staff;
 
-import jp.co.waja.core.entity.*;
+import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.model.staff.StaffSearchRequest;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,17 +18,17 @@ public class StaffSearchForm implements Serializable {
 
 	private LocalDate enteredDate;
 
-	private boolean telework;
+	private Boolean telework;
 
-	private boolean disabled;
+	private Boolean disabled;
 
 	public StaffSearchRequest toStaffSearchRequest() {
 		StaffSearchRequest request = new StaffSearchRequest();
 		request.setTeamId(getTeamId());
 		request.setEmploymentType(getEmploymentType());
 		request.setEnteredDate(getEnteredDate());
-		request.setTelework(isTelework());
-		request.setDisabled(isDisabled());
+		request.setTelework(getTelework());
+		request.setDisabled(getDisabled());
 		return request;
 	}
 }

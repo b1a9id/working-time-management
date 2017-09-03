@@ -1,7 +1,10 @@
 package jp.co.waja.core.model.staff;
 
-import jp.co.waja.core.entity.*;
-import lombok.*;
+import jp.co.waja.core.entity.Staff;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -18,7 +21,7 @@ public class StaffSearchRequest implements Serializable {
 
 	private LocalDate enteredDate;
 
-	private boolean telework;
+	private Boolean telework;
 
-	private boolean disabled;
+	private Boolean disabled;
 }

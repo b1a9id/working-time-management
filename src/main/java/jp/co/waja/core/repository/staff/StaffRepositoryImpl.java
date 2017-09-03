@@ -25,10 +25,16 @@ public class StaffRepositoryImpl implements StaffRepositoryCustom {
 			where.add(builder.equal(root.get(Staff_.employmentType), request.getEmploymentType()));
 		}
 
-		Predicate teleworkPredicate = request.isTelework() ? builder.isTrue(root.get(Staff_.telework)) : builder.isFalse(root.get(Staff_.telework));
-		where.add(teleworkPredicate);
+		if (request.getTelework() != null) {
+			Predicate truePredicate = builder.isTrue(root.get(Staff_.telework));
+			Predicate falsePredicate = builder.isFalse(root.get(Staff_.telework));
+			Predicate teleworkPredicate = request.getTelework() ? truePredicate : builder.or(truePredicate, falsePredicate);
+			where.add(teleworkPredicate);
+		}
 
-		Predicate disabledPredicate = request.isDisabled() ? builder.isTrue(root.get(Staff_.disabled)) : builder.isFalse(root.get(Staff_.disabled));
+		Predicate truePredicate = builder.isTrue(root.get(Staff_.disabled));
+		Predicate falsePredicate = builder.isFalse(root.get(Staff_.disabled));
+		Predicate disabledPredicate = request.getDisabled() == null || !request.getDisabled() ? falsePredicate : truePredicate;
 		where.add(disabledPredicate);
 
 		query.where(where.toArray(new Predicate[where.size()]));
