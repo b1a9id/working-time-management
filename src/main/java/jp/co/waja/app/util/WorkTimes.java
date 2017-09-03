@@ -13,6 +13,10 @@ public class WorkTimes {
 		return WorkTimeUtils.workTime(startAt, endAt, restTime);
 	}
 
+	public boolean overTime(BigDecimal workTime) {
+		return WorkTimeUtils.overTime(workTime);
+	}
+
 	public String formattedYearMonth(Integer yearMonthInt) {
 		return WorkTimeUtils.formattedYearMonth(yearMonthInt);
 	}

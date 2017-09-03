@@ -190,7 +190,7 @@
 							</tr>
 							</tfoot>
 							<tbody>
-							<tr th:classappend="${dayTotal}" th:each="workTime : ${workTimeYearMonth.workTimes}" th:with="dayTotal=${#workTimes.workTime(workTime.startAt, workTime.endAt, workTime.restTime)}">
+							<tr th:each="workTime : ${workTimeYearMonth.workTimes}" th:with="dayTotal=${#workTimes.workTime(workTime.startAt, workTime.endAt, workTime.restTime)}" th:classappend="${#workTimes.overTime(dayTotal)} ? 'bg-danger'">
 								<td th:text="${#temporals.format(workTime.date, 'MM/dd(E)')}">6/1（木）</td>
 								<td th:text="#{|worktime.worktype.${workTime.workType}|}">出勤</td>
 								<td th:text="${workTime.startAt}">9:00</td>
