@@ -87,13 +87,13 @@ public class WorkTimeService {
 		return workTimeYearMonthRepository.saveAndFlush(workTimeYearMonth);
 	}
 
-	public WorkTimeYearMonth complete(Staff completedtaff, Long id, boolean complete) throws NotFoundException {
-		WorkTimeYearMonth workTimeYearMonth = getWorkTimeYearMonth(completedtaff, id);
+	public WorkTimeYearMonth complete(Staff completedStaff, Long id, boolean complete) throws NotFoundException {
+		WorkTimeYearMonth workTimeYearMonth = getWorkTimeYearMonth(completedStaff, id);
 		if (Objects.isNull(workTimeYearMonth)) {
 			throw new NotFoundException();
 		}
 
-		Staff completedBy = complete ? completedtaff : null;
+		Staff completedBy = complete ? completedStaff : null;
 		workTimeYearMonth.setCompletedBy(completedBy.getName());
 		LocalDateTime completedAt = complete ? LocalDateTime.now() : null;
 		workTimeYearMonth.setCompletedAt(completedAt);
@@ -108,10 +108,14 @@ public class WorkTimeService {
 			throw new NotFoundException();
 		}
 
-		Staff approvedBy = approve1 ? approve1Staff : null;
-		workTimeYearMonth.setApproved1By(approvedBy.getName());
-		LocalDateTime approvedAt = approve1 ? LocalDateTime.now() : null;
-		workTimeYearMonth.setApproved1At(approvedAt);
+		String approvedByName = approve1 ? approve1Staff.getName() : null;
+		workTimeYearMonth.setApproved1By(approvedByName);
+		LocalDateTime now = approve1 ? LocalDateTime.now() : null;
+		workTimeYearMonth.setApproved1At(now);
+		if (!approve1) {
+			workTimeYearMonth.setCompletedBy(null);
+			workTimeYearMonth.setCompletedAt(null);
+		}
 
 		return workTimeYearMonthRepository.saveAndFlush(workTimeYearMonth);
 	}

@@ -63,6 +63,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12 text-right">
+						<!--/*/ <th:block th:unless="${workTimeYearMonth.completedAt}"> /*/-->
 						<div class="btn-group">
 							<a class="btn btn-default" href="#complete-modal" data-toggle="modal" th:disabled="${workTimeYearMonth.completedAt}" th:style="${workTimeYearMonth.completedAt} ? 'pointer-events : none;'">入力完了</a>
 						</div>
@@ -79,6 +80,9 @@
 								</li>
 							</ul>
 						</div>
+						<!--/*/ </th:block> /*/-->
+						<p th:with="completedAt=${#temporals.format(workTimeYearMonth.completedAt, 'yyyy/MM/dd hh:mm')}" th:if="${workTimeYearMonth.completedAt}" th:text="#{worktime.completed.message(${workTimeYearMonth.completedBy}, ${completedAt})}">完了:田中太郎(2017/08/10 10:30)</p>
+						<p th:with="approvedAt=${#temporals.format(workTimeYearMonth.approved1At, 'yyyy/MM/dd hh:mm')}" th:if="${workTimeYearMonth.approved1At}" th:text="#{worktime.approved.message(${workTimeYearMonth.approved1By}, ${approvedAt})}">承認:田中二郎(2017/08/10 11:10)</p>
 					</div>
 				</div>
 			</div>

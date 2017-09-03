@@ -25,12 +25,7 @@ public class WorkTimeApproveController {
 			@PathVariable Long id,
 			@RequestParam Boolean approve1,
 			RedirectAttributes redirectAttributes) {
-		WorkTimeYearMonth updatedWorkTimeYearMonth;
-		if (approve1) {
-			updatedWorkTimeYearMonth = workTimeService.approve1(loginUser.getStaff(), id, approve1);
-		} else {
-			updatedWorkTimeYearMonth = workTimeService.complete(loginUser.getStaff(), id, approve1);
-		}
+		WorkTimeYearMonth updatedWorkTimeYearMonth = workTimeService.approve1(loginUser.getStaff(), id, approve1);
 
 		redirectAttributes.addFlashAttribute("updatedWorkTimeYearMonth", updatedWorkTimeYearMonth);
 		redirectAttributes.addAttribute("id", updatedWorkTimeYearMonth.getStaff().getId());
