@@ -1,7 +1,9 @@
 package jp.co.waja.app.controller.admin.staff;
 
 import jp.co.waja.core.entity.Staff;
+import jp.co.waja.core.entity.Team;
 import jp.co.waja.core.service.staff.StaffService;
+import jp.co.waja.core.service.team.TeamService;
 import jp.co.waja.core.service.worktime.WorkTimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,9 @@ public class StaffListController {
 	private static final String FORM_MODEL_KEY = "form";
 
 	@Autowired
+	private TeamService teamService;
+
+	@Autowired
 	private StaffService staffService;
 
 	@Autowired
@@ -29,6 +34,11 @@ public class StaffListController {
 	@ModelAttribute(FORM_MODEL_KEY)
 	public StaffSearchForm setUpStaffSearchForm() {
 		return new StaffSearchForm();
+	}
+
+	@ModelAttribute("teams")
+	public List<Team> setUpWorkTeams() {
+		return teamService.teams();
 	}
 
 	@ModelAttribute("employmentTypes")

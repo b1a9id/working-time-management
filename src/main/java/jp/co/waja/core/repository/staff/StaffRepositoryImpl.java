@@ -1,17 +1,29 @@
 package jp.co.waja.core.repository.staff;
 
-import jp.co.waja.core.entity.*;
+import jp.co.waja.core.entity.Staff;
+import jp.co.waja.core.entity.Staff_;
+import jp.co.waja.core.entity.Team;
 import jp.co.waja.core.model.staff.StaffSearchRequest;
+import jp.co.waja.core.service.team.TeamService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.*;
-import javax.persistence.criteria.*;
-import java.util.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StaffRepositoryImpl implements StaffRepositoryCustom {
 
 	@PersistenceContext
 	private EntityManager entityManager;
+
+	@Autowired
+	private TeamService teamService;
 
 	@Transactional(readOnly = true)
 	@Override
@@ -21,6 +33,11 @@ public class StaffRepositoryImpl implements StaffRepositoryCustom {
 		Root<Staff> root = query.from(Staff.class);
 
 		List<Predicate> where = new ArrayList<>();
+		if (request.getTeamId() != null) {
+			Team team = teamService.findOneById(request.getTeamId());
+			where.add(builder.equal(root.get(Staff_.team), team));
+		}
+
 		if (request.getEmploymentType() != null) {
 			where.add(builder.equal(root.get(Staff_.employmentType), request.getEmploymentType()));
 		}
