@@ -1,7 +1,7 @@
 package jp.co.waja.app.controller.user.worktime;
 
 import jp.co.waja.core.entity.WorkTime;
-import jp.co.waja.core.service.worktime.WorkTimeBulkEditRequest;
+import jp.co.waja.core.model.worktime.WorkTimeBulkEditRequest;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,20 +13,26 @@ import java.time.LocalTime;
 @Setter
 public class WorkTimeBulkEditForm implements Serializable {
 
-	@NotNull
-	private WorkTime.workType workType;
+	private WorkTime.WorkType workType = WorkTime.WorkType.NORMAL;
 
 	@NotNull
-	private LocalTime startAt;
+	private Integer startAtHour;
 
 	@NotNull
-	private LocalTime endAt;
+	private Integer startAtMinute;
 
-	public WorkTimeBulkEditRequest toWorkTimeBulkEditRequest() {
+	@NotNull
+	private Integer endAtHour;
+
+	@NotNull
+	private Integer endAtMinute;
+
+
+	public WorkTimeBulkEditRequest toWorkTimeBulkEditRequest(LocalTime startAt, LocalTime endAt) {
 		WorkTimeBulkEditRequest request = new WorkTimeBulkEditRequest();
 		request.setWorkType(getWorkType());
-		request.setStartAt(getStartAt());
-		request.setEndAt(getEndAt());
+		request.setStartAt(startAt);
+		request.setEndAt(endAt);
 		return request;
 	}
 }

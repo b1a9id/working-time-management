@@ -19,7 +19,7 @@ public class TeamListController {
 
 	@GetMapping
 	public String list(Model model) {
-		List<Team> teams = teamService.teams();
+		List<Team> teams = teamService.getTeams();
 		model.addAttribute("teams", teams);
 		return "admin/team/list";
 	}

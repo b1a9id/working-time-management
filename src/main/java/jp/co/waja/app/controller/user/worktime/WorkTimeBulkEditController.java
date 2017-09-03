@@ -1,20 +1,21 @@
 package jp.co.waja.app.controller.user.worktime;
 
+import jp.co.waja.core.entity.WorkTimeYearMonth;
+import jp.co.waja.core.service.staff.StaffDetails;
 import jp.co.waja.core.service.worktime.WorkTimeService;
+import jp.co.waja.exception.ForbiddenException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.websocket.server.PathParam;
+import java.time.LocalTime;
 
-@Controller
+@RestController
 @RequestMapping("/work-time/bulk-edit")
 public class WorkTimeBulkEditController {
-
-	private static final String TARGET_ENTITY_KEY = "workTime";
 
 	private static final String FORM_MODEL_KEY = "form";
 
@@ -23,18 +24,26 @@ public class WorkTimeBulkEditController {
 	@Autowired
 	private WorkTimeService workTimeService;
 
-	@PostMapping("/{yearMonth}")
+	@PostMapping("/{displayYearMonth}")
 	public String edit(
-			@PathParam("yearMonth") String yearMonth,
-			WorkTimeBulkEditForm form,
+			@AuthenticationPrincipal StaffDetails loginUser,
+			@PathVariable String displayYearMonth,
+			@RequestBody @Validated WorkTimeBulkEditForm form,
 			BindingResult errors,
 			RedirectAttributes redirectAttributes) {
+		redirectAttributes.addFlashAttribute(FORM_MODEL_KEY, form);
+		redirectAttributes.addFlashAttribute(ERRORS_MODEL_KEYS, errors);
 		if (errors.hasErrors()) {
 			return "redirect:/work-time?errors";
 		}
-		int updateQty = workTimeService.edit(yearMonth, form.toWorkTimeBulkEditRequest());
 
-		redirectAttributes.addAttribute("updateQty", updateQty);
+		LocalTime startAt = LocalTime.of(form.getStartAtHour(), form.getStartAtMinute());
+		LocalTime endAt = LocalTime.of(form.getEndAtHour(), form.getEndAtMinute());
+		if (startAt.isAfter(endAt)) {
+			throw new ForbiddenException("startAt is not after endAt");
+		}
+
+		WorkTimeYearMonth workTimeYearMonth = workTimeService.bulkEdit(loginUser.getStaff(), displayYearMonth, form.toWorkTimeBulkEditRequest(startAt, endAt));
 		return "redirect:/work-time";
 	}
 }

@@ -1,19 +1,13 @@
 package jp.co.waja.core.entity;
 
 import jp.co.waja.core.model.Role;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.SortNatural;
+import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 @Entity
 @Table(name = "staff")
@@ -54,7 +48,7 @@ public class Staff extends AbstractEntity<Long> implements Serializable {
 	@Column(nullable = false, name = "name_first_kana")
 	private String nameFirstKana;
 
-	@Column(nullable = false, name = "email")
+	@Column(nullable = false, name = "email", unique = true)
 	private String email;
 
 	@Column(nullable = false)
@@ -68,17 +62,17 @@ public class Staff extends AbstractEntity<Long> implements Serializable {
 	@Column(nullable = false, name = "entered_date")
 	private LocalDate enteredDate;
 
-	private Boolean telework;
+	private boolean telework;
+
+	private boolean disabled;
 
 	@Column(nullable = false)
 	private String password;
 
-	@ElementCollection
-	@SortNatural
 	@JoinTable(name = "user_role")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "role", length = 20, nullable = false)
-	private SortedSet<Role> roles = new TreeSet<>();
+	private Role role;
 
 	@OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<PaidVacation> paidVacations;

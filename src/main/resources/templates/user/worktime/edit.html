@@ -5,28 +5,29 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<script type="text/javascript" th:src="@{/webjars/jquery/3.2.0/jquery.min.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/worktime/edit.js}"></script>
 	<link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
 	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 	<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
 
-	<title>2017年07月稼働実績入力</title>
+	<title th:text="#{worktime.edit.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績入力</title>
 </head>
-<body>
+<body th:with="yearMonth=${#workTimes.intToYearMonth(workTimeYearMonth.workYearMonth)}">
 <div th:replace="common/layout::navbar-layout"></div>
 <div class="section"></div>
 <div class="section">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h1>2017年07月稼働実績入力</h1>
+				<h1 th:text="#{worktime.edit.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績入力</h1>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
 				<ul class="breadcrumb">
 					<li><a th:href="@{/}">ダッシュボード</a></li>
-					<li><a th:href="@{/work-time/list}">稼働実績照会</a></li>
-					<li class="active">2017年07月稼働実績入力</li>
+					<li><a th:href="@{/work-time}">稼働実績照会</a></li>
+					<li th:text="#{worktime.edit.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績入力</li>
 				</ul>
 			</div>
 		</div>
@@ -36,331 +37,65 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<form class="form-horizontal" role="form" th:action="@{/work-time/edit}" method="post" th:object="${workTimeEditForm}">
+				<form class="form-horizontal" role="form" th:action="@{/work-time/edit/{displayYearMonth}(displayYearMonth=${yearMonth})}" method="post" th:object="${form}">
+					<input type="hidden" th:field="*{id}" th:value="*{id}" />
 					<table class="table table-bordered form-group">
 						<thead>
 						<tr>
-							<th class="col-md-1">日付</th>
-							<th class="col-md-2">種別</th>
-							<th>始業時間</th>
-							<th>就業時間</th>
-							<th class="col-md-1">休憩時間</th>
-							<th>稼働時間</th>
-							<th>備考</th>
+							<th class="col-md-1" th:text="#{worktime.list.header.date}">日付</th>
+							<th class="col-md-2" th:text="#{worktime.list.header.type}">種別</th>
+							<th th:text="#{worktime.list.header.startat}">始業時間</th>
+							<th th:text="#{worktime.list.header.endat}">就業時間</th>
+							<th class="col-md-1" th:text="#{worktime.list.header.resttime}">休憩時間</th>
+							<th th:text="#{worktime.list.header.remarks}">備考</th>
 						</tr>
 						</thead>
 						<tbody>
-						<tr>
-							<td>6/1（木）</td>
+						<tr th:each="workTime, workTimeStat : ${form.workTimes}">
+							<input type="hidden" th:field="*{workTimes[__${workTimeStat.index}__].date}" th:value="${workTime.date}" />
+							<td th:text="${#temporals.format(workTime.date, 'MM/dd(E)')}">6/1（木）</td>
 							<td>
-								<select class="form-control">
-									<option>出勤</option>
-									<option>公休</option>
-									<option>有給/半休</option>
-									<option>事後有給/事後半休</option>
-									<option>欠勤/半欠勤</option>
-									<option>代休</option>
-									<option>特別休暇</option>
-								</select>
-							</td>
-							<td>
-								<div class="form-inline">
-									<select class="form-control">
-										<option th:each="hour : ${workTimeHour}" th:text="|${hour}時|">9時</option>
-									</select>
-									<select class="form-control">
-										<option th:each="minute : ${workTimeMinute}" th:text="|${minute}分|">15分</option>
-									</select>
-								</div>
-							</td>
-							<td>
-								<div class="form-inline">
-									<select class="form-control">
-										<option th:each="hour : ${workTimeHour}" th:text="|${hour}時|">9時</option>
-									</select>
-									<select class="form-control">
-										<option th:each="minute : ${workTimeMinute}" th:text="|${minute}分|">15分</option>
-									</select>
-								</div>
-							</td>
-							<td>
-								<select class="form-control">
+								<select class="form-control workType-choice" th:field="*{workTimes[__${workTimeStat.index}__].workType}">
 									<option value=""></option>
-									<option value="">45分</option>
-									<option value="" selected="true">60分</option>
-									<option value="">75分</option>
-									<option value="">90分</option>
-									<option value="">120分</option>
+									<option th:each="workType : ${workTypes}" th:text="#{|worktime.worktype.${workType}|}" th:value="${workType}" th:selected="${workType eq workTime.workType}">出勤</option>
 								</select>
 							</td>
-							<td>8:00</td>
-							<td><input type="text" class="form-control" id="" placeholder="備考" /></td>
-						</tr>
-						<tr>
-							<td>6/2（金）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/3（土）</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/4（日）</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/5（月）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/6（火）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/7（水）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/8（木）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/9（金）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/10（土）</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/11（日）</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/12（月）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/13（火）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/14（水）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/15（木）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/16（金）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/17（土）</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/18（日）</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/19（月）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/20（火）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/21（水）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/22（木）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/23（金）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/24（土）</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/25（日）</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/26（月）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/27（火）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/28（水）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/29（木）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>6/30（金）</td>
-							<td></td>
-							<td>9:00</td>
-							<td>18:00</td>
-							<td>1:00</td>
-							<td>8:00</td>
-							<td></td>
+							<td>
+								<div class="form-inline show-item">
+									<select class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].startAtHour}">
+										<option value=""></option>
+										<option th:each="hour : ${workTimeHour}" th:text="|${hour}時|" th:value="${hour}" th:selected="${hour eq workTime.startAtHour}">9時</option>
+									</select>
+									<select class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].startAtMinute}">
+										<option value=""></option>
+										<option th:each="minute : ${workTimeMinute}" th:text="|${minute}分|" th:value="${minute}" th:selected="${minute eq workTime.startAtMinute}">15分</option>
+									</select>
+								</div>
+							</td>
+							<td>
+								<div class="form-inline show-item">
+									<select class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].endAtHour}">
+										<option value=""></option>
+										<option th:each="hour : ${workTimeHour}" th:text="|${hour}時|" th:value="${hour}" th:selected="${hour eq workTime.endAtHour}">9時</option>
+									</select>
+									<select class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].endAtMinute}">
+										<option value=""></option>
+										<option th:each="minute : ${workTimeMinute}" th:text="|${minute}分|" th:value="${minute}" th:selected="${minute eq workTime.startAtMinute}">15分</option>
+									</select>
+								</div>
+							</td>
+							<td>
+								<select class="form-control show-item" th:field="*{workTimes[__${workTimeStat.index}__].restTime}">
+									<option value=""></option>
+									<option th:each="restTime : ${restTimes}" th:text="${restTime}" th:value="${restTime}" th:selected="${restTime eq workTime.restTime}"></option>
+								</select>
+							</td>
+							<td><input class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].remarks}" type="text" placeholder="備考" /></td>
 						</tr>
 						</tbody>
 					</table>
 					<div class="form-group">
-						<a th:href="@{/work-time/list}" type="button" class="btn btn-default col-md-offset-5">戻る</a>
+						<a th:href="@{/work-time}" type="button" class="btn btn-default col-md-offset-5">戻る</a>
 						<button type="submit" class="btn btn-success">保存</button>
 					</div>
 				</form>

@@ -2,6 +2,7 @@ package jp.co.waja.app.controller.admin.staff;
 
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.entity.Team;
+import jp.co.waja.core.model.Role;
 import jp.co.waja.core.service.staff.StaffService;
 import jp.co.waja.core.service.team.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +35,12 @@ public class StaffEditController {
 
 	@ModelAttribute(TARGET_ENTITY_KEY)
 	public Staff setupStaff(@PathVariable Long id) {
-		return staffService.findOneById(id);
+		return staffService.getStaff(id);
 	}
 
 	@ModelAttribute("teams")
 	public List<Team> setUpTeam() {
-		return teamService.teams();
+		return teamService.getTeams();
 	}
 
 	@ModelAttribute("genders")
@@ -50,6 +51,11 @@ public class StaffEditController {
 	@ModelAttribute("employmentTypes")
 	public List<Staff.EmploymentType> setUpEmploymentType() {
 		return Arrays.asList(Staff.EmploymentType.values());
+	}
+
+	@ModelAttribute("roles")
+	public List<Role> setUpRoles() {
+		return Arrays.asList(Role.values());
 	}
 
 	@GetMapping

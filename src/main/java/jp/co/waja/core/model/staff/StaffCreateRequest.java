@@ -1,13 +1,9 @@
 package jp.co.waja.core.model.staff;
 
-import jp.co.waja.core.entity.Staff;
-import jp.co.waja.core.entity.Team;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jp.co.waja.core.entity.*;
+import jp.co.waja.core.model.Role;
+import lombok.*;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -37,5 +33,9 @@ public class StaffCreateRequest implements Serializable {
 
 	private Boolean telework;
 
+	private Boolean disabled;
+
 	private String password;
+
+	private Role role;
 }

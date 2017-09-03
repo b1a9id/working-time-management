@@ -64,19 +64,15 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-10">
-						<form class="form-horizontal">
+						<form class="form-horizontal" method="post" th:action="@{/admin/staffs}" th:object="${form}">
 							<div class="form-group">
 								<div class="col-sm-2">
 									<label class="control-label" th:text="#{staff.field.team}">チーム</label>
 								</div>
 								<div class="col-sm-10">
-									<select class="form-control">
-										<option value="" selected="selected"></option>
-										<option value="creative">CRチーム</option>
-										<option value="mp">MPチーム</option>
-										<option value="sp">SPチーム</option>
-										<option value="事推">事推</option>
-										<option value="ff">FFチーム</option>
+									<select class="form-control" name="number" th:field="*{teamId}">
+										<option value=""></option>
+										<option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}">クリエイティブチーム</option>
 									</select>
 								</div>
 							</div>
@@ -85,43 +81,23 @@
 									<label class="control-label">雇用形態</label>
 								</div>
 								<div class="col-sm-10">
-									<select class="form-control">
-										<option value="" selected="selected"></option>
-										<option value="てすと１">正社員</option>
-										<option value="てすと２">クルー週２</option>
-										<option value="てすと２">クルー週３</option>
-										<option value="てすと２">クルー週４</option>
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-2">
-									<label class="control-label">入社月</label>
-								</div>
-								<div class="col-sm-10">
-									<select class="form-control">
-										<option value="" selected="selected"></option>
-										<option value="1">1月</option>
-										<option value="2">2月</option>
-										<option value="3">3月</option>
-										<option value="4">4月</option>
-										<option value="5">5月</option>
-										<option value="6">6月</option>
-										<option value="7">7月</option>
-										<option value="8">8月</option>
-										<option value="9">9月</option>
-										<option value="10">10月</option>
-										<option value="11">11月</option>
-										<option value="12">12月</option>
+									<select class="form-control" th:field="*{employmentType}">
+										<option value=""></option>
+										<option th:each="employmentType : ${employmentTypes}" th:value="${employmentType}" th:text="#{|staff.employmenttype.${employmentType}|}">正社員</option>
 									</select>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
 									<div class="checkbox">
-										<label>
-											<input type="checkbox" />在宅勤務可
-										</label>
+										<label><input th:field="*{telework}" type="checkbox" />在宅勤務可</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-10">
+									<div class="checkbox">
+										<label><input th:field="*{disabled}" type="checkbox" />無効アカウントのみ</label>
 									</div>
 								</div>
 							</div>
@@ -137,23 +113,23 @@
 		</div>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-3">
-					<form class="form-inline">
-						<div class="form-group text-right">
-							<input class="form-control" placeholder="キーワード" />
-						</div>
-						<div class="form-group">
-							<div class="col-sm-offset-2 col-sm-10">
-								<button class="btn btn-default">検索</button>
-							</div>
-						</div>
-					</form>
-				</div>
+				<!--<div class="col-md-3">-->
+					<!--<form class="form-inline">-->
+						<!--<div class="form-group text-right">-->
+							<!--<input class="form-control" placeholder="キーワード" />-->
+						<!--</div>-->
+						<!--<div class="form-group">-->
+							<!--<div class="col-sm-offset-2 col-sm-10">-->
+								<!--<button class="btn btn-default">検索</button>-->
+							<!--</div>-->
+						<!--</div>-->
+					<!--</form>-->
+				<!--</div>-->
 				<div class="col-md-2">
 					<a id="describe-search-btn"><i class="fa fa-2x fa-search-plus"></i> 詳細検索</a>
 				</div>
 			</div>
-		</div>
+		</div>V
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 text-right">
@@ -200,12 +176,14 @@
 						<tr>
 							<th th:text="#{staff.field.team}">チーム名</th>
 							<th th:text="#{staff.field.name}">名前</th>
-							<th th:text="#{staff.field.name.kana}">ふりがな</th>
+							<th th:text="#{role.label}">権限</th>
 							<th th:text="#{staff.field.employment.type}">雇用形態</th>
-							<th th:text="#{staff.field.entered.date}">入社日</th>
+							<th th:text="#{staff.field.entereddate}">入社日</th>
 							<th>有給付与日</th>
 							<th>残有給日数</th>
 							<th th:text="#{staff.field.telework}">在宅</th>
+							<th>無効</th>
+							<th></th>
 							<th></th>
 							<th></th>
 						</tr>
@@ -214,14 +192,16 @@
 						<tr th:each="staff : ${staffs}">
 							<td th:text="${staff.team.name}">クリエイティブチーム</td>
 							<td><a th:href="@{/admin/staffs/describe/{id}(id=${staff.id})}" th:text="${staff.nameLast} + ${staff.nameFirst}">テスト太郎</a></td>
-							<td th:text="${staff.nameLastKana} + ${staff.nameFirstKana}">てすとたろう</td>
+							<td th:text="|#{|role.${staff.role}|}">スタッフ</td>
 							<td th:text="#{|staff.employmenttype.${staff.employmentType}|}">正社員</td>
-							<td th:text="${staff.enteredDate}">2015/06/01</td>
+							<td th:text="${#temporals.format(staff.enteredDate, 'yyyy/MM/dd')}">2015/06/01</td>
 							<td>06/01</td>
 							<td>10日</td>
-							<td><i th:if="${staff.telework}" class="glyphicon glyphicon-ok"></i></td>
-							<td><a th:href="@{/admin/work-time/list}">稼働実績</a></td>
+							<td><i th:class="${staff.telework} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
+							<td><i th:class="${staff.disabled} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
+							<td><a th:href="@{/admin/work-time/{id}(id=${staff.id})}"><i class="glyphicon glyphicon-time"></i></a></td>
 							<td><a th:href="@{/admin/staffs/edit/{id}(id=${staff.id})}"><i class="glyphicon glyphicon-pencil"></i></a></td>
+							<td><a @click="delete_staff(${staff.id})" th:href="@{/admin/staffs/delete/{id}(id=${staff.id})}"><i class="glyphicon glyphicon-trash"></i></a></td>
 						</tr>
 						</tbody>
 					</table>
@@ -229,6 +209,23 @@
 			</div>
 		</div>
 	</div>
+	<!--<script>-->
+		<!--new Vue({-->
+			<!--el:'#modify-complete',-->
+			<!--methods: {-->
+				<!--delete_staff: function(id) {-->
+					<!--axios.delete('/admin/staffs/delete/' + id)-->
+						<!--.then(response => {-->
+							<!--console.log(response.data);-->
+							<!--// TODO:Vue.jsでバインドする-->
+							<!--location.reload();-->
+						<!--}).catch(error => {-->
+						<!--console.log(error);-->
+					<!--})-->
+				<!--}-->
+			<!--}-->
+		<!--});-->
+	<!--</script>-->
 	</body>
 
 </html>

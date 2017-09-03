@@ -2,6 +2,7 @@ package jp.co.waja.app.controller.admin.staff;
 
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.entity.Team;
+import jp.co.waja.core.model.Role;
 import jp.co.waja.core.model.staff.StaffEditRequest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,6 +50,11 @@ public class StaffEditForm implements Serializable {
 
 	private Boolean telework;
 
+	private Boolean disabled;
+
+	@NotNull
+	private Role role;
+
 	public StaffEditForm(Staff staff) {
 		this.team = staff.getTeam();
 		this.nameLast = staff.getNameLast();
@@ -59,7 +65,9 @@ public class StaffEditForm implements Serializable {
 		this.gender = staff.getGender();
 		this.employmentType = staff.getEmploymentType();
 		this.enteredDate = staff.getEnteredDate();
-		this.telework = staff.getTelework();
+		this.telework = staff.isTelework();
+		this.disabled = staff.isDisabled();
+		this.role = staff.getRole();
 	}
 
 	public StaffEditRequest toStaffEditRequest() {
@@ -74,6 +82,8 @@ public class StaffEditForm implements Serializable {
 		request.setEmploymentType(getEmploymentType());
 		request.setEnteredDate(getEnteredDate());
 		request.setTelework(getTelework());
+		request.setDisabled(getDisabled());
+		request.setRole(getRole());
 		return request;
 	}
 }

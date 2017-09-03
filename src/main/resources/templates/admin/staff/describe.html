@@ -43,6 +43,15 @@
 				</div>
 			</div>
 		</div>
+		<div th:if="${wrongDelete}" class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-danger" role="alert">
+						<span th:text="#{error.cannnotdelete(${wrongDelete})}">関連データが存在するため削除できません。</span>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="section">
 			<div class="container">
 				<div class="row">
@@ -95,7 +104,7 @@
 									<td th:text="#{|gender.${staff.gender}|}">男</td>
 								</tr>
 								<tr>
-									<th th:text="#{staff.field.entered.date}">入社日</th>
+									<th th:text="#{staff.field.entereddate}">入社日</th>
 									<td th:text="${staff.enteredDate}">2015/06/01</td>
 								</tr>
 								<tr>
@@ -109,6 +118,14 @@
 								<tr>
 									<th th:text="#{staff.field.telework}">在宅</th>
 									<td><i th:if="${staff.telework}" class="glyphicon glyphicon-ok"></i></td>
+								</tr>
+								<tr>
+									<th th:text="#{staff.field.disabled}">アカウント無効</th>
+									<td><i th:if="${staff.disabled}" class="glyphicon glyphicon-ok"></i></td>
+								</tr>
+								<tr>
+									<th th:text="#{role.label}">権限</th>
+									<td th:text="|#{|role.${staff.role}|}">スタッフ</td>
 								</tr>
 							</tbody>
 						</table>

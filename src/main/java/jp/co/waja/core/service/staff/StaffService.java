@@ -1,17 +1,17 @@
 package jp.co.waja.core.service.staff;
 
 import jp.co.waja.core.entity.Staff;
-import jp.co.waja.core.entity.Team;
-import jp.co.waja.core.model.staff.StaffCreateRequest;
-import jp.co.waja.core.model.staff.StaffEditRequest;
-import jp.co.waja.core.model.staff.StaffSearchRequest;
+import jp.co.waja.core.model.staff.*;
 import jp.co.waja.core.repository.staff.StaffRepository;
-import jp.co.waja.core.repository.team.TeamRepository;
+import jp.co.waja.core.service.team.TeamService;
+import jp.co.waja.core.service.worktime.WorkTimeService;
+import jp.co.waja.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -21,19 +21,24 @@ public class StaffService {
 	private StaffRepository staffRepository;
 
 	@Autowired
-	private TeamRepository teamRepository;
+	private TeamService teamService;
 
-	public List<Staff> staffs() {
-		return staffRepository.findAll();
+	@Autowired
+	private WorkTimeService workTimeService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	public List<Staff> enableStaffs() {
+		return staffRepository.findAllByDisabled(false);
 	}
 
-	public List<Staff> staffsByTeam(StaffSearchRequest request) {
-		Team team = teamRepository.findOneById(request.getTeamId());
-		return staffRepository.findAllByTeam(team);
-	}
-
-	public Staff findOneById(long id) {
+	public Staff getStaff(long id) {
 		return staffRepository.findOne(id);
+	}
+
+	public List<Staff> getStaffs(StaffSearchRequest request) {
+		return staffRepository.search(request);
 	}
 
 	public Staff create(StaffCreateRequest request) {
@@ -48,7 +53,9 @@ public class StaffService {
 		staff.setEmploymentType(request.getEmploymentType());
 		staff.setEnteredDate(request.getEnteredDate());
 		staff.setTelework(request.getTelework());
-		staff.setPassword(request.getPassword());
+		staff.setDisabled(request.getDisabled());
+		staff.setPassword(passwordEncoder.encode(request.getPassword()));
+		staff.setRole(request.getRole());
 		return staffRepository.saveAndFlush(staff);
 	}
 
@@ -64,10 +71,29 @@ public class StaffService {
 		staff.setEmploymentType(request.getEmploymentType());
 		staff.setEnteredDate(request.getEnteredDate());
 		staff.setTelework(request.getTelework());
+		staff.setDisabled(request.getDisabled());
+		staff.setRole(request.getRole());
 		return staffRepository.saveAndFlush(staff);
 	}
 
-	public void delete(Long id) {
+	public Staff editPassword(Long id, PasswordEditRequest request) throws NotFoundException {
+		Staff staff = staffRepository.findOne(id);
+		staff.setPassword(passwordEncoder.encode(request.getNewPassword()));
+		return staffRepository.saveAndFlush(staff);
+	}
+
+	public Optional<String> delete(Long id) throws NotFoundException, WrongDeleteException {
+		Staff staff = staffRepository.findOne(id);
+		if (Objects.isNull(staff)) {
+			throw new NotFoundException("Staff");
+		}
+
+		long workTimeCount = workTimeService.countByStaff(staff);
+		if (workTimeCount > 0) {
+			throw new WrongDeleteException("WorkTimeExist");
+		}
+
 		staffRepository.delete(id);
+		return Optional.ofNullable(staff.getName());
 	}
 }
