@@ -57,9 +57,12 @@ create table work_time_year_month (
   id bigint not null auto_increment,
   staff_id bigint not null,
   work_year_month int not null,
-  complete bit,
-  approve1 bit,
-  approve2 bit,
+  completed_at datetime,
+  completed_by varchar(30),
+  approved1_at datetime,
+  approved1_by varchar(30),
+  approved2_at datetime,
+  approved2_by varchar(30),
   created_at datetime,
   created_by varchar(255),
   last_modified_at datetime,
@@ -104,7 +107,7 @@ INSERT INTO paid_vacation (id, staff_id, days, provide_date, disappear_date, cre
 INSERT INTO paid_vacation (id, staff_id, days, provide_date, disappear_date, created_at, created_by) VALUES (14, 10, 11, '2016/04/01', '2018/03/30', '2017/07/01 00:00:00', '内立良介');
 INSERT INTO paid_vacation (id, staff_id, days, provide_date, disappear_date, created_at, created_by) VALUES (15, 10, 12, '2017/04/01', '2019/03/30', '2017/07/01 00:00:00', '内立良介');
 
-INSERT INTO work_time_year_month (id, staff_id, work_year_month, complete, approve1, approve2, created_at, created_by) VALUES (16, 6, 20178, 0, 0, 0, '2017/07/01 00:00:00', '内立良介');
+INSERT INTO work_time_year_month (id, staff_id, work_year_month, created_at, created_by) VALUES (16, 6, 20178, '2017/07/01 00:00:00', '内立良介');
 
 INSERT INTO work_time (work_time_year_month_id, date, work_type, remarks) VALUES (16, '2017/08/01', 'NORMAL', '');
 INSERT INTO work_time (work_time_year_month_id, date, work_type, remarks) VALUES (16, '2017/08/02', 'NORMAL', '');

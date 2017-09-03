@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -27,23 +28,23 @@ public class WorkTimeYearMonth extends AbstractEntity<Long> implements Serializa
 	@Column(name = "work_year_month", nullable = false)
 	private Integer workYearMonth;
 
-	/**
-	 * 入力完了フラグ
-	 */
-	@Column(name = "complete")
-	private boolean complete;
+	@Column(name = "completed_by")
+	private String completedBy;
 
-	/**
-	 * マネージャ承認フラグ
-	 */
-	@Column(name = "approve1")
-	private boolean approve1;
+	@Column(name = "completed_at")
+	private LocalDateTime completedAt;
 
-	/**
-	 * MP承認フラグ
-	 */
-	@Column(name = "approve2")
-	private boolean approve2;
+	@Column(name = "approved1_by")
+	private String approved1By;
+
+	@Column(name = "approved1_at")
+	private LocalDateTime approved1At;
+
+	@Column(name = "approved2_by")
+	private String approved2By;
+
+	@Column(name = "approved2_at")
+	private LocalDateTime approved2At;
 
 	@Embedded
 	@ElementCollection(fetch = FetchType.EAGER)
