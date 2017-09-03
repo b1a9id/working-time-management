@@ -34,7 +34,7 @@ public class StaffRepositoryImpl implements StaffRepositoryCustom {
 
 		List<Predicate> where = new ArrayList<>();
 		if (request.getTeamId() != null) {
-			Team team = teamService.findOneById(request.getTeamId());
+			Team team = teamService.getTeam(request.getTeamId());
 			where.add(builder.equal(root.get(Staff_.team), team));
 		}
 

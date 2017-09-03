@@ -39,7 +39,7 @@ public class StaffCreateController {
 
 	@ModelAttribute("teams")
 	public List<Team> setUpTeam() {
-		return teamService.teams();
+		return teamService.getTeams();
 	}
 
 	@ModelAttribute("genders")

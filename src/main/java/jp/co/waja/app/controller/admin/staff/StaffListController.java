@@ -38,7 +38,7 @@ public class StaffListController {
 
 	@ModelAttribute("teams")
 	public List<Team> setUpWorkTeams() {
-		return teamService.teams();
+		return teamService.getTeams();
 	}
 
 	@ModelAttribute("employmentTypes")

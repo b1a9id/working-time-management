@@ -21,11 +21,11 @@ public class TeamService {
 	@Autowired
 	private StaffRepository staffRepository;
 
-	public List<Team> teams() {
+	public List<Team> getTeams() {
 		return teamRepository.findAll();
 	}
 
-	public Team findOneById(long teamId) {
+	public Team getTeam(long teamId) {
 		return teamRepository.findOneById(teamId);
 	}
 

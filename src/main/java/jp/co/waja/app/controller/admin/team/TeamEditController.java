@@ -27,7 +27,7 @@ public class TeamEditController {
 
 	@ModelAttribute(TARGET_ENTITY_KEY)
 	public Team setupTeam(@PathVariable Long id) {
-		return teamService.findOneById(id);
+		return teamService.getTeam(id);
 	}
 
 	@GetMapping
