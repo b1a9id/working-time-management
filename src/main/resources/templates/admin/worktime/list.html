@@ -14,13 +14,13 @@
 
 	<title th:text="#{worktime.list.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績</title>
 </head>
-<body th:with="yearMonth=${#workTimes.intToYearMonth(workTimeYearMonth.workYearMonth)}">
+<body th:with="yearMonth=${#workTimes.intToYearMonth(workTimeYearMonth.workYearMonth)}, today=${#temporals.createToday()}, thisMonth=${#temporals.month(today)}">
 <div th:replace="common/layout::navbar-layout"></div>
 <div class="section">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h1 th:text="#{worktime.list.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})} +  ' ' + ${workTimeYearMonth.staff.name}">2017年07月稼働実績</h1>
+				<h1 th:text="#{worktime.list.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})} +  ' ' + ${workTimeYearMonth.staff.name}">2017年07月稼働実績 山田太郎</h1>
 			</div>
 		</div>
 		<div class="row">
@@ -46,10 +46,10 @@
 		<div class="row">
 			<div class="col-md-12 text-right">
 				<div class="btn-group">
-					<a class="btn btn-default" href="#approve-modal" data-toggle="modal" th:disabled="!${workTimeYearMonth.complete}" th:style="!${workTimeYearMonth.complete} ? 'pointer-events : none;'">承認</a>
+					<a class="btn btn-default" href="#approve-modal" data-toggle="modal" th:disabled="!${workTimeYearMonth.completedAt}" th:style="!${workTimeYearMonth.completedAt} ? 'pointer-events : none;'">承認</a>
 				</div>
 				<div class="btn-group">
-					<a class="btn btn-default" href="#modify-modal" data-toggle="modal" th:disabled="!${workTimeYearMonth.complete}" th:style="!${workTimeYearMonth.complete} ? 'pointer-events : none;'">修正</a>
+					<a class="btn btn-default" href="#modify-modal" data-toggle="modal" th:disabled="!${workTimeYearMonth.completedAt}" th:style="!${workTimeYearMonth.completedAt} ? 'pointer-events : none;'">修正</a>
 				</div>
 			</div>
 		</div>
@@ -58,11 +58,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<ul class="pager">
-					<li>
-						<a th:href="@{/work-time?displayYearMonth={displayYearMonth}(displayYearMonth=${yearMonth.minusMonths(1)})}" th:text="'←  ' + ${#temporals.format(yearMonth.minusMonths(1), 'yyyy年MM月')}">←  2017年6月</a>
+					<li th:if="${workTimeYearMonth.completedAt}">
+						<a th:href="@{/admin/work-time/{id}?displayYearMonth={displayYearMonth}(id=${workTimeYearMonth.staff.id},displayYearMonth=${yearMonth.minusMonths(1)})}" th:text="'←  ' + ${#temporals.format(yearMonth.minusMonths(1), 'yyyy年MM月')}">←  2017年6月</a>
 					</li>
 					<li th:unless="${yearMonth.plusMonths(1).getMonthValue() > thisMonth}">
-						<a th:href="@{/work-time?displayYearMonth={displayYearMonth}(displayYearMonth=${yearMonth.plusMonths(1)})}" th:text="${#temporals.format(yearMonth.plusMonths(1), 'yyyy年MM月')} + '  →'">2017年8月  →</a>
+						<a th:href="@{/admin/work-time/{id}?displayYearMonth={displayYearMonth}(id=${workTimeYearMonth.staff.id},displayYearMonth=${yearMonth.plusMonths(1)})}" th:text="${#temporals.format(yearMonth.plusMonths(1), 'yyyy年MM月')} + '  →'">2017年8月  →</a>
 					</li>
 				</ul>
 			</div>

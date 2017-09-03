@@ -30,7 +30,7 @@ public class WorkTimeCompleteController {
 		YearMonth parsedDisplayYearMonth = YearMonth.parse(displayYearMonth, formatter);
 		WorkTimeYearMonth workTimeYearMonth =
 				workTimeService.getWorkTimeYearMonth(loginUser.getStaff(), WorkTimeUtil.yearMonthToInt(parsedDisplayYearMonth));
-		if (workTimeYearMonth.isComplete()) {
+		if (workTimeYearMonth.getCompletedAt() != null) {
 			redirectAttributes.addFlashAttribute("notModify", "notModify");
 			return "redirect:/work-time?error";
 		}

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -79,7 +80,12 @@ public class WorkTimeService {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
 		YearMonth parsedDisplayYearMonth = YearMonth.parse(displayYearMonth, formatter);
 		WorkTimeYearMonth workTimeYearMonth = getWorkTimeYearMonth(staff, WorkTimeUtil.yearMonthToInt(parsedDisplayYearMonth));
-		workTimeYearMonth.setComplete(complete);
+
+		Staff completedBy = complete ? staff : null;
+		workTimeYearMonth.setCompletedBy(completedBy.getName());
+		LocalDateTime completedAt = complete ? LocalDateTime.now() : null;
+		workTimeYearMonth.setCompletedAt(completedAt);
+
 		return workTimeYearMonthRepository.saveAndFlush(workTimeYearMonth);
 	}
 
@@ -87,7 +93,12 @@ public class WorkTimeService {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
 		YearMonth parsedDisplayYearMonth = YearMonth.parse(displayYearMonth, formatter);
 		WorkTimeYearMonth workTimeYearMonth = getWorkTimeYearMonth(staff, WorkTimeUtil.yearMonthToInt(parsedDisplayYearMonth));
-		workTimeYearMonth.setApprove1(approve1);
+
+		Staff approvedBy = approve1 ? staff : null;
+		workTimeYearMonth.setApproved1By(approvedBy.getName());
+		LocalDateTime approvedAt = approve1 ? LocalDateTime.now() : null;
+		workTimeYearMonth.setApproved1At(approvedAt);
+
 		return workTimeYearMonthRepository.saveAndFlush(workTimeYearMonth);
 	}
 
