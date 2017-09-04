@@ -1,17 +1,25 @@
 package jp.co.waja.core.service.staff;
 
 import jp.co.waja.core.entity.Staff;
-import jp.co.waja.core.model.staff.*;
+import jp.co.waja.core.model.Role;
+import jp.co.waja.core.model.staff.PasswordEditRequest;
+import jp.co.waja.core.model.staff.StaffCreateRequest;
+import jp.co.waja.core.model.staff.StaffEditRequest;
+import jp.co.waja.core.model.staff.StaffSearchRequest;
 import jp.co.waja.core.repository.staff.StaffRepository;
 import jp.co.waja.core.service.team.TeamService;
 import jp.co.waja.core.service.worktime.WorkTimeService;
-import jp.co.waja.exception.*;
+import jp.co.waja.exception.NotFoundException;
+import jp.co.waja.exception.WrongDeleteException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -37,7 +45,11 @@ public class StaffService {
 		return staffRepository.findOne(id);
 	}
 
-	public List<Staff> getStaffs(StaffSearchRequest request) {
+	@PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
+	public List<Staff> getStaffs(Staff loginUser, StaffSearchRequest request) {
+		if (loginUser.getRole() == Role.MANAGER) {
+			request.setTeamId(loginUser.getTeam().getId());
+		}
 		return staffRepository.search(request);
 	}
 

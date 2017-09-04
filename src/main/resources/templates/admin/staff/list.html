@@ -1,5 +1,5 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ja">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="ja">
 	<head>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -111,7 +111,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="container">
+		<div sec:authorize="hasAnyRole('ADMIN')" class="container">
 			<div class="row">
 				<!--<div class="col-md-3">-->
 					<!--<form class="form-inline">-->
