@@ -18,6 +18,8 @@ public class WorkTimeEditForm implements Serializable {
 	@NotNull
 	private WorkTime.WorkType workType;
 
+	private Boolean trainDelay;
+
 	private Integer startAtHour;
 
 	private Integer startAtMinute;
@@ -34,6 +36,7 @@ public class WorkTimeEditForm implements Serializable {
 	public WorkTimeEditForm(WorkTime workTime) {
 		this.date = workTime.getDate();
 		this.workType = workTime.getWorkType();
+		this.trainDelay = workTime.getTrainDelay();
 		Optional<LocalTime> startAtOptional = Optional.ofNullable(workTime.getStartAt());
 		startAtOptional.ifPresent(startAt -> {
 			this.startAtHour = startAt.getHour();

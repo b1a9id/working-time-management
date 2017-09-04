@@ -75,6 +75,7 @@ create table work_time (
   work_time_year_month_id bigint not null,
   date date not null,
   work_type varchar(255) not null,
+  train_delay bit,
   start_at time,
   end_at time,
   rest_time integer,

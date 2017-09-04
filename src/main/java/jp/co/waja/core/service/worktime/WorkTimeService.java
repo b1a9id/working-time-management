@@ -77,6 +77,7 @@ public class WorkTimeService {
 		List<WorkTime> workTimes = request.getWorkTimes().stream()
 				.map(editRequest -> {
 					WorkTime workTime = new WorkTime(editRequest.getDate(), editRequest.getWorkType());
+					workTime.setTrainDelay(editRequest.getTrainDelay());
 					workTime.setStartAt(editRequest.getStartAt());
 					workTime.setEndAt(editRequest.getEndAt());
 					workTime.setRestTime(editRequest.getRestTime());
