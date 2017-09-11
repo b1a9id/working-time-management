@@ -1,5 +1,5 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ja">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="ja">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -45,7 +45,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 text-right">
-				<!--/*/ <th:block th:unless="${workTimeYearMonth.approved1At}"> /*/-->
+				<!--/*/ <th:block sec:authorize="hasAnyRole('MANAGER')" th:unless="${workTimeYearMonth.approved1At}"> /*/-->
 				<div class="btn-group">
 					<a class="btn btn-default" href="#modal-approve" data-toggle="modal" th:disabled="!${workTimeYearMonth.completedAt}" th:style="!${workTimeYearMonth.completedAt} ? 'pointer-events : none;'">承認</a>
 				</div>
