@@ -52,7 +52,7 @@ public class PasswordEditController {
 		redirectAttributes.addFlashAttribute(FORM_MODEL_KEY, form);
 		redirectAttributes.addFlashAttribute(ERRORS_MODEL_KEYS, errors);
 		if (errors.hasErrors()) {
-			return "redirect:/admin/staffs/password/edit?error";
+			return "redirect:/admin/staffs/password/edit/{id}?error";
 		}
 
 		Staff staff = staffService.getStaff(id);
@@ -67,7 +67,7 @@ public class PasswordEditController {
 			errors.rejectValue("retypePassword", "valid.retypepassword");
 		}
 		if (errors.hasErrors()) {
-			return "redirect:/admin/staffs/password/edit?error";
+			return "redirect:/admin/staffs/password/edit/{id}?error";
 		}
 
 		Staff passwordUpdatedStaff = staffService.editPassword(staff.getId(), form.toPasswordEditRequest());
