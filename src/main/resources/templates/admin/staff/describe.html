@@ -70,10 +70,8 @@
 							<ul class="dropdown-menu" role="menu">
 								<li>
 									<a th:href="@{/admin/staffs/edit/{staffId}(staffId=${staff.id})}">編集</a>
-									<a th:href="@{/admin/staffs/delete?id={staffId}(staffId=${staff.id})}" data-method="delete">削除</a>
-									<a href="#">有給管理</a>
-									<a th:href="@{/work-time/list}">稼働実績確認</a>
-									<a th:href="@{/admin/staffs/password/edit}">パスワード変更</a>
+									<!--<a href="#">有給管理</a>-->
+									<a th:href="@{/admin/staffs/password/edit/{id}(id=${staff.id})}">パスワード変更</a>
 								</li>
 							</ul>
 						</div>
