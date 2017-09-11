@@ -21,7 +21,7 @@ public class WorkTimeUtil {
 	}
 
 	public static List<Integer> workTimeMinute() {
-		return Arrays.asList(0, 15, 45);
+		return Arrays.asList(0, 15, 30, 45);
 	}
 
 	public static List<Integer> restTime() {

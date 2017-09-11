@@ -171,7 +171,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<table class="table">
+					<table class="table" id="staff-delete">
 						<thead>
 						<tr>
 							<th th:text="#{staff.field.team}">チーム名</th>
@@ -199,9 +199,14 @@
 							<td>10日</td>
 							<td><i th:class="${staff.telework} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
 							<td><i th:class="${staff.disabled} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
-							<td><a th:href="@{/admin/work-time/{id}(id=${staff.id})}"><i class="glyphicon glyphicon-time"></i></a></td>
-							<td><a th:href="@{/admin/staffs/edit/{id}(id=${staff.id})}"><i class="glyphicon glyphicon-pencil"></i></a></td>
-							<td><a @click="delete_staff(${staff.id})" th:href="@{/admin/staffs/delete/{id}(id=${staff.id})}"><i class="glyphicon glyphicon-trash"></i></a></td>
+							<td><a class="btn btn-link glyphicon glyphicon-time" th:href="@{/admin/work-time/{id}(id=${staff.id})}"></a></td>
+							<td><a class="btn btn-link glyphicon glyphicon-pencil" th:href="@{/admin/staffs/edit/{id}(id=${staff.id})}"></a></td>
+							<td>
+								<form method="post" th:action="@{/admin/staffs/delete/{id}(id=${staff.id})}">
+									<input type="hidden" name="_method" value="delete"/>
+									<button class="btn btn-link glyphicon glyphicon-trash"></button>
+								</form>
+							</td>
 						</tr>
 						</tbody>
 					</table>
@@ -209,23 +214,6 @@
 			</div>
 		</div>
 	</div>
-	<!--<script>-->
-		<!--new Vue({-->
-			<!--el:'#modify-complete',-->
-			<!--methods: {-->
-				<!--delete_staff: function(id) {-->
-					<!--axios.delete('/admin/staffs/delete/' + id)-->
-						<!--.then(response => {-->
-							<!--console.log(response.data);-->
-							<!--// TODO:Vue.jsでバインドする-->
-							<!--location.reload();-->
-						<!--}).catch(error => {-->
-						<!--console.log(error);-->
-					<!--})-->
-				<!--}-->
-			<!--}-->
-		<!--});-->
-	<!--</script>-->
 	</body>
 
 </html>
