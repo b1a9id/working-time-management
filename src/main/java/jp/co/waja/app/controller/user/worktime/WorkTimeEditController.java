@@ -1,7 +1,6 @@
 package jp.co.waja.app.controller.user.worktime;
 
-import jp.co.waja.core.entity.WorkTime;
-import jp.co.waja.core.entity.WorkTimeYearMonth;
+import jp.co.waja.core.entity.*;
 import jp.co.waja.core.model.worktime.WorkTimeYearMonthEditRequest;
 import jp.co.waja.core.service.staff.StaffDetails;
 import jp.co.waja.core.service.worktime.WorkTimeService;
@@ -16,9 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.YearMonth;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/work-time/edit")
@@ -41,8 +38,8 @@ public class WorkTimeEditController {
 	}
 
 	@ModelAttribute("workTypes")
-	public List<WorkTime.WorkType> setUpWorkTypes() {
-		return Arrays.asList(WorkTime.WorkType.values());
+	public List<WorkTime.WorkType> setUpWorkTypes(@AuthenticationPrincipal StaffDetails loginUser) {
+		return WorkTimeUtil.workTypes(loginUser.getStaff());
 	}
 
 	@GetMapping("/{displayYearMonth}")

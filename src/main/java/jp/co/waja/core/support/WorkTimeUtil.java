@@ -1,6 +1,6 @@
 package jp.co.waja.core.support;
 
-import jp.co.waja.core.entity.WorkTime;
+import jp.co.waja.core.entity.*;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static jp.co.waja.core.entity.WorkTime.WorkType.*;
 
 /**
  * Created by uchitate on 2017/06/26.
@@ -35,9 +37,25 @@ public class WorkTimeUtil {
 
 		DayOfWeek dayOfWeek = date.getDayOfWeek();
 		if (isHoliday || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
-			return WorkTime.WorkType.LEGAL_VACATION;
+			return LEGAL_VACATION;
 		}
 		return WorkTime.WorkType.NORMAL;
+	}
+
+	public static List<WorkTime.WorkType> workTypes(Staff staff) {
+		if (!staff.isFlextime()) {
+			return Arrays.asList(WorkTime.WorkType.values());
+		}
+
+		return Arrays.asList(
+				NORMAL,
+				LEGAL_VACATION,
+				FULL_PAID_VACATION,
+				HALF_PAID_VACATION,
+				ABSENCE,
+				HALF_ABSENCE,
+				SPECIAL_VACATION
+		);
 	}
 
 	public static int yearMonthToInt(YearMonth yearMonth) {
