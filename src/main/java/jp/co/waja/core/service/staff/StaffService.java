@@ -64,6 +64,7 @@ public class StaffService {
 		staff.setGender(request.getGender());
 		staff.setEmploymentType(request.getEmploymentType());
 		staff.setEnteredDate(request.getEnteredDate());
+		staff.setFlextime(request.getFlextime());
 		staff.setTelework(request.getTelework());
 		staff.setDisabled(request.getDisabled());
 		staff.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -82,6 +83,7 @@ public class StaffService {
 		staff.setGender(request.getGender());
 		staff.setEmploymentType(request.getEmploymentType());
 		staff.setEnteredDate(request.getEnteredDate());
+		staff.setFlextime(request.getFlextime());
 		staff.setTelework(request.getTelework());
 		staff.setDisabled(request.getDisabled());
 		staff.setRole(request.getRole());

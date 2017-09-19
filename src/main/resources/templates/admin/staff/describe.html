@@ -98,6 +98,10 @@
 									<td th:text="${staff.nameLastKana} + ${staff.nameFirstKana}">てすとたろう</td>
 								</tr>
 								<tr>
+									<th th:text="#{staff.field.employment.type}">ふりがな</th>
+									<td th:text="#{|staff.employmenttype.${staff.employmentType}|}">正社員</td>
+								</tr>
+								<tr>
 									<th th:text="#{staff.field.email}">メールアドレス</th>
 									<td th:text="${staff.email}">worldrone@waja.jp</td>
 								</tr>
@@ -107,15 +111,19 @@
 								</tr>
 								<tr>
 									<th th:text="#{staff.field.entereddate}">入社日</th>
-									<td th:text="${staff.enteredDate}">2015/06/01</td>
+									<td th:text="${#temporals.format(staff.enteredDate, 'yyyy/MM/dd')}">2015/06/01</td>
 								</tr>
+								<!--<tr>-->
+									<!--<th>有給付与日</th>-->
+									<!--<td>2015/12/01</td>-->
+								<!--</tr>-->
+								<!--<tr>-->
+									<!--<th>残有給日数</th>-->
+									<!--<td>10日</td>-->
+								<!--</tr>-->
 								<tr>
-									<th>有給付与日</th>
-									<td>2015/12/01</td>
-								</tr>
-								<tr>
-									<th>残有給日数</th>
-									<td>10日</td>
+									<th th:text="#{staff.field.flextime}">フレックスタイム</th>
+									<td><i th:if="${staff.flextime}" class="glyphicon glyphicon-ok"></i></td>
 								</tr>
 								<tr>
 									<th th:text="#{staff.field.telework}">在宅</th>
