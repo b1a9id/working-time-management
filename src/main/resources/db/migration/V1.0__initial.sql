@@ -95,11 +95,11 @@ INSERT INTO team (id, name, short_name, created_at, created_by) VALUES (5, 'マ�
 INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, flextime, telework, disabled, password, role, created_at, created_by)
 VALUES (6, 1, '田中', '一郎', 'たなか', 'いちろう', 'tanaka_taro@waja.jp', 'MAN', 'PERMANENT_STAFF', '2015/01/01', 1, 1, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'STAFF', '2017/07/01 00:00:00', '内立良介');
 INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, flextime, telework, disabled, password, role, created_at, created_by)
-VALUES (7, 2, '田中', '二郎', 'たなか', 'じろう', 'tanaka_jiro@waja.jp', 'MAN', 'CREW_TWO', '2015/01/01', 1, 1, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'ADMIN', '2017/07/01 00:00:00', '内立良介');
+VALUES (7, 2, '田中', '二郎', 'たなか', 'じろう', 'tanaka_jiro@waja.jp', 'MAN', 'PERMANENT_STAFF', '2015/01/01', 1, 1, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'ADMIN', '2017/07/01 00:00:00', '内立良介');
 INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, flextime, telework, disabled, password, role, created_at, created_by)
 VALUES (8, 3, '長澤', 'まさみ', 'ながさわ', 'まさみ', 'nagasawa_masami@waja.jp', 'WOMAN', 'CREW_THREE', '2015/01/01', 0, 1, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'STAFF', '2017/07/01 00:00:00', '内立良介');
 INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, flextime, telework, disabled, password, role, created_at, created_by)
-VALUES (9, 4, '田中', '四郎', 'たなか', 'しろう', 'tanaka_shiro@waja.jp', 'MAN', 'CREW_FOUR', '2015/01/01', 1, 1, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'STAFF', '2017/07/01 00:00:00', '内立良介');
+VALUES (9, 4, '田中', '四郎', 'たなか', 'しろう', 'tanaka_shiro@waja.jp', 'MAN', 'CREW_FOUR', '2015/01/01', 0, 1, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'STAFF', '2017/07/01 00:00:00', '内立良介');
 INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, flextime, telework, disabled, password, role, created_at, created_by)
 VALUES (10, 5, '鈴木', '花子', 'すずき', 'はなこ', 'suzuki_hanako@waja.jp', 'WOMAN', 'PERMANENT_STAFF', '2015/01/01', 0, 1, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'MANAGER', '2017/07/01 00:00:00', '内立良介');
 
