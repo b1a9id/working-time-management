@@ -1,7 +1,6 @@
 package jp.co.waja.app.controller.admin.staff;
 
-import jp.co.waja.core.entity.Staff;
-import jp.co.waja.core.entity.Team;
+import jp.co.waja.core.entity.*;
 import jp.co.waja.core.model.Role;
 import jp.co.waja.core.service.staff.StaffService;
 import jp.co.waja.core.service.team.TeamService;
@@ -9,14 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin/staffs")
@@ -69,6 +64,19 @@ public class StaffCreateController {
 			RedirectAttributes redirectAttributes) {
 		redirectAttributes.addFlashAttribute(FORM_MODEL_KEY, form);
 		redirectAttributes.addFlashAttribute(ERRORS_MODEL_KEYS, errors);
+
+		if (form.getEmploymentType() != Staff.EmploymentType.PERMANENT_STAFF) {
+			if (form.getFlextime()) {
+				errors.rejectValue("flextime", "error.cannot.flextime");
+			}
+			if (form.getTelework()) {
+				errors.rejectValue("telework", "error.cannot.telework");
+			}
+			if (form.getRole() != Role.CREW) {
+				errors.rejectValue("role", "error.cannot.choice.role");
+			}
+		}
+
 		if (errors.hasErrors()) {
 			return "redirect:/admin/staffs/create?error";
 		}
