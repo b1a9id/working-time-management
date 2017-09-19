@@ -14,7 +14,6 @@
 </head>
 <body th:with="yearMonth=${#workTimes.intToYearMonth(workTimeYearMonth.workYearMonth)}">
 <div th:replace="common/layout::navbar-layout"></div>
-<div class="section"></div>
 <div class="section">
 	<div class="container">
 		<div class="row">
@@ -27,7 +26,7 @@
 				<ul class="breadcrumb">
 					<li><a th:href="@{/}">ダッシュボード</a></li>
 					<li><a th:href="@{/work-time}">稼働実績照会</a></li>
-					<li th:text="#{worktime.edit.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績入力</li>
+					<li class="active" th:text="#{worktime.edit.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績入力</li>
 				</ul>
 			</div>
 		</div>
@@ -39,7 +38,7 @@
 			<div class="col-md-12">
 				<form class="form-horizontal" role="form" th:action="@{/work-time/edit/{displayYearMonth}(displayYearMonth=${yearMonth})}" method="post" th:object="${form}">
 					<input type="hidden" th:field="*{id}" th:value="*{id}" />
-					<table class="table table-bordered form-group">
+					<table class="table table-bordered">
 						<thead>
 						<tr>
 							<th class="col-md-1" th:text="#{worktime.list.header.date}">日付</th>
