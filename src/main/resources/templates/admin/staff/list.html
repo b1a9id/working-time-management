@@ -179,9 +179,9 @@
 							<th th:text="#{staff.field.employment.type}">雇用形態</th>
 							<th>有給付与日</th>
 							<th>残有給日数</th>
-							<th>フレックス</th>
-							<th th:text="#{staff.field.telework}">在宅</th>
-							<th>無効</th>
+							<th class="text-center">フレックス</th>
+							<th class="text-center" th:text="#{staff.field.telework}">在宅</th>
+							<th class="text-center">無効</th>
 							<th th:text="#{role.label}">権限</th>
 							<th></th>
 							<th></th>
@@ -190,7 +190,7 @@
 						</thead>
 						<tbody>
 						<tr th:each="staff : ${staffs}">
-							<td th:text="${staff.team.name}">クリエイティブチーム</td>
+							<td th:text="${staff.team.shortName}">クリエイティブチーム</td>
 							<td><a th:href="@{/admin/staffs/describe/{id}(id=${staff.id})}" th:text="${staff.nameLast} + ${staff.nameFirst}">テスト太郎</a></td>
 							<td th:text="#{|staff.employmenttype.${staff.employmentType}|}">正社員</td>
 							<td>06/01</td>

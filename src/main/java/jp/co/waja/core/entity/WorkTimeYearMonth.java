@@ -53,4 +53,11 @@ public class WorkTimeYearMonth extends AbstractEntity<Long> implements Serializa
 			joinColumns = @JoinColumn(name = "work_time_year_month_id")
 	)
 	private List<WorkTime> workTimes;
+
+	public long countByWorkType(WorkTime.WorkType workType) {
+		List<WorkTime> workTimes = getWorkTimes();
+		return workTimes.stream()
+				.filter(workTime -> workTime.getWorkType().equals(workType))
+				.count();
+	}
 }
