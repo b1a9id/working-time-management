@@ -35,8 +35,8 @@ public class PasswordEditController {
 		if (Objects.isNull(staff)) {
 			return "redirect:/admin/staffs";
 		}
-		PasswordEditForm form = (PasswordEditForm) model.asMap().get(FORM_MODEL_KEY);
-		form = Optional.ofNullable(form).orElse(new PasswordEditForm());
+		PasswordInitForm form = (PasswordInitForm) model.asMap().get(FORM_MODEL_KEY);
+		form = Optional.ofNullable(form).orElse(new PasswordInitForm());
 		model.addAttribute(FORM_MODEL_KEY, form);
 		model.addAttribute("staff" ,staff);
 		return "admin/staff/password/edit";
@@ -45,7 +45,7 @@ public class PasswordEditController {
 	@PostMapping("/edit/{id}")
 	public String passwordEdit(
 			@PathVariable Long id,
-			@ModelAttribute(FORM_MODEL_KEY) @Validated PasswordEditForm form,
+			@ModelAttribute(FORM_MODEL_KEY) @Validated PasswordInitForm form,
 			BindingResult errors,
 			RedirectAttributes redirectAttributes) {
 		redirectAttributes.addFlashAttribute(FORM_MODEL_KEY, form);
@@ -59,17 +59,11 @@ public class PasswordEditController {
 			return "redirect:/admin/staffs";
 		}
 
-		if (!passwordEncoder.matches(form.getOldPassword(), staff.getPassword())) {
-			errors.rejectValue("oldPassword", "valid.oldpassword");
-		}
-		if (!form.getNewPassword().equals(form.getRetypePassword())) {
-			errors.rejectValue("retypePassword", "valid.retypepassword");
-		}
 		if (errors.hasErrors()) {
 			return "redirect:/admin/staffs/password/edit/{id}?error";
 		}
 
-		Staff passwordUpdatedStaff = staffService.editPassword(staff.getId(), form.toPasswordEditRequest());
+		Staff passwordUpdatedStaff = staffService.initPassword(staff.getId(), form.toPasswordEditRequest());
 		redirectAttributes.getFlashAttributes().clear();
 		redirectAttributes.addFlashAttribute("passwordUpdatedStaff", passwordUpdatedStaff);
 		return "redirect:/admin/staffs";

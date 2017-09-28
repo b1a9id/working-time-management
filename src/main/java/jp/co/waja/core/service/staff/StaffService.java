@@ -2,10 +2,7 @@ package jp.co.waja.core.service.staff;
 
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.model.Role;
-import jp.co.waja.core.model.staff.PasswordEditRequest;
-import jp.co.waja.core.model.staff.StaffCreateRequest;
-import jp.co.waja.core.model.staff.StaffEditRequest;
-import jp.co.waja.core.model.staff.StaffSearchRequest;
+import jp.co.waja.core.model.staff.*;
 import jp.co.waja.core.repository.staff.StaffRepository;
 import jp.co.waja.core.service.team.TeamService;
 import jp.co.waja.core.service.worktime.WorkTimeService;
@@ -91,6 +88,12 @@ public class StaffService {
 	}
 
 	public Staff editPassword(Long id, PasswordEditRequest request) throws NotFoundException {
+		Staff staff = staffRepository.findOne(id);
+		staff.setPassword(passwordEncoder.encode(request.getNewPassword()));
+		return staffRepository.saveAndFlush(staff);
+	}
+
+	public Staff initPassword(Long id, PasswordInitRequest request) throws NotFoundException {
 		Staff staff = staffRepository.findOne(id);
 		staff.setPassword(passwordEncoder.encode(request.getNewPassword()));
 		return staffRepository.saveAndFlush(staff);
