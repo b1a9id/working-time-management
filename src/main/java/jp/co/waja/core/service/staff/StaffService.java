@@ -50,6 +50,7 @@ public class StaffService {
 		return staffRepository.search(request);
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	public Staff create(StaffCreateRequest request) {
 		Staff staff = new Staff();
 		staff.setTeam(request.getTeam());
@@ -69,6 +70,7 @@ public class StaffService {
 		return staffRepository.saveAndFlush(staff);
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	public Staff edit(StaffEditRequest request, Long id) {
 		Staff staff = staffRepository.findOne(id);
 		staff.setTeam(request.getTeam());
@@ -93,12 +95,14 @@ public class StaffService {
 		return staffRepository.saveAndFlush(staff);
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	public Staff initPassword(Long id, PasswordInitRequest request) throws NotFoundException {
 		Staff staff = staffRepository.findOne(id);
 		staff.setPassword(passwordEncoder.encode(request.getNewPassword()));
 		return staffRepository.saveAndFlush(staff);
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	public Optional<String> delete(Long id) throws NotFoundException, WrongDeleteException {
 		Staff staff = staffRepository.findOne(id);
 		if (Objects.isNull(staff)) {
