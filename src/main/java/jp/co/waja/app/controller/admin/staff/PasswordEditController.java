@@ -1,6 +1,5 @@
 package jp.co.waja.app.controller.admin.staff;
 
-import jp.co.waja.app.controller.user.profile.PasswordEditForm;
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.service.staff.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
