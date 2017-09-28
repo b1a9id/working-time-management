@@ -6,6 +6,7 @@ import jp.co.waja.core.repository.staff.StaffRepository;
 import jp.co.waja.core.repository.team.TeamRepository;
 import jp.co.waja.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,7 @@ public class TeamService {
 		return teamRepository.findOneById(teamId);
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	public Team create(TeamCreateRequest request) {
 		Team team = new Team();
 		team.setName(request.getName());
@@ -36,6 +38,7 @@ public class TeamService {
 		return teamRepository.saveAndFlush(team);
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	public Team edit(TeamEditRequest request, Long id) {
 		Optional<Team> teamOptional = Optional.ofNullable(teamRepository.findOneById(id));
 		if (!teamOptional.isPresent()) {
@@ -48,6 +51,7 @@ public class TeamService {
 		return teamRepository.saveAndFlush(team);
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	public Optional<String> delete(Long id) throws NotFoundException, WrongDeleteException {
 		Team team = teamRepository.findOneById(id);
 		if (Objects.isNull(team)) {
