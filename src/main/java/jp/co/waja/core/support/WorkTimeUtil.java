@@ -5,9 +5,7 @@ import jp.co.waja.core.entity.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.Arrays;
-import java.util.List;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -31,6 +29,9 @@ public class WorkTimeUtil {
 	}
 
 	public static WorkTime.WorkType workType(LocalDate date) {
+		if (date == null) {
+			return null;
+		}
 		List<LocalDate> publicHolidays = PublicHolidays.getPublicHolidays();
 		boolean isHoliday = publicHolidays.stream()
 				.anyMatch(publicHoliday -> publicHoliday.isEqual(date));
@@ -39,10 +40,13 @@ public class WorkTimeUtil {
 		if (isHoliday || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
 			return LEGAL_VACATION;
 		}
-		return WorkTime.WorkType.NORMAL;
+		return NORMAL;
 	}
 
 	public static List<WorkTime.WorkType> workTypes(Staff staff) {
+		if (staff == null) {
+			return null;
+		}
 		if (!staff.isFlextime()) {
 			return Arrays.asList(WorkTime.WorkType.values());
 		}
@@ -58,13 +62,21 @@ public class WorkTimeUtil {
 		);
 	}
 
-	public static int yearMonthToInt(YearMonth yearMonth) {
+	public static Integer yearMonthToInt(YearMonth yearMonth) {
+		if (yearMonth == null) {
+			return null;
+		}
+
 		Integer year = yearMonth.getYear();
 		Integer month = yearMonth.getMonthValue();
 		return Integer.valueOf(year.toString() + month.toString());
 	}
 
 	public static YearMonth intToYearMonth(Integer yearMonth) {
+		if (yearMonth == null) {
+			return null;
+		}
+
 		String year = yearMonth.toString().substring(0, 4);
 		String month = "0" + yearMonth.toString().substring(4);
 		StringJoiner joiner = new StringJoiner("-");
