@@ -6,17 +6,15 @@ import jp.co.waja.core.model.staff.*;
 import jp.co.waja.core.repository.staff.StaffRepository;
 import jp.co.waja.core.service.team.TeamService;
 import jp.co.waja.core.service.worktime.WorkTimeService;
-import jp.co.waja.exception.NotFoundException;
-import jp.co.waja.exception.WrongDeleteException;
+import jp.co.waja.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -43,11 +41,13 @@ public class StaffService {
 	}
 
 	@PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
-	public List<Staff> getStaffs(Staff loginUser, StaffSearchRequest request) {
+	public Page<Staff> getStaffs(Staff loginUser, StaffSearchRequest request, int size, int page) {
 		if (loginUser.getRole() == Role.MANAGER) {
 			request.setTeamId(loginUser.getTeam().getId());
 		}
-		return staffRepository.search(request);
+
+		Pageable pageable = new PageRequest(page, size);
+		return staffRepository.search(request, pageable);
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")

@@ -6,6 +6,7 @@ import jp.co.waja.core.entity.Team;
 import jp.co.waja.core.model.staff.StaffSearchRequest;
 import jp.co.waja.core.service.team.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -27,7 +28,7 @@ public class StaffRepositoryImpl implements StaffRepositoryCustom {
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<Staff> search(StaffSearchRequest request) {
+	public Page<Staff> search(StaffSearchRequest request, Pageable pageable) {
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Staff> query = builder.createQuery(Staff.class);
 		Root<Staff> root = query.from(Staff.class);
@@ -55,6 +56,6 @@ public class StaffRepositoryImpl implements StaffRepositoryCustom {
 		where.add(disabledPredicate);
 
 		query.where(where.toArray(new Predicate[where.size()]));
-		return entityManager.createQuery(query).getResultList();
+		return new PageImpl<>(entityManager.createQuery(query).getResultList(), pageable, 2);
 	}
 }
