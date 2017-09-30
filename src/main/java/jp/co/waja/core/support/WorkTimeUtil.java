@@ -77,8 +77,9 @@ public class WorkTimeUtil {
 			return null;
 		}
 
-		String year = yearMonth.toString().substring(0, 4);
-		String month = "0" + yearMonth.toString().substring(4);
+		String yearMonthStr = yearMonth.toString();
+		String year = yearMonthStr.substring(0, 4);
+		String month = yearMonthStr.substring(4).length() >= 2 ? yearMonthStr.substring(4) : "0" + yearMonthStr.substring(4);
 		StringJoiner joiner = new StringJoiner("-");
 		return YearMonth.parse(joiner.add(year).add(month).toString());
 	}
