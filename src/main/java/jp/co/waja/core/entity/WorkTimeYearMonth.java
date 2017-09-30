@@ -3,6 +3,7 @@ package jp.co.waja.core.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class WorkTimeYearMonth extends AbstractEntity<Long> implements Serializable {
 
 	public WorkTimeYearMonth(Staff staff, Integer workYearMonth) {
