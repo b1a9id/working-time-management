@@ -1,16 +1,22 @@
 package jp.co.waja.app.controller.admin.staff;
 
-import jp.co.waja.app.support.PageabelForm;
-import jp.co.waja.core.entity.*;
-import jp.co.waja.core.service.staff.*;
+import jp.co.waja.core.entity.Staff;
+import jp.co.waja.core.entity.Team;
+import jp.co.waja.core.service.staff.StaffDetails;
+import jp.co.waja.core.service.staff.StaffService;
 import jp.co.waja.core.service.team.TeamService;
 import jp.co.waja.core.service.worktime.WorkTimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
@@ -48,13 +54,12 @@ public class StaffListController {
 	@GetMapping
 	public String list(
 			@AuthenticationPrincipal StaffDetails loginUser,
-			@ModelAttribute PageabelForm pageabelForm,
+			@PageableDefault(size = 20, sort = "id") Pageable pageable,
 			Model model) {
 		StaffSearchForm form = (StaffSearchForm) model.asMap().get(FORM_MODEL_KEY);
 		form = Optional.ofNullable(form).orElse(new StaffSearchForm());
 
-		int size = pageabelForm.getSize() == 0 ? 20 : pageabelForm.getSize();
-		Page<Staff> staffs = staffService.getStaffs(loginUser.getStaff(), form.toStaffSearchRequest(), size, pageabelForm.getPage());
+		Page<Staff> staffs = staffService.getStaffs(loginUser.getStaff(), form.toStaffSearchRequest(), pageable);
 
 		Map<Long, Boolean> existWorkTimeMap = new HashMap<>();
 		staffs.forEach(staff -> existWorkTimeMap.put(staff.getId(), workTimeService.countByStaff(staff) > 0));

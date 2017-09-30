@@ -41,12 +41,11 @@ public class StaffService {
 	}
 
 	@PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
-	public Page<Staff> getStaffs(Staff loginUser, StaffSearchRequest request, int size, int page) {
+	public Page<Staff> getStaffs(Staff loginUser, StaffSearchRequest request, Pageable pageable) {
 		if (loginUser.getRole() == Role.MANAGER) {
 			request.setTeamId(loginUser.getTeam().getId());
 		}
 
-		Pageable pageable = new PageRequest(page, size);
 		return staffRepository.search(request, pageable);
 	}
 

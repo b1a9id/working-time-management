@@ -56,6 +56,10 @@ public class StaffRepositoryImpl implements StaffRepositoryCustom {
 		where.add(disabledPredicate);
 
 		query.where(where.toArray(new Predicate[where.size()]));
-		return new PageImpl<>(entityManager.createQuery(query).getResultList(), pageable, 2);
+
+		List<Staff> staffs = entityManager.createQuery(query).getResultList();
+		int start = pageable.getOffset();
+		int end = start + pageable.getPageSize() > staffs.size() ? staffs.size() : start + pageable.getPageSize();
+		return new PageImpl<>(staffs.subList(start, end), pageable, staffs.size());
 	}
 }
