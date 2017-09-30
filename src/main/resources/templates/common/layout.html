@@ -52,7 +52,7 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">管理者メニュー</a>
 						<ul class="dropdown-menu" role="menu">
 							<li>
-								<a th:href="@{/admin/staffs}">スタッフ管理</a>
+								<a th:href="@{/admin/staffs?page=0}">スタッフ管理</a>
 							</li>
 							<li sec:authorize="hasAnyRole('ADMIN')">
 								<a th:href="@{/admin/teams}">チーム管理</a>

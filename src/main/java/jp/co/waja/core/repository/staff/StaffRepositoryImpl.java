@@ -5,6 +5,7 @@ import jp.co.waja.core.entity.Staff_;
 import jp.co.waja.core.entity.Team;
 import jp.co.waja.core.model.staff.StaffSearchRequest;
 import jp.co.waja.core.service.team.TeamService;
+import jp.co.waja.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,6 +61,9 @@ public class StaffRepositoryImpl implements StaffRepositoryCustom {
 		List<Staff> staffs = entityManager.createQuery(query).getResultList();
 		int start = pageable.getOffset();
 		int end = start + pageable.getPageSize() > staffs.size() ? staffs.size() : start + pageable.getPageSize();
+		if (start > end) {
+			throw new NotFoundException();
+		}
 		return new PageImpl<>(staffs.subList(start, end), pageable, staffs.size());
 	}
 }

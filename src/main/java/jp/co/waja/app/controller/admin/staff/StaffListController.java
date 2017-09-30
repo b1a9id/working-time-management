@@ -1,5 +1,6 @@
 package jp.co.waja.app.controller.admin.staff;
 
+import jp.co.waja.app.support.PageWrapper;
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.entity.Team;
 import jp.co.waja.core.service.staff.StaffDetails;
@@ -54,7 +55,7 @@ public class StaffListController {
 	@GetMapping
 	public String list(
 			@AuthenticationPrincipal StaffDetails loginUser,
-			@PageableDefault(size = 20, sort = "id") Pageable pageable,
+			@PageableDefault(size = 25, sort = "id") Pageable pageable,
 			Model model) {
 		StaffSearchForm form = (StaffSearchForm) model.asMap().get(FORM_MODEL_KEY);
 		form = Optional.ofNullable(form).orElse(new StaffSearchForm());
@@ -65,6 +66,7 @@ public class StaffListController {
 		staffs.forEach(staff -> existWorkTimeMap.put(staff.getId(), workTimeService.countByStaff(staff) > 0));
 
 		model.addAttribute("staffs", staffs);
+		model.addAttribute("pagination", new PageWrapper<>(staffs));
 		model.addAttribute("existWorkTimeMap", existWorkTimeMap);
 		return "admin/staff/list";
 	}
