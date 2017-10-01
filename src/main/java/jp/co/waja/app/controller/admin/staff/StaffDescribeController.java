@@ -23,7 +23,7 @@ public class StaffDescribeController {
 	public String describe(
 			@PathVariable Long id,
 			Model model) {
-		Staff staff = staffService.findOneById(id);
+		Staff staff = staffService.getStaff(id);
 		if (Objects.isNull(staff)) {
 			throw new NotFoundException();
 		}

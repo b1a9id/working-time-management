@@ -35,12 +35,12 @@ public class StaffEditController {
 
 	@ModelAttribute(TARGET_ENTITY_KEY)
 	public Staff setupStaff(@PathVariable Long id) {
-		return staffService.findOneById(id);
+		return staffService.getStaff(id);
 	}
 
 	@ModelAttribute("teams")
 	public List<Team> setUpTeam() {
-		return teamService.teams();
+		return teamService.getTeams();
 	}
 
 	@ModelAttribute("genders")
@@ -78,8 +78,21 @@ public class StaffEditController {
 			RedirectAttributes redirectAttributes) {
 		redirectAttributes.addFlashAttribute(FORM_MODEL_KEY, form);
 		redirectAttributes.addFlashAttribute(ERRORS_MODEL_KEYS, errors);
+
+		if (form.getEmploymentType() != Staff.EmploymentType.PERMANENT_STAFF) {
+			if (form.getFlextime()) {
+				errors.rejectValue("flextime", "error.cannot.flextime");
+			}
+			if (form.getTelework()) {
+				errors.rejectValue("telework", "error.cannot.telework");
+			}
+			if (form.getRole() != Role.CREW) {
+				errors.rejectValue("role", "error.cannot.choice.role");
+			}
+		}
+
 		if (errors.hasErrors()) {
-			return "redirect:/admin/staffs/edit?error";
+			return "redirect:/admin/staffs/edit/{id}?error";
 		}
 
 		Staff savedStaff = staffService.edit(form.toStaffEditRequest(), id);

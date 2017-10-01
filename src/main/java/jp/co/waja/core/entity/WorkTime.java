@@ -5,18 +5,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Entity
-@Table(name = "work_time")
 @Getter
 @Setter
 @NoArgsConstructor
-public class WorkTime extends AbstractEntity<Long> implements Serializable {
+@Embeddable
+public class WorkTime {
 
-	public enum workType {
+	public enum WorkType {
 		NORMAL,
 		LEGAL_VACATION,
 		FULL_PAID_VACATION,
@@ -29,22 +27,20 @@ public class WorkTime extends AbstractEntity<Long> implements Serializable {
 		SPECIAL_VACATION
 	}
 
-	public WorkTime(Staff staff, LocalDate date, workType workType) {
-		this.staff = staff;
+	public WorkTime(LocalDate date, WorkType workType) {
 		this.date = date;
 		this.workType = workType;
 	}
-
-	@ManyToOne
-	@JoinColumn(name = "staff_id", nullable = false)
-	private Staff staff;
 
 	@Column(nullable = false)
 	private LocalDate date;
 
 	@Column(name = "work_type", nullable = false)
 	@Enumerated(EnumType.STRING)
-	private workType workType;
+	private WorkType workType;
+
+	@Column(name = "train_delay")
+	private Boolean trainDelay;
 
 	@Column(name = "start_at")
 	private LocalTime startAt;

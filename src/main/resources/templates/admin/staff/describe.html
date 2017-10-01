@@ -43,6 +43,15 @@
 				</div>
 			</div>
 		</div>
+		<div th:if="${wrongDelete}" class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-danger" role="alert">
+						<span th:text="#{error.cannnotdelete(${wrongDelete})}">関連データが存在するため削除できません。</span>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="section">
 			<div class="container">
 				<div class="row">
@@ -61,10 +70,8 @@
 							<ul class="dropdown-menu" role="menu">
 								<li>
 									<a th:href="@{/admin/staffs/edit/{staffId}(staffId=${staff.id})}">編集</a>
-									<a th:href="@{/admin/staffs/delete?id={staffId}(staffId=${staff.id})}" data-method="delete">削除</a>
-									<a href="#">有給管理</a>
-									<a th:href="@{/work-time/list}">稼働実績確認</a>
-									<a th:href="@{/admin/staffs/password/edit}">パスワード変更</a>
+									<!--<a href="#">有給管理</a>-->
+									<a th:href="@{/admin/staffs/password/edit/{id}(id=${staff.id})}">パスワード変更</a>
 								</li>
 							</ul>
 						</div>
@@ -91,24 +98,44 @@
 									<td th:text="${staff.nameLastKana} + ${staff.nameFirstKana}">てすとたろう</td>
 								</tr>
 								<tr>
+									<th th:text="#{staff.field.employment.type}">ふりがな</th>
+									<td th:text="#{|staff.employmenttype.${staff.employmentType}|}">正社員</td>
+								</tr>
+								<tr>
+									<th th:text="#{staff.field.email}">メールアドレス</th>
+									<td th:text="${staff.email}">worldrone@waja.jp</td>
+								</tr>
+								<tr>
 									<th th:text="#{staff.field.gender}">性別</th>
 									<td th:text="#{|gender.${staff.gender}|}">男</td>
 								</tr>
 								<tr>
 									<th th:text="#{staff.field.entereddate}">入社日</th>
-									<td th:text="${staff.enteredDate}">2015/06/01</td>
+									<td th:text="${#temporals.format(staff.enteredDate, 'yyyy/MM/dd')}">2015/06/01</td>
 								</tr>
+								<!--<tr>-->
+									<!--<th>有給付与日</th>-->
+									<!--<td>2015/12/01</td>-->
+								<!--</tr>-->
+								<!--<tr>-->
+									<!--<th>残有給日数</th>-->
+									<!--<td>10日</td>-->
+								<!--</tr>-->
 								<tr>
-									<th>有給付与日</th>
-									<td>2015/12/01</td>
-								</tr>
-								<tr>
-									<th>残有給日数</th>
-									<td>10日</td>
+									<th th:text="#{staff.field.flextime}">フレックスタイム</th>
+									<td><i th:if="${staff.flextime}" class="glyphicon glyphicon-ok"></i></td>
 								</tr>
 								<tr>
 									<th th:text="#{staff.field.telework}">在宅</th>
 									<td><i th:if="${staff.telework}" class="glyphicon glyphicon-ok"></i></td>
+								</tr>
+								<tr>
+									<th th:text="#{staff.field.disabled}">アカウント無効</th>
+									<td><i th:if="${staff.disabled}" class="glyphicon glyphicon-ok"></i></td>
+								</tr>
+								<tr>
+									<th th:text="#{role.label}">権限</th>
+									<td th:text="|#{|role.${staff.role}|}">スタッフ</td>
 								</tr>
 							</tbody>
 						</table>

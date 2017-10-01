@@ -10,7 +10,6 @@
 		<link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
-		<script th:src="@{/js/profile/profile.js}"></script>
 
 		<title th:text="#{profile.title}">プロフィール</title>
 	</head>
@@ -33,6 +32,15 @@
 				</div>
 			</div>
 		</div>
+		<div th:if="${passwordUpdatedStaff}" class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-success" role="alert">
+						<span th:text="#{update.msg('パスワード')}">パスワードを更新しました。</span>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="section">
 			<div class="container">
 				<div class="row">
@@ -51,6 +59,7 @@
 									<th th:text="#{staff.field.entereddate}">入社日</th>
 									<td>2017/04/01</td>
 								</tr>
+								<!--/*-->
 								<tr>
 									<th>有給付与日</th>
 									<td>2017/10/01</td>
@@ -63,6 +72,7 @@
 									<th>2017年有給消滅日数</th>
 									<td>2日</td>
 								</tr>
+								<!--*/-->
 							</tbody>
 						</table>
 					</div>
