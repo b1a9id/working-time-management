@@ -18,8 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -77,6 +76,7 @@ public class WorkTimeService {
 		List<WorkTime> workTimes = request.getWorkTimes().stream()
 				.map(editRequest -> {
 					WorkTime workTime = new WorkTime(editRequest.getDate(), editRequest.getWorkType());
+					workTime.setTrainDelay(editRequest.getTrainDelay());
 					workTime.setStartAt(editRequest.getStartAt());
 					workTime.setEndAt(editRequest.getEndAt());
 					workTime.setRestTime(editRequest.getRestTime());
@@ -122,5 +122,15 @@ public class WorkTimeService {
 
 	public long countByStaff(Staff staff) {
 		return workTimeYearMonthRepository.countByStaff(staff);
+	}
+
+	public long countByWorkType(Staff staff, WorkTime.WorkType workType) {
+		List<WorkTimeYearMonth> workTimeYearMonths = workTimeYearMonthRepository.findAllByStaff(staff);
+		long total = 0;
+		for (WorkTimeYearMonth workTimeYearMonth : workTimeYearMonths) {
+			long amount = workTimeYearMonth.countByWorkType(workType);
+			total += amount;
+		}
+		return total;
 	}
 }

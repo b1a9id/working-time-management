@@ -39,6 +39,9 @@ public class WorkTime {
 	@Enumerated(EnumType.STRING)
 	private WorkType workType;
 
+	@Column(name = "train_delay")
+	private Boolean trainDelay;
+
 	@Column(name = "start_at")
 	private LocalTime startAt;
 

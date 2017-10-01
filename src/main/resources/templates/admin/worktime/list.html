@@ -1,5 +1,5 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ja">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="ja">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -14,7 +14,7 @@
 
 	<title th:text="#{worktime.list.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績</title>
 </head>
-<body th:with="yearMonth=${#workTimes.intToYearMonth(workTimeYearMonth.workYearMonth)}, today=${#temporals.createToday()}, thisMonth=${#temporals.month(today)}">
+<body th:with="yearMonth=${#workTimes.intToYearMonth(workTimeYearMonth.workYearMonth)}, today=${#temporals.createToday()}, thisMonth=${#temporals.month(today)}, normalCount=${#workTimes.workTypeDays(workTimeYearMonth, 'NORMAL')}">
 <div th:replace="common/layout::navbar-layout"></div>
 <div class="section">
 	<div class="container">
@@ -45,12 +45,17 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 text-right">
-				<!--/*/ <th:block th:unless="${workTimeYearMonth.approved1At}"> /*/-->
+				<!--/*/ <th:block sec:authorize="hasAnyRole('MANAGER')" th:unless="${workTimeYearMonth.approved1At}"> /*/-->
 				<div class="btn-group">
 					<a class="btn btn-default" href="#modal-approve" data-toggle="modal" th:disabled="!${workTimeYearMonth.completedAt}" th:style="!${workTimeYearMonth.completedAt} ? 'pointer-events : none;'">承認</a>
 				</div>
 				<div class="btn-group">
 					<a class="btn btn-default" href="#modal-modify" data-toggle="modal" th:disabled="!${workTimeYearMonth.completedAt}" th:style="!${workTimeYearMonth.completedAt} ? 'pointer-events : none;'">修正</a>
+				</div>
+				<!--/*/ </th:block> /*/-->
+				<!--/*/ <th:block sec:authorize="hasAnyRole('ADMIN')" th:if="${workTimeYearMonth.approved1At}"> /*/-->
+				<div>
+					<a class="btn btn-default" th:href="@{/admin/work-time/edit/{id}?displayYearMonth={displayYearMonth}(id=${workTimeYearMonth.staff.id},displayYearMonth=${yearMonth})}">編集</a>
 				</div>
 				<!--/*/ </th:block> /*/-->
 				<p th:with="completedAt=${#temporals.format(workTimeYearMonth.completedAt, 'yyyy/MM/dd hh:mm')}" th:if="${workTimeYearMonth.completedAt}" th:text="#{worktime.completed.message(${workTimeYearMonth.completedBy}, ${completedAt})}">完了:田中太郎(2017/08/10 10:30)</p>
@@ -87,20 +92,19 @@
 					<tbody>
 					<tr>
 						<th>出勤日数</th>
-						<td>
-							<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'NORMAL')}">22</span><span>日</span>
-						</td>
-					</tr>
-					<tr>
-						<th>欠勤/半欠勤日数</th>
-						<td>
-							<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'ABSENCE')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_ABSENCE')}">22</span><span>日</span>
-						</td>
+						<td><span th:text="${normalCount}">22</span><span>日</span></td>
 					</tr>
 					<tr>
 						<th>有給/半休取得日数</th>
 						<td>
 							<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION')}">22</span><span>日</span>
+						</td>
+					</tr>
+					<!--/*/ <th:block th:unless="${workTimeYearMonth.staff.flextime}"> /*/-->
+					<tr>
+						<th>欠勤/半欠勤日数</th>
+						<td>
+							<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'ABSENCE')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_ABSENCE')}">22</span><span>日</span>
 						</td>
 					</tr>
 					<tr>
@@ -109,6 +113,39 @@
 							<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION_AFTER')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION_AFTER')}">22</span><span>日</span>
 						</td>
 					</tr>
+					<!--/*/ </th:block> /*/-->
+					<!--/*/ <th:block th:if="${workTimeYearMonth.staff.flextime}"> /*/-->
+					<tr>
+						<th>前月不足勤務時間</th>
+						<td>
+							<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION_AFTER')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION_AFTER')}">22</span><span>日</span>
+						</td>
+					</tr>
+					<tr>
+						<th>月間所定勤務日数/時間</th>
+						<td>
+							<!--<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION_AFTER')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION_AFTER')}">22</span><span>日</span>-->
+						</td>
+					</tr>
+					<tr>
+						<th>1日あたりの規定労働時間</th>
+						<td>
+							<!--<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION_AFTER')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION_AFTER')}">22</span><span>日</span>-->
+						</td>
+					</tr>
+					<tr>
+						<th>月間労働時間</th>
+						<td>
+							<!--<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION_AFTER')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION_AFTER')}">22</span><span>日</span>-->
+						</td>
+					</tr>
+					<tr>
+						<th>有給消化計</th>
+						<td>
+							<!--<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION_AFTER')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION_AFTER')}">22</span><span>日</span>-->
+						</td>
+					</tr>
+					<!--/*/ </th:block> /*/-->
 					</tbody>
 				</table>
 			</div>
@@ -119,20 +156,23 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<table class="table">
+				<table class="table" th:with="regularWorkTime=${normalCount} * 8.00">
 					<caption>勤怠表</caption>
 					<thead>
 					<tr>
-						<th class="col-md-1" th:text="#{worktime.list.header.date}">日付</th>
-						<th class="col-md-2" th:text="#{worktime.list.header.type}">種別</th>
-						<th th:text="#{worktime.list.header.startat}">始業時間</th>
-						<th th:text="#{worktime.list.header.endat}">就業時間</th>
-						<th class="col-md-1" th:text="#{worktime.list.header.resttime}">休憩時間</th>
+						<th class="col-md-1 text-center" th:text="#{worktime.list.header.date}">日付</th>
+						<th class="col-md-1 text-center" th:text="#{worktime.list.header.type}">種別</th>
+						<th th:unless="${workTimeYearMonth.staff.flextime}" class="col-md-1 text-center" th:text="#{worktime.list.header.traindelay}">電車遅延</th>
+						<th class="text-center" th:text="#{worktime.list.header.startat}">始業時間</th>
+						<th class="text-center" th:text="#{worktime.list.header.endat}">就業時間</th>
+						<th class="col-md-1 text-center" th:text="#{worktime.list.header.resttime}">休憩</th>
+						<th class="col-md-1 text-center" th:text="#{worktime.list.header.daytotal}">稼働時間</th>
 						<th th:text="#{worktime.list.header.remarks}">備考</th>
 					</tr>
 					</thead>
 					<tfoot>
 					<tr>
+						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -146,8 +186,9 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td>規定労働時間</td>
-						<td>160:00</td>
+						<td></td>
+						<td th:text="${workTimeYearMonth.staff.flextime} ? '有給消化数' : '規定時間'">規定時間</td>
+						<td th:text="${regularWorkTime}">154:00</td>
 						<td></td>
 					</tr>
 					<tr>
@@ -155,30 +196,23 @@
 						<td></td>
 						<td></td>
 						<td></td>
+						<td></td>
 						<td>残業時間</td>
-						<td>20:00</td>
+						<td th:text="${workTimeSum} - ${regularWorkTime} < 0 ? '0.00' : ${workTimeSum} - ${regularWorkTime}">20:00</td>
 						<td></td>
 					</tr>
 					</tfoot>
 					<tbody>
 					<tr th:classappend="${dayTotal}" th:each="workTime : ${workTimeYearMonth.workTimes}" th:with="dayTotal=${#workTimes.workTime(workTime.startAt, workTime.endAt, workTime.restTime)}">
-						<td th:text="${#temporals.format(workTime.date, 'MM/dd(E)')}">6/1（木）</td>
-						<td th:text="#{|worktime.worktype.${workTime.workType}|}">出勤</td>
-						<td th:text="${workTime.startAt}">9:00</td>
-						<td th:text="${workTime.endAt}">18:00</td>
-						<td th:text="${workTime.restTime}">1:00</td>
-						<td th:text="${dayTotal}">8.00</td>
-						<td th:text="${workTime.remarks}"></td>
+						<td class="text-center" th:text="${#temporals.format(workTime.date, 'MM/dd(E)')}">6/1（木）</td>
+						<td class="text-center" th:text="#{|worktime.worktype.${workTime.workType}|}">出勤</td>
+						<td th:unless="${workTimeYearMonth.staff.flextime}" class="text-center"><i th:classappend="${workTime.trainDelay} ? 'glyphicon glyphicon-ok'"></i></td>
+						<td class="text-center" th:text="${workTime.startAt}">9:00</td>
+						<td class="text-center" th:text="${workTime.endAt}">18:00</td>
+						<td class="text-center" th:text="${workTime.restTime}">1:00</td>
+						<td class="text-center" th:text="${dayTotal}">8.00</td>
+						<td class="text-center" th:text="${workTime.remarks}"></td>
 					</tr>
-					<!--<tr class="bg-danger">-->
-					<!--<td>6/2（金）</td>-->
-					<!--<td>出勤</td>-->
-					<!--<td>9:00</td>-->
-					<!--<td>19:00</td>-->
-					<!--<td>1:00</td>-->
-					<!--<td>9:00</td>-->
-					<!--<td></td>-->
-					<!--</tr>-->
 					</tbody>
 				</table>
 			</div>

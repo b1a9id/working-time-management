@@ -2,9 +2,8 @@ package jp.co.waja.core.repository.staff;
 
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.model.staff.StaffSearchRequest;
-
-import java.util.List;
+import org.springframework.data.domain.*;
 
 public interface StaffRepositoryCustom {
-	List<Staff> search(StaffSearchRequest request);
+	Page<Staff> search(StaffSearchRequest request, Pageable pageable);
 }

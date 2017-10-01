@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import java.util.List;
 
 @Component
-@ControllerAdvice("jp.co.waja.app.controller.user.worktime")
+@ControllerAdvice({"jp.co.waja.app.controller.user.worktime","jp.co.waja.app.controller.admin.worktime"})
 public class WorkTimeControllerAdvice {
 
 	@ModelAttribute("workTimeHour")

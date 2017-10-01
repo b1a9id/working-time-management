@@ -46,6 +46,7 @@ public class WorkTimeYearMonthEditForm implements Serializable {
 		WorkTimeEditRequest editRequest = new WorkTimeEditRequest();
 		editRequest.setDate(workTime.getDate());
 		editRequest.setWorkType(workTime.getWorkType());
+		editRequest.setTrainDelay(workTime.getTrainDelay());
 
 		List<WorkTime.WorkType> nonTimeWorkTypes = Arrays.asList(
 				LEGAL_VACATION, FULL_PAID_VACATION, ABSENCE, COMPENSATORY_VACATION, SPECIAL_VACATION

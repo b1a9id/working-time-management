@@ -123,6 +123,14 @@
 									<p class="help-block" th:if="${#fields.hasErrors('enteredDate')}" th:errors="*{enteredDate}">エラーメッセージ</p>
 								</div>
 							</div>
+							<div class="form-group" th:classappend="${#fields.hasErrors('flextime')}? has-error">
+								<div class="col-sm-offset-2 col-sm-10">
+									<div class="checkbox">
+										<label><input th:field="*{flextime}" type="checkbox" />フレックスタイム適用</label>
+										<p class="help-block" th:if="${#fields.hasErrors('flextime')}" th:errors="*{flextime}">エラーメッセージ</p>
+									</div>
+								</div>
+							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('telework')}? has-error">
 								<div class="col-sm-offset-2 col-sm-10">
 									<div class="checkbox">
@@ -153,7 +161,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
-									<a type="submit" class="btn btn-default" th:href="@{/admin/staff/describe?id={id}(id=${staff.id})}" th:text="#{back}">戻る</a>
+									<a type="submit" class="btn btn-default" th:href="@{/admin/staffs/describe/{id}(id=${staff.id})}" th:text="#{back}">戻る</a>
 									<button class="btn btn-success" th:text="#{update}">更新</button>
 								</div>
 							</div>

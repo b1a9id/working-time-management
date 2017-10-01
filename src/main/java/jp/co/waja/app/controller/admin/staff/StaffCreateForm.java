@@ -46,6 +46,8 @@ public class StaffCreateForm implements Serializable {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate enteredDate;
 
+	private Boolean flextime;
+
 	private Boolean telework;
 
 	private Boolean disabled;
@@ -67,6 +69,7 @@ public class StaffCreateForm implements Serializable {
 		request.setGender(getGender());
 		request.setEmploymentType(getEmploymentType());
 		request.setEnteredDate(getEnteredDate());
+		request.setFlextime(getFlextime());
 		request.setTelework(getTelework());
 		request.setDisabled(getDisabled());
 		request.setPassword(getPassword());

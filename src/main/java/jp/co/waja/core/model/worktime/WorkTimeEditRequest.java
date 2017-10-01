@@ -14,6 +14,8 @@ public class WorkTimeEditRequest implements Serializable {
 
 	private WorkTime.WorkType workType;
 
+	private Boolean trainDelay;
+
 	private LocalTime startAt;
 
 	private LocalTime endAt;
