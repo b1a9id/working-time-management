@@ -175,6 +175,21 @@
 			<version>2.18.1</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.google.api-client</groupId>
+			<artifactId>google-api-client-appengine</artifactId>
+			<version>1.22.0</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.cloud.sql</groupId>
+			<artifactId>mysql-socket-factory-connector-j-6</artifactId>
+			<version>1.0.4</version>
+		</dependency>
+
+
+
 		<!--<dependency>-->
 			<!--<groupId>org.hibernate</groupId>-->
 			<!--<artifactId>hibernate-core</artifactId>-->
