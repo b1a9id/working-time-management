@@ -70,7 +70,7 @@
 							<ul class="dropdown-menu" role="menu">
 								<li>
 									<a th:href="@{/admin/staffs/edit/{staffId}(staffId=${staff.id})}">編集</a>
-									<!--<a href="#">有給管理</a>-->
+									<!--<a href="#">有休管理</a>-->
 									<a th:href="@{/admin/staffs/password/edit/{id}(id=${staff.id})}">パスワード変更</a>
 								</li>
 							</ul>
@@ -114,11 +114,11 @@
 									<td th:text="${#temporals.format(staff.enteredDate, 'yyyy/MM/dd')}">2015/06/01</td>
 								</tr>
 								<!--<tr>-->
-									<!--<th>有給付与日</th>-->
+									<!--<th>有休付与日</th>-->
 									<!--<td>2015/12/01</td>-->
 								<!--</tr>-->
 								<!--<tr>-->
-									<!--<th>残有給日数</th>-->
+									<!--<th>残有休日数</th>-->
 									<!--<td>10日</td>-->
 								<!--</tr>-->
 								<tr>
