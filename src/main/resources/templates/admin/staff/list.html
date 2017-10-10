@@ -159,7 +159,7 @@
 							<a th:href="@{/admin/staffs?page={page}(page=${pagination.getNumber() - 1})}" th:disabled="!${pagination.hasPrevious()}" th:style="!${pagination.hasPrevious()} ? 'pointer-events : none;'"><i class="fa fa-angle-left fa-fw fa-lg"></i></a>
 						</li>
 						<li class = 'active'>
-							<a th:href="@{/admin/staffs?page={page}(page=${pagination.getNumber()})}" th:text="${pagination.currentNumber}">2</a>
+							<a th:href="@{/admin/staffs?page={page}(page=${pagination.getNumber()})}" disabled="disabled" style="pointer-events : none;" th:text="${pagination.currentNumber}">2</a>
 						</li>
 						<li>
 							<a th:href="@{/admin/staffs?page={page}(page=${pagination.getNumber() + 1})}" th:disabled="!${pagination.hasNext()}" th:style="!${pagination.hasNext()} ? 'pointer-events : none;'"><i class="fa fa-angle-right fa-fw fa-lg"></i></a>
