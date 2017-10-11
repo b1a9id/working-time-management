@@ -6,12 +6,12 @@ drop table if exists user_role;
 
 create table team (
   id bigint not null auto_increment,
-  name varchar(255) not null,
-  short_name varchar(255) not null,
+  name varchar(30) not null,
+  short_name varchar(30) not null,
   created_at datetime,
-  created_by varchar(255),
+  created_by varchar(30),
   last_modified_at datetime,
-  last_modified_by varchar(255),
+  last_modified_by varchar(30),
   primary key (id)
 )
 engine=InnoDB;
@@ -19,13 +19,13 @@ engine=InnoDB;
 create table staff (
   id bigint not null auto_increment,
   team_id bigint not null,
-  name_last varchar(255) not null,
-  name_first varchar(255) not null,
-  name_last_kana varchar(255) not null,
-  name_first_kana varchar(255) not null,
-  email varchar(255) not null,
+  name_last varchar(30) not null,
+  name_first varchar(30) not null,
+  name_last_kana varchar(30) not null,
+  name_first_kana varchar(30) not null,
+  email varchar(50) not null,
   gender varchar(10) not null,
-  employment_type varchar(255) not null,
+  employment_type varchar(30) not null,
   entered_date date not null,
   flextime bit,
   telework bit,
@@ -33,12 +33,22 @@ create table staff (
   password varchar(255) not null,
   role varchar(20) not null,
   created_at datetime,
-  created_by varchar(255),
+  created_by varchar(30),
   last_modified_at datetime,
-  last_modified_by varchar(255),
+  last_modified_by varchar(30),
   primary key (id)
 )
 engine=InnoDB;
+
+create table staff_history (
+  staff_id bigint not null,
+  field_name varchar(100),
+  before_value varchar(100),
+  after_value varchar(100) not null,
+  updated_by varchar(30) not null,
+  updated_at datetime not null
+)
+  engine=InnoDB;
 
 create table paid_vacation (
   id bigint not null auto_increment,
@@ -47,9 +57,9 @@ create table paid_vacation (
   provide_date date not null,
   disappear_date date not null,
   created_at datetime,
-  created_by varchar(255),
+  created_by varchar(30),
   last_modified_at datetime,
-  last_modified_by varchar(255),
+  last_modified_by varchar(30),
   primary key (id)
 )
 engine=InnoDB;
@@ -65,9 +75,9 @@ create table work_time_year_month (
   approved2_at datetime,
   approved2_by varchar(30),
   created_at datetime,
-  created_by varchar(255),
+  created_by varchar(30),
   last_modified_at datetime,
-  last_modified_by varchar(255),
+  last_modified_by varchar(30),
   primary key (id)
 )
   engine=InnoDB;
@@ -75,7 +85,7 @@ create table work_time_year_month (
 create table work_time (
   work_time_year_month_id bigint not null,
   date date not null,
-  work_type varchar(255) not null,
+  work_type varchar(30) not null,
   train_delay bit,
   start_at time,
   end_at time,
@@ -160,3 +170,4 @@ alter table paid_vacation add constraint FKjk3lekaqd3mnn5432w6lsxtys foreign key
 alter table staff add constraint FKmdoqnc1maraqd1w8ptjpk1i9r foreign key (team_id) references team (id);
 alter table work_time add constraint FKewu2afn7kycb1qkdyd3njg9mk foreign key (work_time_year_month_id) references work_time_year_month (id);
 alter table work_time_year_month add constraint FKhl16odltapeepn6bbvvtwgjuu foreign key (staff_id) references staff (id);
+alter table staff_history add constraint FKrfgodmtowgdcdpps3cqahwqeo foreign key (staff_id) references staff (id);
