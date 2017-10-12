@@ -203,12 +203,12 @@
 							<td class="text-center"><i th:class="${staff.telework} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
 							<td class="text-center"><i th:class="${staff.disabled} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
 							<td th:text="|#{|role.${staff.role}|}">スタッフ</td>
-							<td><a class="btn btn-link glyphicon glyphicon-time" th:href="@{/admin/work-time/{id}(id=${staff.id})}"></a></td>
-							<td><a class="btn btn-link glyphicon glyphicon-pencil" th:href="@{/admin/staffs/edit/{id}(id=${staff.id})}"></a></td>
+							<td><a class="btn btn-link glyphicon glyphicon-time" data-toggle="tooltip" data-container="body" title="今月の稼働実績" data-placement="top" th:href="@{/admin/work-time/{id}(id=${staff.id})}"></a></td>
+							<td><a class="btn btn-link glyphicon glyphicon-pencil" data-toggle="tooltip" data-container="body" title="編集" data-placement="top" th:href="@{/admin/staffs/edit/{id}(id=${staff.id})}"></a></td>
 							<td>
 								<form method="post" th:action="@{/admin/staffs/delete/{id}(id=${staff.id})}">
 									<input type="hidden" name="_method" value="delete"/>
-									<button class="btn btn-link glyphicon glyphicon-trash"></button>
+									<button class="btn btn-link glyphicon glyphicon-trash" data-toggle="tooltip" data-container="body" title="削除" data-placement="top" ></button>
 								</form>
 							</td>
 						</tr>
@@ -218,6 +218,7 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
 	</body>
 
 </html>
