@@ -29,7 +29,7 @@ public class StaffEditHistoryController {
 
 		Map<LocalDateTime, List<StaffHistory>> histories = new LinkedHashMap<>();
 		staff.getHistories().stream()
-				.sorted(Comparator.comparing(StaffHistory::getUpdatedAt))
+				.sorted(Comparator.comparing(StaffHistory::getUpdatedAt).reversed())
 				.forEach(staffHistory -> histories.put(staffHistory.getUpdatedAt(), new ArrayList<>()));
 		staff.getHistories()
 				.forEach(staffHistory -> {
