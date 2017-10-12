@@ -91,11 +91,11 @@
 								</tr>
 								<tr>
 									<th th:text="#{staff.field.name}">名前</th>
-									<td th:text="${staff.nameLast} + ${staff.nameFirst}">テスト太郎</td>
+									<td th:text="${staff.getName()}">テスト太郎</td>
 								</tr>
 								<tr>
 									<th th:text="#{staff.field.name.kana}">ふりがな</th>
-									<td th:text="${staff.nameLastKana} + ${staff.nameFirstKana}">てすとたろう</td>
+									<td th:text="${staff.getNameKana()}">てすとたろう</td>
 								</tr>
 								<tr>
 									<th th:text="#{staff.field.employment.type}">ふりがな</th>

@@ -195,7 +195,7 @@
 						<tbody>
 						<tr th:each="staff : ${staffs}">
 							<td th:text="${staff.team.shortName}">クリエイティブチーム</td>
-							<td><a th:href="@{/admin/staffs/describe/{id}(id=${staff.id})}" th:text="${staff.nameLast} + ${staff.nameFirst}">テスト太郎</a></td>
+							<td><a th:href="@{/admin/staffs/describe/{id}(id=${staff.id})}" th:text="${staff.getName()}">テスト太郎</a></td>
 							<td th:text="#{|staff.employmenttype.${staff.employmentType}|}">正社員</td>
 							<td>06/01</td>
 							<td>10日</td>
