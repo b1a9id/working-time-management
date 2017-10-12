@@ -11,6 +11,7 @@
 		<link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" th:src="@{/js/worktime/list.js}"></script>
 
 		<title th:text="#{worktime.list.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績</title>
 	</head>
@@ -63,6 +64,9 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12 text-right">
+						<div class="btn-group">
+							<a href="#type-help-modal" data-toggle="modal"><i class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-container="body" title="種別とは?" data-placement="top"></i></a>
+						</div>
 						<!--/*/ <th:block th:unless="${workTimeYearMonth.completedAt}"> /*/-->
 						<div class="btn-group">
 							<a class="btn btn-default" href="#complete-modal" data-toggle="modal" th:disabled="${workTimeYearMonth.completedAt}" th:style="${workTimeYearMonth.completedAt} ? 'pointer-events : none;'">入力完了</a>
@@ -300,6 +304,35 @@
 					<div class="modal-footer">
 						<a class="btn btn-default" data-dismiss="modal">キャンセル</a>
 						<button @click="complete" class="btn btn-primary">保存</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="type-help-modal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h3 class="modal-title">種別とは?</h3>
+					</div>
+					<div class="modal-body text-left">
+						<h4 th:text="#{worktime.worktype.NORMAL}">出勤</h4>
+						<p th:text="#{worktime.type.help.description.normal}"></p>
+						<h4 th:text="#{worktime.worktype.LEGAL_VACATION}">公休</h4>
+						<p th:text="#{worktime.type.help.description.legalvacation}"></p>
+						<h4 th:text="#{worktime.worktype.FULL_PAID_VACATION} + '/' + #{worktime.worktype.HALF_PAID_VACATION}">有休/半有給休</h4>
+						<p th:text="#{worktime.type.help.description.paidvacation}"></p>
+						<h4 th:text="#{worktime.worktype.FULL_PAID_VACATION_AFTER} + '/' + #{worktime.worktype.HALF_PAID_VACATION_AFTER}">事後有休/事後半有休</h4>
+						<p th:text="#{worktime.type.help.description.paidvacationafter}"></p>
+						<h4 th:text="#{worktime.worktype.ABSENCE} + '/' + #{worktime.worktype.HALF_ABSENCE}">欠勤/半欠勤</h4>
+						<p th:text="#{worktime.type.help.description.absense}"></p>
+						<h4 th:text="#{worktime.worktype.COMPENSATORY_VACATION}">代休</h4>
+						<p th:text="#{worktime.type.help.description.compensatoryvacation}"></p>
+						<h4 th:text="#{worktime.worktype.SPECIAL_VACATION}">特別休暇</h4>
+						<p th:text="#{worktime.type.help.description.specialvacation}"></p>
+					</div>
+					<div class="modal-footer">
+						<a class="btn btn-default" data-dismiss="modal">閉じる</a>
 					</div>
 				</div>
 			</div>
