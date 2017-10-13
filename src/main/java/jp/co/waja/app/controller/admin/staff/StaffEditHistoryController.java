@@ -27,11 +27,21 @@ public class StaffEditHistoryController {
 			throw new NotFoundException();
 		}
 
+		List<StaffHistory> staffHistories = staff.getHistories();
+
+		Map<LocalDateTime, String> editors = new LinkedHashMap<>();
+		staffHistories
+				.forEach(staffHistory -> {
+					if (!editors.keySet().contains(staffHistory.getUpdatedAt())) {
+						editors.put(staffHistory.getUpdatedAt(), staffHistory.getUpdatedBy());
+					}
+				});
+
 		Map<LocalDateTime, List<StaffHistory>> histories = new LinkedHashMap<>();
-		staff.getHistories().stream()
+		staffHistories.stream()
 				.sorted(Comparator.comparing(StaffHistory::getUpdatedAt).reversed())
 				.forEach(staffHistory -> histories.put(staffHistory.getUpdatedAt(), new ArrayList<>()));
-		staff.getHistories()
+		staffHistories
 				.forEach(staffHistory -> {
 					List<StaffHistory> list = histories.get(staffHistory.getUpdatedAt());
 					list.add(staffHistory);
@@ -40,6 +50,7 @@ public class StaffEditHistoryController {
 
 		model.addAttribute("staff", staff);
 		model.addAttribute("histories", histories);
+		model.addAttribute("editors", editors);
 		return "admin/staff/history";
 	}
 }
