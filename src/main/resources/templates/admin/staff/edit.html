@@ -26,8 +26,8 @@
 					<div class="col-md-12">
 						<ul class="breadcrumb">
 							<li><a th:href="@{/}" th:text="#{dashboard.title}">ダッシュボード</a></li>
-							<li><a th:href="@{/staff/list}" th:text="#{staff.list.title}">スタッフ一覧</a></li>
-							<li><a th:href="@{/staff/describe/1}" th:text="#{staff.describe.title}">テスト太郎詳細</a></li>
+							<li><a th:href="@{/admin/staffs}" th:text="#{staff.list.title}">スタッフ一覧</a></li>
+							<li><a th:href="@{/admin/staffs/describe/{id}(id=${staff.id})}" th:text="#{staff.describe.title}">テスト太郎詳細</a></li>
 							<li class="active" th:text="#{staff.edit.title(${form.nameLast + form.nameFirst})}">テスト太郎編集</li>
 						</ul>
 					</div>
@@ -68,7 +68,7 @@
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('nameLastKana') or #fields.hasErrors('nameFirstKana')}? has-error">
 								<div class="col-sm-2">
-									<label class="control-label" th:text="#{staff.field.name.kana}">ふりがな</label>
+									<label class="control-label" th:text="#{staff.field.nameKana}">ふりがな</label>
 								</div>
 								<div class="col-sm-10 row">
 									<div class="col-sm-6">

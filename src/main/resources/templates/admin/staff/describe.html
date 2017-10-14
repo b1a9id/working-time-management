@@ -20,7 +20,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1 th:text="${staff.nameLast} + ${staff.nameFirst}">テスト太郎</h1>
+						<h1 th:text="${staff.getName()}">テスト太郎</h1>
 					</div>
 				</div>
 				<div class="row">
@@ -57,7 +57,7 @@
 				<div class="row">
 					<div class="col-md-12 text-right">
 						<div class="btn-group">
-							<a class="btn btn-default" th:href="@{/admin/staffs/histories/1}">変更履歴</a>
+							<a class="btn btn-default" th:href="@{/admin/staffs/edit-history/{id}(id=${staff.id})}">変更履歴</a>
 						</div>
 						<div class="btn-group">
 							<form method="post" th:action="@{/admin/staffs/delete/{id}(id=${staff.id})}">
@@ -70,7 +70,7 @@
 							<ul class="dropdown-menu" role="menu">
 								<li>
 									<a th:href="@{/admin/staffs/edit/{staffId}(staffId=${staff.id})}">編集</a>
-									<!--<a href="#">有給管理</a>-->
+									<!--<a href="#">有休管理</a>-->
 									<a th:href="@{/admin/staffs/password/edit/{id}(id=${staff.id})}">パスワード変更</a>
 								</li>
 							</ul>
@@ -91,11 +91,11 @@
 								</tr>
 								<tr>
 									<th th:text="#{staff.field.name}">名前</th>
-									<td th:text="${staff.nameLast} + ${staff.nameFirst}">テスト太郎</td>
+									<td th:text="${staff.getName()}">テスト太郎</td>
 								</tr>
 								<tr>
-									<th th:text="#{staff.field.name.kana}">ふりがな</th>
-									<td th:text="${staff.nameLastKana} + ${staff.nameFirstKana}">てすとたろう</td>
+									<th th:text="#{staff.field.nameKana}">ふりがな</th>
+									<td th:text="${staff.getNameKana()}">てすとたろう</td>
 								</tr>
 								<tr>
 									<th th:text="#{staff.field.employment.type}">ふりがな</th>
@@ -114,11 +114,11 @@
 									<td th:text="${#temporals.format(staff.enteredDate, 'yyyy/MM/dd')}">2015/06/01</td>
 								</tr>
 								<!--<tr>-->
-									<!--<th>有給付与日</th>-->
+									<!--<th>有休付与日</th>-->
 									<!--<td>2015/12/01</td>-->
 								<!--</tr>-->
 								<!--<tr>-->
-									<!--<th>残有給日数</th>-->
+									<!--<th>残有休日数</th>-->
 									<!--<td>10日</td>-->
 								<!--</tr>-->
 								<tr>

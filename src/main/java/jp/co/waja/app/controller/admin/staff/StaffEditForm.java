@@ -48,11 +48,11 @@ public class StaffEditForm implements Serializable {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate enteredDate;
 
-	private Boolean flextime;
+	private boolean flextime;
 
-	private Boolean telework;
+	private boolean telework;
 
-	private Boolean disabled;
+	private boolean disabled;
 
 	@NotNull
 	private Role role;
@@ -84,9 +84,9 @@ public class StaffEditForm implements Serializable {
 		request.setGender(getGender());
 		request.setEmploymentType(getEmploymentType());
 		request.setEnteredDate(getEnteredDate());
-		request.setFlextime(getFlextime());
-		request.setTelework(getTelework());
-		request.setDisabled(getDisabled());
+		request.setFlextime(isFlextime());
+		request.setTelework(isTelework());
+		request.setDisabled(isDisabled());
 		request.setRole(getRole());
 		return request;
 	}

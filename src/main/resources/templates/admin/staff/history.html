@@ -10,7 +10,7 @@
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
 
-		<title>変更履歴</title>
+		<title th:text="#{staff.history.title('')}">テスト太郎 変更履歴</title>
 	</head>
 
 	<body>
@@ -20,78 +20,42 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1>テスト太郎変更履歴</h1>
+						<h1 th:text="#{staff.history.title(${staff.getName()})}">テスト太郎 変更履歴</h1>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<ul class="breadcrumb">
-							<li><a th:href="@{/}">ダッシュボード</a></li>
-							<li><a th:href="@{/staff/list}">スタッフ一覧</a></li>
-							<li><a th:href="@{/staff/describe/1}">テスト太郎詳細</a></li>
-							<li class="active">変更履歴</li>
+							<li><a th:href="@{/}" th:text="#{dashboard.title}">ダッシュボード</a></li>
+							<li><a th:href="@{/admin/staffs}" th:text="#{staff.list.title}">スタッフ一覧</a></li>
+							<li><a th:href="@{/staff/describe/1}" th:text="${staff.getName()} + '詳細'">テスト太郎詳細</a></li>
+							<li class="active" th:text="#{staff.history.title(${staff.getName()})}">変更履歴</li>
 						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="section">
-			<div class="container">
+			<div class="container" th:each="key : ${histories.keySet()}">
 				<div class="row">
 					<div class="col-md-12 text-left">
 						<table class="table">
-							<caption>2017/07/02 17:45</caption>
+							<caption th:text="${#temporals.format(key, 'yyyy/MM/dd hh:mm:ss')} + ' ' + ${editors.get(key)}">2017/07/02 17:45 内立良介</caption>
 							<tbody>
-							<tr>
-								<td>有給日数</td>
-								<td>0日</td>
-								<td>10日</td>
-							</tr>
-							<tr>
-								<td>チーム</td>
-								<td>CRチーム</td>
-								<td>事推</td>
-							</tr>
-							<tr>
-								<td>性別</td>
-								<td>男</td>
-								<td>女</td>
+							<tr th:each="history : ${histories.get(key)}">
+								<td th:text="#{|staff.field.${history.fieldName}|}">有休日数</td>
+								<td th:text="${history.beforeValue}">0日</td>
+								<td th:text="${history.afterValue}">10日</td>
 							</tr>
 							</tbody>
 							<thead>
 							<tr>
-								<th class="col-md-4">変更箇所</th>
-								<th class="col-md-4">変更前</th>
-								<th class="col-md-4">変更後</th>
+								<th class="col-md-3">変更箇所</th>
+								<th class="col-md-3">変更前</th>
+								<th class="col-md-3">変更後</th>
 							</tr>
 							</thead>
 						</table>
-					</div>
-				</div>
-			</div>
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12 text-left">
-						<table class="table">
-							<caption>2017/07/02 11:51</caption>
-							<tbody>
-							<tr>
-								<td>有給日数</td>
-								<td>0日</td>
-								<td>11日</td>
-							</tr>
-							</tbody>
-							<thead>
-							<tr>
-								<th class="col-md-4">変更箇所</th>
-								<th class="col-md-4">変更前</th>
-								<th class="col-md-4">変更後</th>
-							</tr>
-							</thead>
-						</table>
-					</div>
-					<div class="col-md-12">
-						<hr />
 					</div>
 				</div>
 			</div>

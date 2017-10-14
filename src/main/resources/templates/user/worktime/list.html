@@ -11,6 +11,7 @@
 		<link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
 
 		<title th:text="#{worktime.list.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績</title>
 	</head>
@@ -63,6 +64,9 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12 text-right">
+						<div class="btn-group">
+							<a href="#type-help-modal" data-toggle="modal"><i class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-container="body" title="種別とは?" data-placement="top"></i></a>
+						</div>
 						<!--/*/ <th:block th:unless="${workTimeYearMonth.completedAt}"> /*/-->
 						<div class="btn-group">
 							<a class="btn btn-default" href="#complete-modal" data-toggle="modal" th:disabled="${workTimeYearMonth.completedAt}" th:style="${workTimeYearMonth.completedAt} ? 'pointer-events : none;'">入力完了</a>
@@ -120,7 +124,7 @@
 								</td>
 							</tr>
 							<tr>
-								<th>有給/半休取得日数</th>
+								<th>有休/半有休取得日数</th>
 								<td>
 									<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION')}">22</span><span>日</span>
 								</td>
@@ -133,7 +137,7 @@
 								</td>
 							</tr>
 							<tr>
-								<th>事後有給/事後半休取得日数</th>
+								<th>事後有休/事後半有休取得日数</th>
 								<td>
 									<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION_AFTER')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION_AFTER')}">22</span><span>日</span>
 								</td>
@@ -165,7 +169,7 @@
 								</td>
 							</tr>
 							<tr>
-								<th>有給消化計</th>
+								<th>有休消化計</th>
 								<td>
 									<!--<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION_AFTER')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION_AFTER')}">22</span><span>日</span>-->
 								</td>
@@ -212,7 +216,7 @@
 								<td></td>
 								<td></td>
 								<td></td>
-								<td th:text="${workTimeYearMonth.staff.flextime} ? '有給消化数' : '規定時間'">規定時間</td>
+								<td th:text="${workTimeYearMonth.staff.flextime} ? '有休消化数' : '規定時間'">規定時間</td>
 								<td th:text="${regularWorkTime}">154:00</td>
 								<td></td>
 							</tr>
@@ -300,6 +304,50 @@
 					<div class="modal-footer">
 						<a class="btn btn-default" data-dismiss="modal">キャンセル</a>
 						<button @click="complete" class="btn btn-primary">保存</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="type-help-modal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-show="true" data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h3 class="modal-title">種別とは?</h3>
+					</div>
+					<div class="modal-body">
+						<div class="panel panel-default">
+							<div class="panel-heading" th:text="#{worktime.worktype.NORMAL}">出勤</div>
+							<div class="panel-body" th:text="#{worktime.type.help.description.normal}"></div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading" th:text="#{worktime.worktype.LEGAL_VACATION}">公休</div>
+							<div class="panel-body" th:text="#{worktime.type.help.description.legalvacation}"></div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading" th:text="#{worktime.worktype.FULL_PAID_VACATION} + '/' + #{worktime.worktype.HALF_PAID_VACATION}">有休/半有給休</div>
+							<div class="panel-body" th:text="#{worktime.type.help.description.paidvacation}"></div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading" th:text="#{worktime.worktype.FULL_PAID_VACATION_AFTER} + '/' + #{worktime.worktype.HALF_PAID_VACATION_AFTER}">事後有休/事後半有休</div>
+							<div class="panel-body" th:text="#{worktime.type.help.description.paidvacationafter}"></div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading" th:text="#{worktime.worktype.ABSENCE} + '/' + #{worktime.worktype.HALF_ABSENCE}">欠勤/半欠勤</div>
+							<div class="panel-body" th:text="#{worktime.type.help.description.absense}"></div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading" th:text="#{worktime.worktype.COMPENSATORY_VACATION}">代休</div>
+							<div class="panel-body" th:text="#{worktime.type.help.description.compensatoryvacation}"></div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading" th:text="#{worktime.worktype.SPECIAL_VACATION}">特別休暇</div>
+							<div class="panel-body" th:text="#{worktime.type.help.description.specialvacation}"></div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<a class="btn btn-default" data-dismiss="modal">閉じる</a>
 					</div>
 				</div>
 			</div>

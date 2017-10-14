@@ -1,11 +1,11 @@
 package jp.co.waja.app.controller.admin.staff;
 
-import jp.co.waja.core.entity.Staff;
-import jp.co.waja.core.entity.Team;
+import jp.co.waja.core.entity.*;
 import jp.co.waja.core.model.Role;
-import jp.co.waja.core.service.staff.StaffService;
+import jp.co.waja.core.service.staff.*;
 import jp.co.waja.core.service.team.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,9 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin/staffs/edit/{id}")
@@ -72,6 +70,7 @@ public class StaffEditController {
 
 	@PostMapping
 	public String edit(
+			@AuthenticationPrincipal StaffDetails loginUser,
 			@PathVariable Long id,
 			@Validated @ModelAttribute(FORM_MODEL_KEY) StaffEditForm form,
 			BindingResult errors,
@@ -80,10 +79,10 @@ public class StaffEditController {
 		redirectAttributes.addFlashAttribute(ERRORS_MODEL_KEYS, errors);
 
 		if (form.getEmploymentType() != Staff.EmploymentType.PERMANENT_STAFF) {
-			if (form.getFlextime()) {
+			if (form.isFlextime()) {
 				errors.rejectValue("flextime", "error.cannot.flextime");
 			}
-			if (form.getTelework()) {
+			if (form.isTelework()) {
 				errors.rejectValue("telework", "error.cannot.telework");
 			}
 			if (form.getRole() != Role.CREW) {
@@ -95,7 +94,7 @@ public class StaffEditController {
 			return "redirect:/admin/staffs/edit/{id}?error";
 		}
 
-		Staff savedStaff = staffService.edit(form.toStaffEditRequest(), id);
+		Staff savedStaff = staffService.edit(loginUser, form.toStaffEditRequest(), id);
 		redirectAttributes.getFlashAttributes().clear();
 		redirectAttributes.addAttribute("id", savedStaff.getId());
 		redirectAttributes.addFlashAttribute("savedStaff", savedStaff);

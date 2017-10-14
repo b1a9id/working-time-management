@@ -73,7 +73,7 @@
 			<div class="row">
 				<div class="col-md-12 text-right">
 					<div class="btn-group">
-						<a class="btn btn-success" th:href="@{/admin/teams/create}" th:text="#{registration}">登録</a>
+						<a class="btn btn-success" th:href="@{/admin/teams/create}" th:text="#{registration}">新規登録</a>
 					</div>
 				</div>
 			</div>
@@ -94,11 +94,11 @@
 							<tr th:each="team : ${teams}">
 								<td th:text="${team.name}">クリエイティブチーム</td>
 								<td th:text="${team.shortName}">CR</td>
-								<td><a class="btn btn-link glyphicon glyphicon-pencil" th:href="@{/admin/teams/edit/{id}(id=${team.id})}"></a></td>
+								<td><a class="btn btn-link glyphicon glyphicon-pencil" data-toggle="tooltip" data-container="body" title="編集" data-placement="top" th:href="@{/admin/teams/edit/{id}(id=${team.id})}"></a></td>
 								<td>
 									<form method="post" th:action="@{/admin/teams/delete/{id}(id=${team.id})}">
 										<input type="hidden" name="_method" value="delete"/>
-										<button class="btn btn-link glyphicon glyphicon-trash"></button>
+										<button class="btn btn-link glyphicon glyphicon-trash" data-toggle="tooltip" data-container="body" title="削除" data-placement="top"></button>
 									</form>
 								</td>
 							</tr>
@@ -108,6 +108,7 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
 	</body>
 
 </html>

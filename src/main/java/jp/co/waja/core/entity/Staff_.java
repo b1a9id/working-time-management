@@ -1,5 +1,7 @@
 package jp.co.waja.core.entity;
 
+import jp.co.waja.core.model.Role;
+
 import javax.persistence.metamodel.*;
 import java.time.LocalDate;
 
@@ -18,4 +20,5 @@ public class Staff_ {
 	public static volatile SingularAttribute<Staff, LocalDate> enteredDate;
 	public static volatile SingularAttribute<Staff, Boolean> telework;
 	public static volatile SingularAttribute<Staff, Boolean> disabled;
+	public static volatile SingularAttribute<Staff, Role> role;
 }

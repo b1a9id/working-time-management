@@ -6,12 +6,12 @@ drop table if exists user_role;
 
 create table team (
   id bigint not null auto_increment,
-  name varchar(255) not null,
-  short_name varchar(255) not null,
+  name varchar(30) not null,
+  short_name varchar(30) not null,
   created_at datetime,
-  created_by varchar(255),
+  created_by varchar(30),
   last_modified_at datetime,
-  last_modified_by varchar(255),
+  last_modified_by varchar(30),
   primary key (id)
 )
 engine=InnoDB;
@@ -19,13 +19,13 @@ engine=InnoDB;
 create table staff (
   id bigint not null auto_increment,
   team_id bigint not null,
-  name_last varchar(255) not null,
-  name_first varchar(255) not null,
-  name_last_kana varchar(255) not null,
-  name_first_kana varchar(255) not null,
-  email varchar(255) not null,
+  name_last varchar(30) not null,
+  name_first varchar(30) not null,
+  name_last_kana varchar(30) not null,
+  name_first_kana varchar(30) not null,
+  email varchar(50) not null,
   gender varchar(10) not null,
-  employment_type varchar(255) not null,
+  employment_type varchar(30) not null,
   entered_date date not null,
   flextime bit,
   telework bit,
@@ -33,12 +33,22 @@ create table staff (
   password varchar(255) not null,
   role varchar(20) not null,
   created_at datetime,
-  created_by varchar(255),
+  created_by varchar(30),
   last_modified_at datetime,
-  last_modified_by varchar(255),
+  last_modified_by varchar(30),
   primary key (id)
 )
 engine=InnoDB;
+
+create table staff_history (
+  staff_id bigint not null,
+  field_name varchar(100),
+  before_value varchar(100),
+  after_value varchar(100) not null,
+  updated_by varchar(30) not null,
+  updated_at datetime not null
+)
+  engine=InnoDB;
 
 create table paid_vacation (
   id bigint not null auto_increment,
@@ -47,9 +57,9 @@ create table paid_vacation (
   provide_date date not null,
   disappear_date date not null,
   created_at datetime,
-  created_by varchar(255),
+  created_by varchar(30),
   last_modified_at datetime,
-  last_modified_by varchar(255),
+  last_modified_by varchar(30),
   primary key (id)
 )
 engine=InnoDB;
@@ -65,9 +75,9 @@ create table work_time_year_month (
   approved2_at datetime,
   approved2_by varchar(30),
   created_at datetime,
-  created_by varchar(255),
+  created_by varchar(30),
   last_modified_at datetime,
-  last_modified_by varchar(255),
+  last_modified_by varchar(30),
   primary key (id)
 )
   engine=InnoDB;
@@ -75,7 +85,7 @@ create table work_time_year_month (
 create table work_time (
   work_time_year_month_id bigint not null,
   date date not null,
-  work_type varchar(255) not null,
+  work_type varchar(30) not null,
   train_delay bit,
   start_at time,
   end_at time,
@@ -93,15 +103,27 @@ INSERT INTO team (id, name, short_name, created_at, created_by) VALUES (4, 'フ�
 INSERT INTO team (id, name, short_name, created_at, created_by) VALUES (5, 'マネジメントプランニングチーム', 'MP', '2017/07/01 00:00:00', '内立良介');
 
 INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, flextime, telework, disabled, password, role, created_at, created_by)
-VALUES (6, 1, '田中', '一郎', 'たなか', 'いちろう', 'tanaka_taro@waja.jp', 'MAN', 'PERMANENT_STAFF', '2015/01/01', 1, 1, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'STAFF', '2017/07/01 00:00:00', '内立良介');
+VALUES (6, 1, '田中', '一郎', 'たなか', 'いちろう', 'tanaka_ichiro@waja.jp', 'MAN', 'PERMANENT_STAFF', '2015/01/01', 1, 1, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'MANAGER', '2017/07/01 00:00:00', '内立良介');
 INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, flextime, telework, disabled, password, role, created_at, created_by)
-VALUES (7, 2, '田中', '二郎', 'たなか', 'じろう', 'tanaka_jiro@waja.jp', 'MAN', 'PERMANENT_STAFF', '2015/01/01', 1, 1, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'ADMIN', '2017/07/01 00:00:00', '内立良介');
+VALUES (7, 1, '佐藤', '健', 'さとう', 'たける', 'sato_takeru@waja.jp', 'MAN', 'PERMANENT_STAFF', '2014/06/11', 1, 1, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'STAFF', '2017/07/01 00:00:00', '内立良介');
+
 INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, flextime, telework, disabled, password, role, created_at, created_by)
-VALUES (8, 3, '長澤', 'まさみ', 'ながさわ', 'まさみ', 'nagasawa_masami@waja.jp', 'WOMAN', 'CREW_THREE', '2015/01/01', 0, 0, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'CREW', '2017/07/01 00:00:00', '内立良介');
+VALUES (8, 2, '田中', '二郎', 'たなか', 'じろう', 'tanaka_jiro@waja.jp', 'MAN', 'PERMANENT_STAFF', '2015/01/01', 1, 1, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'MANAGER', '2017/07/01 00:00:00', '内立良介');
+
 INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, flextime, telework, disabled, password, role, created_at, created_by)
-VALUES (9, 4, '田中', '四郎', 'たなか', 'しろう', 'tanaka_shiro@waja.jp', 'MAN', 'CREW_FOUR', '2015/01/01', 0, 0, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'CREW', '2017/07/01 00:00:00', '内立良介');
+VALUES (9, 3, '長澤', 'まさみ', 'ながさわ', 'まさみ', 'nagasawa_masami@waja.jp', 'WOMAN', 'CREW_THREE', '2015/01/01', 0, 0, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'MANAGER', '2017/07/01 00:00:00', '内立良介');
+
 INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, flextime, telework, disabled, password, role, created_at, created_by)
-VALUES (10, 5, '鈴木', '花子', 'すずき', 'はなこ', 'suzuki_hanako@waja.jp', 'WOMAN', 'PERMANENT_STAFF', '2015/01/01', 0, 0, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'MANAGER', '2017/07/01 00:00:00', '内立良介');
+VALUES (10, 4, '田中', '四郎', 'たなか', 'しろう', 'tanaka_shiro@waja.jp', 'MAN', 'CREW_FOUR', '2015/01/01', 0, 0, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'MANAGER', '2017/07/01 00:00:00', '内立良介');
+INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, flextime, telework, disabled, password, role, created_at, created_by)
+VALUES (11, 4, '佐藤', '大地', 'さとう', 'だいち', 'sato_daichi@waja.jp', 'MAN', 'CREW_FOUR', '2015/01/01', 0, 0, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'CREW', '2017/07/01 00:00:00', '内立良介');
+
+INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, flextime, telework, disabled, password, role, created_at, created_by)
+VALUES (12, 5, '鈴木', '花子', 'すずき', 'はなこ', 'suzuki_hanako@waja.jp', 'WOMAN', 'PERMANENT_STAFF', '2015/01/01', 0, 0, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'MANAGER', '2017/07/01 00:00:00', '内立良介');
+INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, flextime, telework, disabled, password, role, created_at, created_by)
+VALUES (13, 5, '管理者', '太郎', 'かんりしゃ', 'たろう', 'kanrisya_taro@waja.jp', 'WOMAN', 'PERMANENT_STAFF', '2016/10/01', 0, 0, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'ADMIN', '2017/07/01 00:00:00', '内立良介');
+INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, flextime, telework, disabled, password, role, created_at, created_by)
+VALUES (14, 5, '利用者', '花子', 'りしょうしゃ', 'はなこ', 'riyousya_hanako@waja.jp', 'MAN', 'PERMANENT_STAFF', '2017/02/04', 0, 0, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'STAFF', '2017/07/01 00:00:00', '内立良介');
 
 INSERT INTO paid_vacation (id, staff_id, days, provide_date, disappear_date, created_at, created_by) VALUES (11, 6, 10, '2017/07/01', '2019/06/30', '2017/07/01 00:00:00', '内立良介');
 INSERT INTO paid_vacation (id, staff_id, days, provide_date, disappear_date, created_at, created_by) VALUES (12, 7, 21, '2015/08/01', '2017/07/31', '2017/07/01 00:00:00', '内立良介');
@@ -148,3 +170,4 @@ alter table paid_vacation add constraint FKjk3lekaqd3mnn5432w6lsxtys foreign key
 alter table staff add constraint FKmdoqnc1maraqd1w8ptjpk1i9r foreign key (team_id) references team (id);
 alter table work_time add constraint FKewu2afn7kycb1qkdyd3njg9mk foreign key (work_time_year_month_id) references work_time_year_month (id);
 alter table work_time_year_month add constraint FKhl16odltapeepn6bbvvtwgjuu foreign key (staff_id) references staff (id);
+alter table staff_history add constraint FKrfgodmtowgdcdpps3cqahwqeo foreign key (staff_id) references staff (id);

@@ -1,12 +1,13 @@
 package jp.co.waja.core.service.staff;
 
-import jp.co.waja.core.entity.Staff;
+import jp.co.waja.core.entity.*;
 import jp.co.waja.core.model.Role;
 import jp.co.waja.core.model.staff.*;
 import jp.co.waja.core.repository.staff.StaffRepository;
 import jp.co.waja.core.service.team.TeamService;
 import jp.co.waja.core.service.worktime.WorkTimeService;
 import jp.co.waja.exception.*;
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,11 +15,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
 @Transactional
 public class StaffService {
+
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private StaffRepository staffRepository;
@@ -70,21 +74,81 @@ public class StaffService {
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
-	public Staff edit(StaffEditRequest request, Long id) {
+	public Staff edit(StaffDetails loginStaff, StaffEditRequest request, Long id) {
+		List<StaffHistory> histories = new LinkedList<>();
+		String updatedBy = loginStaff.getStaff().getName();
+		LocalDateTime updatedAt = LocalDateTime.now();
+
 		Staff staff = staffRepository.findOne(id);
+		if (!staff.getTeam().getId().equals(request.getTeam().getId())) {
+			StaffHistory history = addHistory("team", staff.getTeam().getName(), request.getTeam().getName(), updatedBy, updatedAt);
+			histories.add(history);
+		}
 		staff.setTeam(request.getTeam());
+
+		if (!staff.getNameLast().equals(request.getNameLast()) || !staff.getNameFirst().equals(request.getNameFirst())) {
+			StaffHistory history = addHistory("name", staff.getName(), request.getNameLast() + request.getNameFirst(), updatedBy, updatedAt);
+			histories.add(history);
+		}
 		staff.setNameLast(request.getNameLast());
 		staff.setNameFirst(request.getNameFirst());
+
+		if (!staff.getNameLastKana().equals(request.getNameLastKana()) || !staff.getNameFirstKana().equals(request.getNameFirstKana())) {
+			StaffHistory history = addHistory("nameKana", staff.getNameKana(), request.getNameLastKana() + request.getNameFirstKana(), updatedBy, updatedAt);
+			histories.add(history);
+		}
 		staff.setNameLastKana(request.getNameLastKana());
 		staff.setNameFirstKana(request.getNameFirstKana());
+
+		if (!staff.getEmail().equals(request.getEmail())) {
+			StaffHistory history = addHistory("email", staff.getEmail(), request.getEmail(), updatedBy, updatedAt);
+			histories.add(history);
+		}
 		staff.setEmail(request.getEmail());
+
+		if (staff.getGender() != request.getGender()) {
+			StaffHistory history = addHistory("gender", staff.getGender().name(), request.getGender().name(), updatedBy, updatedAt);
+			histories.add(history);
+		}
 		staff.setGender(request.getGender());
+
+		if (staff.getEmploymentType() != request.getEmploymentType()) {
+			StaffHistory history = addHistory("employmentType", staff.getEmploymentType().name(), request.getEmploymentType().name(), updatedBy, updatedAt);
+			histories.add(history);
+		}
 		staff.setEmploymentType(request.getEmploymentType());
+
+		if (!staff.getEnteredDate().isEqual(request.getEnteredDate())) {
+			StaffHistory history = addHistory("enteredDate", staff.getEnteredDate().toString(), request.getEnteredDate().toString(), updatedBy, updatedAt);
+			histories.add(history);
+		}
 		staff.setEnteredDate(request.getEnteredDate());
-		staff.setFlextime(request.getFlextime());
-		staff.setTelework(request.getTelework());
-		staff.setDisabled(request.getDisabled());
+
+		if (staff.isFlextime() != request.isFlextime()) {
+			StaffHistory history = addHistory("flextime", String.valueOf(staff.isFlextime()), String.valueOf(request.isFlextime()), updatedBy, updatedAt);
+			histories.add(history);
+		}
+
+		if (staff.isTelework() != request.isTelework()) {
+			StaffHistory history = addHistory("telework", String.valueOf(staff.isTelework()), String.valueOf(request.isTelework()), updatedBy, updatedAt);
+			histories.add(history);
+		}
+		staff.setTelework(request.isTelework());
+
+		if (staff.isDisabled() != request.isDisabled()) {
+			StaffHistory history = addHistory("disabled", String.valueOf(staff.isDisabled()), String.valueOf(request.isDisabled()), updatedBy, updatedAt);
+			histories.add(history);
+		}
+		staff.setDisabled(request.isDisabled());
+
+		if (staff.getRole() != request.getRole()) {
+			StaffHistory history = addHistory("role", staff.getRole().name(), request.getRole().name(), updatedBy, updatedAt);
+			histories.add(history);
+		}
 		staff.setRole(request.getRole());
+
+		staff.getHistories().addAll(histories);
+
 		return staffRepository.saveAndFlush(staff);
 	}
 
@@ -115,5 +179,21 @@ public class StaffService {
 
 		staffRepository.delete(id);
 		return Optional.ofNullable(staff.getName());
+	}
+
+	private StaffHistory addHistory(
+			String fieldName,
+			String beforeValue,
+			String afterValue,
+			String updatedBy,
+			LocalDateTime updatedAt) {
+		StaffHistory staffHistory = new StaffHistory();
+		staffHistory.setFieldName(fieldName);
+		staffHistory.setBeforeValue(beforeValue);
+		staffHistory.setAfterValue(afterValue);
+		staffHistory.setUpdatedBy(updatedBy);
+		staffHistory.setUpdatedAt(updatedAt);
+
+		return staffHistory;
 	}
 }

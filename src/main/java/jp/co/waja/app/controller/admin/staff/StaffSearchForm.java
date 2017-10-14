@@ -1,6 +1,7 @@
 package jp.co.waja.app.controller.admin.staff;
 
 import jp.co.waja.core.entity.Staff;
+import jp.co.waja.core.model.Role;
 import jp.co.waja.core.model.staff.StaffSearchRequest;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +17,8 @@ public class StaffSearchForm implements Serializable {
 
 	private Staff.EmploymentType employmentType;
 
+	private Role role;
+
 	private LocalDate enteredDate;
 
 	private Boolean telework;
@@ -26,6 +29,7 @@ public class StaffSearchForm implements Serializable {
 		StaffSearchRequest request = new StaffSearchRequest();
 		request.setTeamId(getTeamId());
 		request.setEmploymentType(getEmploymentType());
+		request.setRole(getRole());
 		request.setEnteredDate(getEnteredDate());
 		request.setTelework(getTelework());
 		request.setDisabled(getDisabled());
