@@ -3,7 +3,6 @@ package jp.co.waja.app.controller.admin.staff;
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.service.staff.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,7 +10,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.*;
+import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin/staffs/password")
@@ -25,9 +25,6 @@ public class PasswordEditController {
 
 	@Autowired
 	private StaffService staffService;
-
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
 	@GetMapping("/edit/{id}")
 	public String passwordEdit(@PathVariable Long id, Model model) {

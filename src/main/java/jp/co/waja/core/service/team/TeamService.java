@@ -27,7 +27,7 @@ public class TeamService {
 	}
 
 	public Team getTeam(long teamId) {
-		return teamRepository.findOneById(teamId);
+		return teamRepository.findOne(teamId);
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")

@@ -1,22 +1,28 @@
 package jp.co.waja.core.service.staff;
 
-import jp.co.waja.core.entity.*;
+import jp.co.waja.core.entity.Staff;
+import jp.co.waja.core.entity.StaffHistory;
 import jp.co.waja.core.model.Role;
 import jp.co.waja.core.model.staff.*;
 import jp.co.waja.core.repository.staff.StaffRepository;
-import jp.co.waja.core.service.team.TeamService;
 import jp.co.waja.core.service.worktime.WorkTimeService;
-import jp.co.waja.exception.*;
-import org.slf4j.*;
+import jp.co.waja.exception.NotFoundException;
+import jp.co.waja.exception.WrongDeleteException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -28,17 +34,10 @@ public class StaffService {
 	private StaffRepository staffRepository;
 
 	@Autowired
-	private TeamService teamService;
-
-	@Autowired
 	private WorkTimeService workTimeService;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
-	public List<Staff> enableStaffs() {
-		return staffRepository.findAllByDisabled(false);
-	}
 
 	public Staff getStaff(long id) {
 		return staffRepository.findOne(id);
@@ -79,7 +78,7 @@ public class StaffService {
 		String updatedBy = loginStaff.getStaff().getName();
 		LocalDateTime updatedAt = LocalDateTime.now();
 
-		Staff staff = staffRepository.findOne(id);
+		Staff staff = staffRepository.findOneById(id);
 		if (!staff.getTeam().getId().equals(request.getTeam().getId())) {
 			StaffHistory history = addHistory("team", staff.getTeam().getName(), request.getTeam().getName(), updatedBy, updatedAt);
 			histories.add(history);
@@ -153,21 +152,21 @@ public class StaffService {
 	}
 
 	public Staff editPassword(Long id, PasswordEditRequest request) throws NotFoundException {
-		Staff staff = staffRepository.findOne(id);
+		Staff staff = staffRepository.findOneById(id);
 		staff.setPassword(passwordEncoder.encode(request.getNewPassword()));
 		return staffRepository.saveAndFlush(staff);
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	public Staff initPassword(Long id, PasswordInitRequest request) throws NotFoundException {
-		Staff staff = staffRepository.findOne(id);
+		Staff staff = staffRepository.findOneById(id);
 		staff.setPassword(passwordEncoder.encode(request.getNewPassword()));
 		return staffRepository.saveAndFlush(staff);
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
 	public Optional<String> delete(Long id) throws NotFoundException, WrongDeleteException {
-		Staff staff = staffRepository.findOne(id);
+		Staff staff = staffRepository.findOneById(id);
 		if (Objects.isNull(staff)) {
 			throw new NotFoundException("Staff");
 		}
