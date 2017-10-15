@@ -22,6 +22,7 @@ public class TeamService {
 	@Autowired
 	private StaffRepository staffRepository;
 
+	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
 	public List<Team> getTeams() {
 		return teamRepository.findAll();
 	}
