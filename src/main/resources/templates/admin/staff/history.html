@@ -40,7 +40,7 @@
 				<div class="row">
 					<div class="col-md-12 text-left">
 						<table class="table">
-							<caption th:text="${#temporals.format(key, 'yyyy/MM/dd hh:mm:ss')} + ' ' + ${editors.get(key)}">2017/07/02 17:45 内立良介</caption>
+							<caption th:text="${#temporals.format(key, 'yyyy/MM/dd HH:mm:ss')} + ' ' + ${editors.get(key)}">2017/07/02 17:45 内立良介</caption>
 							<tbody>
 							<tr th:each="history : ${histories.get(key)}">
 								<td th:text="#{|staff.field.${history.fieldName}|}">有休日数</td>
