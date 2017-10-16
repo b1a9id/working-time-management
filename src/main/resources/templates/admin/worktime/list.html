@@ -45,17 +45,18 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 text-right">
-				<!--/*/ <th:block sec:authorize="hasAnyRole('MANAGER')" th:unless="${workTimeYearMonth.approved1At}"> /*/-->
+				<!--/*/ <th:block sec:authorize="hasAnyRole('MANAGER')"> /*/-->
 				<div class="btn-group">
-					<a class="btn btn-default" href="#modal-approve" data-toggle="modal" th:disabled="!${workTimeYearMonth.completedAt}" th:style="!${workTimeYearMonth.completedAt} ? 'pointer-events : none;'">承認</a>
+					<a class="btn btn-default" href="#modal-approve" data-toggle="modal" th:disabled="${#workTimes.disabledApprove(workTimeYearMonth)}" th:style="${#workTimes.disabledApprove(workTimeYearMonth)} ? 'pointer-events : none;'">承認</a>
 				</div>
 				<div class="btn-group">
-					<a class="btn btn-default" href="#modal-modify" data-toggle="modal" th:disabled="!${workTimeYearMonth.completedAt}" th:style="!${workTimeYearMonth.completedAt} ? 'pointer-events : none;'">修正</a>
+					<a class="btn btn-default" href="#modal-modify" data-toggle="modal" th:disabled="${#workTimes.disabledApprove(workTimeYearMonth)}" th:style="${#workTimes.disabledApprove(workTimeYearMonth)} ? 'pointer-events : none;'">修正</a>
 				</div>
 				<!--/*/ </th:block> /*/-->
-				<!--/*/ <th:block sec:authorize="hasAnyRole('ADMIN')" th:if="${workTimeYearMonth.approved1At}"> /*/-->
+				<!--/*/ <th:block sec:authorize="hasAnyRole('ADMIN')"> /*/-->
 				<div>
-					<a class="btn btn-default" th:href="@{/admin/work-time/edit/{id}?displayYearMonth={displayYearMonth}(id=${workTimeYearMonth.staff.id},displayYearMonth=${yearMonth})}">編集</a>
+					<a class="btn btn-default" th:href="@{/admin/work-time/edit/{id}?displayYearMonth={displayYearMonth}(id=${workTimeYearMonth.staff.id},displayYearMonth=${yearMonth})}"
+							th:disabled="${#workTimes.disabledApprove(workTimeYearMonth)}" th:style="${#workTimes.disabledApprove(workTimeYearMonth)} ? 'pointer-events : none;'">編集</a>
 				</div>
 				<!--/*/ </th:block> /*/-->
 				<p th:with="completedAt=${#temporals.format(workTimeYearMonth.completedAt, 'yyyy/MM/dd hh:mm')}" th:if="${workTimeYearMonth.completedAt}" th:text="#{worktime.completed.message(${workTimeYearMonth.completedBy}, ${completedAt})}">完了:田中太郎(2017/08/10 10:30)</p>
@@ -247,6 +248,7 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
 <script>
 	new Vue({
 		el:'#modal-approve',

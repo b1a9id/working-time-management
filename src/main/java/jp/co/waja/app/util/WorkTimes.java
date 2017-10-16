@@ -28,4 +28,8 @@ public class WorkTimes {
 	public YearMonth intToYearMonth(Integer yearMonthInt) {
 		return WorkTimeUtil.intToYearMonth(yearMonthInt);
 	}
+
+	public boolean disabledApprove(WorkTimeYearMonth workTimeYearMonth) {
+		return WorkTimeUtil.disabledApprove(workTimeYearMonth);
+	}
 }
