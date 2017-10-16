@@ -2,12 +2,9 @@ package jp.co.waja.core.support;
 
 import jp.co.waja.core.entity.*;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.YearMonth;
+import java.time.*;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.stream.*;
 
 import static jp.co.waja.core.entity.WorkTime.WorkType.*;
 
@@ -82,5 +79,19 @@ public class WorkTimeUtil {
 		String month = yearMonthStr.substring(4).length() >= 2 ? yearMonthStr.substring(4) : "0" + yearMonthStr.substring(4);
 		StringJoiner joiner = new StringJoiner("-");
 		return YearMonth.parse(joiner.add(year).add(month).toString());
+	}
+
+	public static boolean disabledApprove(WorkTimeYearMonth workTimeYearMonth) {
+		if (!Objects.isNull(workTimeYearMonth.getCompletedAt()) && Objects.isNull(workTimeYearMonth.getApproved1At())) {
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean invalidEdit(WorkTimeYearMonth workTimeYearMonth) {
+		if (!Objects.isNull(workTimeYearMonth.getCompletedAt()) && !Objects.isNull(workTimeYearMonth.getApproved1At())) {
+			return false;
+		}
+		return true;
 	}
 }
