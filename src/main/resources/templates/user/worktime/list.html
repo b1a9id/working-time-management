@@ -85,8 +85,8 @@
 							</ul>
 						</div>
 						<!--/*/ </th:block> /*/-->
-						<p th:with="completedAt=${#temporals.format(workTimeYearMonth.completedAt, 'yyyy/MM/dd hh:mm')}" th:if="${workTimeYearMonth.completedAt}" th:text="#{worktime.completed.message(${workTimeYearMonth.completedBy}, ${completedAt})}">完了:田中太郎(2017/08/10 10:30)</p>
-						<p th:with="approvedAt=${#temporals.format(workTimeYearMonth.approved1At, 'yyyy/MM/dd hh:mm')}" th:if="${workTimeYearMonth.approved1At}" th:text="#{worktime.approved.message(${workTimeYearMonth.approved1By}, ${approvedAt})}">承認:田中二郎(2017/08/10 11:10)</p>
+						<p th:with="completedAt=${#temporals.format(workTimeYearMonth.completedAt, 'yyyy/MM/dd HH:mm')}" th:if="${workTimeYearMonth.completedAt}" th:text="#{worktime.completed.message(${workTimeYearMonth.completedBy}, ${completedAt})}">完了:田中太郎(2017/08/10 10:30)</p>
+						<p th:with="approvedAt=${#temporals.format(workTimeYearMonth.approved1At, 'yyyy/MM/dd HH:mm')}" th:if="${workTimeYearMonth.approved1At}" th:text="#{worktime.approved.message(${workTimeYearMonth.approved1By}, ${approvedAt})}">承認:田中二郎(2017/08/10 11:10)</p>
 					</div>
 				</div>
 			</div>
@@ -301,9 +301,13 @@
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 						<h4 class="modal-title">入力完了報告</h4>
 					</div>
+					<div class="modal-body">
+						<p>完了報告してもよろしいでしょうか？</p>
+						<p>編集する場合は、マネージャにステータスを修正にしてもらってください。</p>
+					</div>
 					<div class="modal-footer">
-						<a class="btn btn-default" data-dismiss="modal">キャンセル</a>
 						<button @click="complete" class="btn btn-primary">保存</button>
+						<a class="btn btn-default" data-dismiss="modal">キャンセル</a>
 					</div>
 				</div>
 			</div>
