@@ -82,14 +82,16 @@ public class WorkTimeUtil {
 	}
 
 	public static boolean disabledApprove(WorkTimeYearMonth workTimeYearMonth) {
-		if (Objects.isNull(workTimeYearMonth.getCompletedAt())) {
-			return true;
+		if (!Objects.isNull(workTimeYearMonth.getCompletedAt()) && Objects.isNull(workTimeYearMonth.getApproved1At())) {
+			return false;
 		}
+		return true;
+	}
 
+	public static boolean invalidEdit(WorkTimeYearMonth workTimeYearMonth) {
 		if (!Objects.isNull(workTimeYearMonth.getCompletedAt()) && !Objects.isNull(workTimeYearMonth.getApproved1At())) {
-			return true;
+			return false;
 		}
-
-		return false;
+		return true;
 	}
 }

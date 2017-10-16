@@ -32,4 +32,8 @@ public class WorkTimes {
 	public boolean disabledApprove(WorkTimeYearMonth workTimeYearMonth) {
 		return WorkTimeUtil.disabledApprove(workTimeYearMonth);
 	}
+
+	public boolean invalidEdit(WorkTimeYearMonth workTimeYearMonth) {
+		return WorkTimeUtil.invalidEdit(workTimeYearMonth);
+	}
 }

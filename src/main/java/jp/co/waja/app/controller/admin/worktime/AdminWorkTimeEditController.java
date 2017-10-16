@@ -2,6 +2,7 @@ package jp.co.waja.app.controller.admin.worktime;
 
 import jp.co.waja.app.controller.user.worktime.WorkTimeYearMonthEditForm;
 import jp.co.waja.core.entity.*;
+import jp.co.waja.core.model.Role;
 import jp.co.waja.core.model.worktime.WorkTimeYearMonthEditRequest;
 import jp.co.waja.core.service.staff.*;
 import jp.co.waja.core.service.worktime.WorkTimeService;
@@ -16,9 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.YearMonth;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin/work-time/edit")
@@ -75,7 +74,11 @@ public class AdminWorkTimeEditController {
 			return "redirect:/admin/work-time/edit/{displayDate}?error";
 		}
 		WorkTimeYearMonthEditRequest request = form.toWorkTimeYearMonthEditRequest();
-		WorkTimeYearMonth updatedWorkTimeYearMonth = workTimeService.edit(loginUser.getStaff(), request);
+		Staff staff = loginUser.getStaff();
+		if (loginUser.getStaff().getRole() == Role.ADMIN) {
+			staff = staffService.getStaff(id);
+		}
+		WorkTimeYearMonth updatedWorkTimeYearMonth = workTimeService.edit(staff, request);
 
 		redirectAttributes.getFlashAttributes().clear();
 		redirectAttributes.addFlashAttribute("updatedWorkTimeYearMonth", updatedWorkTimeYearMonth);
