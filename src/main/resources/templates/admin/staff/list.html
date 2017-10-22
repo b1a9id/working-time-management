@@ -191,11 +191,11 @@
 							<th th:text="#{staff.field.team}">チーム名</th>
 							<th th:text="#{staff.field.name}">名前</th>
 							<th th:text="#{staff.field.employment.type}">雇用形態</th>
+							<th>入社日</th>
 							<th>有休付与日</th>
 							<th>残有休日数</th>
 							<th class="text-center">フレックス</th>
 							<th class="text-center" th:text="#{staff.field.telework}">在宅</th>
-							<th class="text-center">無効</th>
 							<th th:text="#{role.label}">権限</th>
 							<th></th>
 							<th></th>
@@ -207,11 +207,11 @@
 							<td th:text="${staff.team.shortName}">クリエイティブチーム</td>
 							<td><a th:href="@{/admin/staffs/describe/{id}(id=${staff.id})}" th:text="${staff.getName()}">テスト太郎</a></td>
 							<td th:text="#{|staff.employmenttype.${staff.employmentType}|}">正社員</td>
+							<td th:text="${#temporals.format(staff.enteredDate, 'yyyy/MM/dd')}">2015/04/01</td>
 							<td>06/01</td>
 							<td>10日</td>
 							<td class="text-center"><i th:class="${staff.flextime} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
 							<td class="text-center"><i th:class="${staff.telework} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
-							<td class="text-center"><i th:class="${staff.disabled} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
 							<td th:text="|#{|role.${staff.role}|}">スタッフ</td>
 							<td><a class="btn btn-link glyphicon glyphicon-time" data-toggle="tooltip" data-container="body" title="今月の稼働実績" data-placement="top" th:href="@{/admin/work-time/{id}(id=${staff.id})}"></a></td>
 							<td><a class="btn btn-link glyphicon glyphicon-pencil" data-toggle="tooltip" data-container="body" title="編集" data-placement="top" th:href="@{/admin/staffs/edit/{id}(id=${staff.id})}"></a></td>
