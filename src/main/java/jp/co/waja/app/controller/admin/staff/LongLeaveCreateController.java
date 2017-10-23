@@ -42,6 +42,11 @@ public class LongLeaveCreateController {
 		LongLeaveCreateForm form = (LongLeaveCreateForm) model.asMap().get(FORM_MODEL_KEY);
 		form = Optional.ofNullable(form).orElse(new LongLeaveCreateForm());
 
+		if (form.getForms() == null) {
+			List<LongLeaveForm> longLeaveForms = new ArrayList<>();
+			form.setForms(longLeaveForms);
+		}
+
 		model.addAttribute(FORM_MODEL_KEY, form);
 		model.addAttribute(TARGET_ENTITY_KEY, staff);
 
