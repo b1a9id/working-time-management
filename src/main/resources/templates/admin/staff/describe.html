@@ -70,6 +70,7 @@
 							<ul class="dropdown-menu" role="menu">
 								<li>
 									<a th:href="@{/admin/staffs/edit/{staffId}(staffId=${staff.id})}">編集</a>
+									<a th:href="@{/admin/staffs/long-leave/create/{staffId}(staffId=${staff.id})}">長期休暇登録</a>
 									<!--<a href="#">有休管理</a>-->
 									<a th:href="@{/admin/staffs/password/edit/{id}(id=${staff.id})}">パスワード変更</a>
 								</li>
