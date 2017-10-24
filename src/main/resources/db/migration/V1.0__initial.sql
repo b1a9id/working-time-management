@@ -64,6 +64,15 @@ create table paid_vacation (
 )
 engine=InnoDB;
 
+create table long_leave (
+  staff_id bigint not null,
+  type integer not null,
+  start_at date not null,
+  end_at date,
+  remarks varchar(255)
+)
+engine=InnoDB;
+
 create table work_time_year_month (
   id bigint not null auto_increment,
   staff_id bigint not null,
@@ -167,6 +176,7 @@ INSERT INTO work_time (work_time_year_month_id, date, work_type, remarks) VALUES
 
 alter table staff add constraint UK_pvctx4dbua9qh4p4s3gm3scrh unique (email);
 alter table paid_vacation add constraint FKjk3lekaqd3mnn5432w6lsxtys foreign key (staff_id) references staff (id);
+alter table long_leave add constraint FKi4hrwnaesljcq8p801vlfvr78 foreign key (staff_id) references staff (id);
 alter table staff add constraint FKmdoqnc1maraqd1w8ptjpk1i9r foreign key (team_id) references team (id);
 alter table work_time add constraint FKewu2afn7kycb1qkdyd3njg9mk foreign key (work_time_year_month_id) references work_time_year_month (id);
 alter table work_time_year_month add constraint FKhl16odltapeepn6bbvvtwgjuu foreign key (staff_id) references staff (id);

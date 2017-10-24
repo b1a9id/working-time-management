@@ -1,7 +1,6 @@
 package jp.co.waja.core.service.staff;
 
-import jp.co.waja.core.entity.Staff;
-import jp.co.waja.core.entity.StaffHistory;
+import jp.co.waja.core.entity.*;
 import jp.co.waja.core.model.Role;
 import jp.co.waja.core.model.staff.*;
 import jp.co.waja.core.repository.staff.StaffRepository;
@@ -19,10 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -178,6 +175,23 @@ public class StaffService {
 
 		staffRepository.delete(id);
 		return Optional.ofNullable(staff.getName());
+	}
+
+	@PreAuthorize("hasRole('ADMIN')")
+	public Staff longLeaveCreate(LongLeaveCreateRequest request, Long id) {
+		Staff staff = staffRepository.findOneById(id);
+		List<LongLeave> longLeaves = request.getLongLeaveRequests().stream()
+				.map(longLeaveRequest -> {
+					LongLeave longLeave = new LongLeave();
+					longLeave.setType(longLeaveRequest.getType());
+					longLeave.setStartAt(longLeaveRequest.getStartAt());
+					longLeave.setEndAt(longLeaveRequest.getEndAt());
+					longLeave.setRemarks(longLeaveRequest.getRemarks());
+					return longLeave;
+				})
+				.collect(Collectors.toList());
+		staff.setLongLeaves(longLeaves);
+		return staffRepository.saveAndFlush(staff);
 	}
 
 	private StaffHistory addHistory(

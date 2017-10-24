@@ -82,6 +82,14 @@ public class Staff extends AbstractEntity<Long> implements Serializable {
 	@Embedded
 	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(
+			name = "long_leave",
+			joinColumns = @JoinColumn(name = "staff_id")
+	)
+	private List<LongLeave> longLeaves;
+
+	@Embedded
+	@ElementCollection(fetch = FetchType.LAZY)
+	@CollectionTable(
 			name = "staff_history",
 			joinColumns = @JoinColumn(name = "staff_id")
 	)
