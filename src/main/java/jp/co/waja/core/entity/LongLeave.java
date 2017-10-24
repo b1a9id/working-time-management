@@ -17,6 +17,7 @@ public class LongLeave {
 	}
 
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	private Type type;
 
 	@Column(name = "start_at", nullable = false)

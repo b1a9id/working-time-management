@@ -72,10 +72,10 @@ public class LongLeaveCreateController {
 			return "redirect:/admin/staffs/long-leave/create/{id}?error";
 		}
 
-		Staff savedStaff = staffService.longLeaveCreate(form.toLongLeaveCreateRequest(), id);
+		Staff updatedStaff = staffService.longLeaveCreate(form.toLongLeaveCreateRequest(), id);
 		redirectAttributes.getFlashAttributes().clear();
-		redirectAttributes.addAttribute("id", savedStaff.getId());
-		redirectAttributes.addFlashAttribute("savedStaff", savedStaff);
+		redirectAttributes.addAttribute("id", updatedStaff.getId());
+		redirectAttributes.addFlashAttribute("updatedStaff", updatedStaff);
 
 		return "redirect:/admin/staffs";
 	}
