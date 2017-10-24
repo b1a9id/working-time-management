@@ -193,17 +193,16 @@
 				<div class="row">
 					<div class="col-md-12">
 						<table class="table" th:with="regularWorkTime=${normalCount} * 8.00">
-							<caption>勤怠表</caption>
 							<thead>
-							<tr>
-								<th class="col-md-1 text-center" th:text="#{worktime.list.header.date}">日付</th>
-								<th class="col-md-1 text-center" th:text="#{worktime.list.header.type}">種別</th>
-								<th th:unless="${workTimeYearMonth.staff.flextime}" class="col-md-1 text-center" th:text="#{worktime.list.header.traindelay}">電車遅延</th>
-								<th class="text-center" th:text="#{worktime.list.header.startat}">始業時間</th>
-								<th class="text-center" th:text="#{worktime.list.header.endat}">就業時間</th>
-								<th class="col-md-1 text-center" th:text="#{worktime.list.header.resttime}">休憩</th>
-								<th class="col-md-1 text-center" th:text="#{worktime.list.header.daytotal}">稼働時間</th>
-								<th th:text="#{worktime.list.header.remarks}">備考</th>
+							<tr class="text-left">
+								<th class="col-md-1" th:text="#{worktime.list.header.date}">日付</th>
+								<th class="col-md-1" th:text="#{worktime.list.header.type}">種別</th>
+								<th th:unless="${workTimeYearMonth.staff.flextime}" class="col-md-1" th:text="#{worktime.list.header.traindelay}">電車遅延</th>
+								<th th:text="#{worktime.list.header.startat}">始業時間</th>
+								<th th:text="#{worktime.list.header.endat}">就業時間</th>
+								<th class="col-md-1" th:text="#{worktime.list.header.resttime}">休憩</th>
+								<th class="col-md-1" th:text="#{worktime.list.header.daytotal}">稼働時間</th>
+								<th class="col-md-3" th:text="#{worktime.list.header.remarks}">備考</th>
 							</tr>
 							</thead>
 							<tfoot>
@@ -240,14 +239,14 @@
 							</tfoot>
 							<tbody>
 							<tr th:each="workTime : ${workTimeYearMonth.workTimes}" th:with="dayTotal=${#workTimes.workTime(workTime.startAt, workTime.endAt, workTime.restTime)}" th:classappend="${#workTimes.overTime(dayTotal)} ? 'bg-danger'">
-								<td class="text-center" th:text="${#temporals.format(workTime.date, 'MM/dd(E)')}">6/1（木）</td>
-								<td class="text-center" th:text="#{|worktime.worktype.${workTime.workType}|}">出勤</td>
-								<td th:unless="${workTimeYearMonth.staff.flextime}" class="text-center"><i th:classappend="${workTime.trainDelay} ? 'glyphicon glyphicon-ok'"></i></td>
-								<td class="text-center" th:text="${workTime.startAt}">9:00</td>
-								<td class="text-center" th:text="${workTime.endAt}">18:00</td>
-								<td class="text-center" th:text="${workTime.restTime}">1:00</td>
-								<td class="text-center" th:text="${dayTotal}">8.00</td>
-								<td th:text="${workTime.remarks}"></td>
+								<td class="text-left" th:text="${#temporals.format(workTime.date, 'MM/dd(E)')}">6/1（木）</td>
+								<td class="text-left" th:text="#{|worktime.worktype.${workTime.workType}|}">出勤</td>
+								<td th:unless="${workTimeYearMonth.staff.flextime}" class="text-left"><i th:classappend="${workTime.trainDelay} ? 'glyphicon glyphicon-ok'"></i></td>
+								<td class="text-left" th:text="${workTime.startAt}">9:00</td>
+								<td class="text-left" th:text="${workTime.endAt}">18:00</td>
+								<td class="text-left" th:text="${workTime.restTime}">1:00</td>
+								<td class="text-left" th:text="${dayTotal}">8.00</td>
+								<td class="text-left" th:text="${workTime.remarks}"></td>
 							</tr>
 							</tbody>
 						</table>
