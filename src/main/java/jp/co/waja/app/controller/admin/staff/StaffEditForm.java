@@ -45,7 +45,7 @@ public class StaffEditForm implements Serializable {
 	private Staff.EmploymentType employmentType;
 
 	@NotNull
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate enteredDate;
 
 	private boolean flextime;
