@@ -143,6 +143,29 @@
 					</div>
 				</div>
 			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table">
+							<caption th:text="#{longleave.describe.title}">長期休暇</caption>
+							<tbody>
+							<tr>
+								<th th:text="#{longleave.field.type}">種別</th>
+								<th th:text="#{longleave.field.startat}">開始日</th>
+								<th th:text="#{longleave.field.endat}">終了日</th>
+								<th th:text="#{longleave.field.remarks}">備考</th>
+							</tr>
+							<tr th:each="longLeave : ${staff.longLeaves}">
+								<td th:text="#{|longleave.type.${longLeave.type}|}">産休</td>
+								<td th:text="${#temporals.format(longLeave.startAt, 'yyyy/MM/dd')}">2017/10/01</td>
+								<td th:text="${#temporals.format(longLeave.endAt, 'yyyy/MM/dd')}">2018/10/01</td>
+								<td th:text="${longLeave.remarks}">テスト</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>
