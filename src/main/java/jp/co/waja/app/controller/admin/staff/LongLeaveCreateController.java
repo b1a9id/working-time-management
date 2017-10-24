@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +48,10 @@ public class LongLeaveCreateController {
 			form.setForms(longLeaveForms);
 		}
 
+		if (CollectionUtils.isEmpty(form.getForms())) {
+			form.setForms(Collections.singletonList(new LongLeaveForm()));
+		}
+
 		model.addAttribute(FORM_MODEL_KEY, form);
 		model.addAttribute(TARGET_ENTITY_KEY, staff);
 
@@ -67,10 +72,10 @@ public class LongLeaveCreateController {
 			return "redirect:/admin/staffs/long-leave/create/{id}?error";
 		}
 
-		Staff savedStaff = staffService.longLeaveCreate(form.toLongLeaveCreateRequest(), id);
+		Staff updatedStaff = staffService.longLeaveCreate(form.toLongLeaveCreateRequest(), id);
 		redirectAttributes.getFlashAttributes().clear();
-		redirectAttributes.addAttribute("id", savedStaff.getId());
-		redirectAttributes.addFlashAttribute("savedStaff", savedStaff);
+		redirectAttributes.addAttribute("id", updatedStaff.getId());
+		redirectAttributes.addFlashAttribute("updatedStaff", updatedStaff);
 
 		return "redirect:/admin/staffs";
 	}

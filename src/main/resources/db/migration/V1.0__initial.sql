@@ -66,7 +66,7 @@ engine=InnoDB;
 
 create table long_leave (
   staff_id bigint not null,
-  type integer not null,
+  type varchar(30) not null,
   start_at date not null,
   end_at date,
   remarks varchar(255)
