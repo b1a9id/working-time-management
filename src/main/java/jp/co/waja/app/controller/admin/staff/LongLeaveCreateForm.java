@@ -3,7 +3,7 @@ package jp.co.waja.app.controller.admin.staff;
 import jp.co.waja.core.model.staff.*;
 import lombok.*;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Setter
 public class LongLeaveCreateForm implements Serializable {
 
-	@NotNull
+	@Valid
 	private List<LongLeaveForm> forms;
 
 	public LongLeaveCreateRequest toLongLeaveCreateRequest() {
