@@ -7,7 +7,7 @@ $(document).ready(function () {
 $(function () {
 	$('[data-toggle="tooltip"]').tooltip();
 
-	$('.date-time-picker').datepicker({
+	$('.date-picker').datepicker({
 		dateFormat: 'yy/mm/dd',
 		inline: true,
 		lang: 'ja'

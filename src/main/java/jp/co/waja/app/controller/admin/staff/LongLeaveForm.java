@@ -2,7 +2,9 @@ package jp.co.waja.app.controller.admin.staff;
 
 import jp.co.waja.core.entity.LongLeave;
 import jp.co.waja.core.model.staff.LongLeaveRequest;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -16,8 +18,10 @@ public class LongLeaveForm implements Serializable {
 	private LongLeave.Type type;
 
 	@NotNull
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate startAt;
 
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate endAt;
 
 	private String remarks;
