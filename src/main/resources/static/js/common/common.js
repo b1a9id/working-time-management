@@ -5,7 +5,12 @@ $(document).ready(function () {
 });
 
 $(function () {
-	$('[data-toggle="tooltip"]').tooltip()
-});
+	$('[data-toggle="tooltip"]').tooltip();
 
+	$('.date-time-picker').datepicker({
+		dateFormat: 'yy/mm/dd',
+		inline: true,
+		lang: 'ja'
+	});
+});
 
