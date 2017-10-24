@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +46,10 @@ public class LongLeaveCreateController {
 		if (form.getForms() == null) {
 			List<LongLeaveForm> longLeaveForms = new ArrayList<>();
 			form.setForms(longLeaveForms);
+		}
+
+		if (CollectionUtils.isEmpty(form.getForms())) {
+			form.setForms(Collections.singletonList(new LongLeaveForm()));
 		}
 
 		model.addAttribute(FORM_MODEL_KEY, form);
