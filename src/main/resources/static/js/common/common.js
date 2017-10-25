@@ -6,11 +6,5 @@ $(document).ready(function () {
 
 $(function () {
 	$('[data-toggle="tooltip"]').tooltip();
-
-	$('.date-picker').datepicker({
-		dateFormat: 'yy/mm/dd',
-		inline: true,
-		lang: 'ja'
-	});
 });
 
