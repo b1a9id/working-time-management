@@ -22,7 +22,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1 th:text="#{longleave.create.title} + ' ' + ${staff.name}">長期休暇登録</h1>
+						<h1 th:text="#{longleave.create.title}">長期休暇登録</h1>
 					</div>
 				</div>
 				<div class="row">
@@ -30,7 +30,6 @@
 						<ul class="breadcrumb">
 							<li><a th:href="@{/}" th:text="#{dashboard.title}">ダッシュボード</a></li>
 							<li><a th:href="@{/admin/staffs}" th:text="#{staff.list.title}">スタッフ一覧</a></li>
-							<li><a th:href="@{/admin/staffs/describe/{id}(id=${staff.id})}">スタッフ詳細</a></li>
 							<li class="active" th:text="#{longleave.create.title}">長期休暇登録</li>
 						</ul>
 					</div>
@@ -41,7 +40,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-12">
-						<form class="form-horizontal" method="post" th:action="@{/admin/staffs/long-leave/create/{id}(id=${staff.id})}" th:object="${form}">
+						<form class="form-horizontal" method="post" th:action="@{/admin/staffs/long-leave/create}" th:object="${form}">
 							<div th:if="${#fields.hasErrors()}">
 								<div class="alert alert-danger" role="alert">
 									<span th:text="#{global.error}">入力項目にエラーがあります。</span>
@@ -50,6 +49,7 @@
 							<table class="table">
 								<thead>
 								<tr>
+									<th th:text="#{longleave.field.staff}">スタッフ</th>
 									<th th:text="#{longleave.field.type}">種別</th>
 									<th th:text="#{longleave.field.startat}">開始日</th>
 									<th th:text="#{longleave.field.endat}">終了日</th>
@@ -59,6 +59,13 @@
 								</thead>
 								<tbody>
 								<tr th:each="llForm,stat : *{forms}">
+									<td th:classappend="${#fields.hasErrors('forms[' + __${stat.index}__ + '].staffId')}? has-error">
+										<select class="form-control" name="number" th:field="*{forms[__${stat.index}__].staffId}">
+											<option value=""></option>
+											<option th:each="staff : ${staffs}" th:value="${staff.id}" th:text="${staff.name}">田中 太郎</option>
+										</select>
+										<p class="help-block" th:if="${#fields.hasErrors('forms[' + __${stat.index}__ + '].staffId')}" th:errors="*{forms[__${stat.index}__].staffId}">エラーメッセージ</p>
+									</td>
 									<td th:classappend="${#fields.hasErrors('forms[' + __${stat.index}__ + '].type')}? has-error">
 										<select class="form-control" name="number" th:field="*{forms[__${stat.index}__].type}">
 											<option value=""></option>
@@ -83,7 +90,7 @@
 								</tbody>
 							</table>
 							<div class="form-group">
-								<a th:href="@{/admin/staffs/describe/{id}(id=${staff.id})}" type="button" class="btn btn-default col-md-offset-5">戻る</a>
+								<a th:href="@{/admin/staffs}" type="button" class="btn btn-default col-md-offset-5">戻る</a>
 								<button type="submit" class="btn btn-success" th:text="#{save}">保存</button>
 							</div>
 						</form>

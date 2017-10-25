@@ -1,6 +1,6 @@
 package jp.co.waja.core.model.staff;
 
-import jp.co.waja.core.entity.LongLeave;
+import jp.co.waja.core.entity.*;
 import lombok.*;
 
 import java.io.Serializable;
@@ -11,6 +11,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LongLeaveRequest implements Serializable {
+
+	private Long staffId;
 
 	private LongLeave.Type type;
 

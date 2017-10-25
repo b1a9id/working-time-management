@@ -132,6 +132,20 @@
 		</div>
 		<div sec:authorize="hasAnyRole('ADMIN')" class="container">
 			<div class="row">
+				<div class="col-md-2">
+					<a id="accordion-btn"><i class="fa fa-2x fa-search-plus"></i> 詳細検索</a>
+				</div>
+				<div class="col-md-10 text-right">
+					<div class="btn-group">
+						<a class="btn btn-success dropdown-toggle" data-toggle="dropdown"> メニュー <span class="fa fa-caret-down"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li>
+								<a th:href="@{/admin/staffs/create}" th:text="#{registration}">新規登録</a>
+								<a th:href="@{/admin/staffs/long-leave/create}">長期休暇登録</a>
+							</li>
+						</ul>
+					</div>
+				</div>
 				<!--<div class="col-md-3">-->
 					<!--<form class="form-inline">-->
 						<!--<div class="form-group text-right">-->
@@ -144,20 +158,18 @@
 						<!--</div>-->
 					<!--</form>-->
 				<!--</div>-->
-				<div class="col-md-2">
-					<a id="accordion-btn"><i class="fa fa-2x fa-search-plus"></i> 詳細検索</a>
-				</div>
 			</div>
 		</div>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 text-right">
-					<div class="btn-group">
-						<a class="btn btn-success" th:href="@{/admin/staffs/create}" th:text="#{registration}">新規登録</a>
-					</div>
-				</div>
-			</div>
-		</div>
+		<!--<div class="container">-->
+			<!--<div class="row">-->
+				<!--&lt;!&ndash;<div class="col-md-12 text-right">&ndash;&gt;-->
+					<!--&lt;!&ndash;<div class="btn-group">&ndash;&gt;-->
+						<!--&lt;!&ndash;<a class="btn btn-success" th:href="@{/admin/staffs/create}" th:text="#{registration}">新規登録</a>&ndash;&gt;-->
+					<!--&lt;!&ndash;</div>&ndash;&gt;-->
+				<!--&lt;!&ndash;</div>&ndash;&gt;-->
+				<!---->
+			<!--</div>-->
+		<!--</div>-->
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 text-right">

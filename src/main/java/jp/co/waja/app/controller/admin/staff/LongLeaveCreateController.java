@@ -1,6 +1,7 @@
 package jp.co.waja.app.controller.admin.staff;
 
 import jp.co.waja.core.entity.*;
+import jp.co.waja.core.service.longleave.LongLeaveService;
 import jp.co.waja.core.service.staff.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.*;
 
 @Controller
-@RequestMapping("/admin/staffs/long-leave/create/{id}")
+@RequestMapping("/admin/staffs/long-leave/create")
 public class LongLeaveCreateController {
 
 	private static final String TARGET_ENTITY_KEY = "staff";
@@ -27,9 +28,12 @@ public class LongLeaveCreateController {
 	@Autowired
 	private StaffService staffService;
 
-	@ModelAttribute(TARGET_ENTITY_KEY)
-	public Staff setupStaff(@PathVariable Long id) {
-		return staffService.getStaff(id);
+	@Autowired
+	private LongLeaveService longLeaveService;
+
+	@ModelAttribute("staffs")
+	public List<Staff> setUpStaffs() {
+		return staffService.getStaffsByEmploymentType(Staff.EmploymentType.PERMANENT_STAFF);
 	}
 
 	@ModelAttribute("types")
@@ -39,7 +43,6 @@ public class LongLeaveCreateController {
 
 	@GetMapping
 	public String create(Model model) {
-		Staff staff = (Staff) model.asMap().get(TARGET_ENTITY_KEY);
 		LongLeaveCreateForm form = (LongLeaveCreateForm) model.asMap().get(FORM_MODEL_KEY);
 		form = Optional.ofNullable(form).orElse(new LongLeaveCreateForm());
 
@@ -53,15 +56,12 @@ public class LongLeaveCreateController {
 		}
 
 		model.addAttribute(FORM_MODEL_KEY, form);
-		model.addAttribute(TARGET_ENTITY_KEY, staff);
-
 		return "admin/staff/longleave/create";
 	}
 
 	@PostMapping
 	public String create(
 			@AuthenticationPrincipal StaffDetails loginUser,
-			@PathVariable Long id,
 			@Validated @ModelAttribute(FORM_MODEL_KEY) LongLeaveCreateForm form,
 			BindingResult errors,
 			RedirectAttributes redirectAttributes) {
@@ -69,13 +69,12 @@ public class LongLeaveCreateController {
 		redirectAttributes.addFlashAttribute(ERRORS_MODEL_KEYS, errors);
 
 		if (errors.hasErrors()) {
-			return "redirect:/admin/staffs/long-leave/create/{id}?error";
+			return "redirect:/admin/staffs/long-leave/create?error";
 		}
 
-		Staff updatedStaff = staffService.longLeaveCreate(form.toLongLeaveCreateRequest(), id);
+		List<LongLeave> savedLongLeaves = longLeaveService.create(form.toLongLeaveCreateRequest());
 		redirectAttributes.getFlashAttributes().clear();
-		redirectAttributes.addAttribute("id", updatedStaff.getId());
-		redirectAttributes.addFlashAttribute("updatedStaff", updatedStaff);
-		return "redirect:/admin/staffs/describe/{id}";
+		redirectAttributes.addFlashAttribute("savedLongLeaves", savedLongLeaves);
+		return "redirect:/admin/staffs";
 	}
 }

@@ -5,13 +5,10 @@ import jp.co.waja.core.model.Role;
 import jp.co.waja.core.model.staff.*;
 import jp.co.waja.core.repository.staff.StaffRepository;
 import jp.co.waja.core.service.worktime.WorkTimeService;
-import jp.co.waja.exception.NotFoundException;
-import jp.co.waja.exception.WrongDeleteException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jp.co.waja.exception.*;
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -38,6 +34,11 @@ public class StaffService {
 
 	public Staff getStaff(long id) {
 		return staffRepository.findOne(id);
+	}
+
+	@PreAuthorize("hasRole('ADMIN')")
+	public List<Staff> getStaffsByEmploymentType(Staff.EmploymentType employmentType) {
+		return staffRepository.findAllByEmploymentType(employmentType);
 	}
 
 	@PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
@@ -175,23 +176,6 @@ public class StaffService {
 
 		staffRepository.delete(id);
 		return Optional.ofNullable(staff.getName());
-	}
-
-	@PreAuthorize("hasRole('ADMIN')")
-	public Staff longLeaveCreate(LongLeaveCreateRequest request, Long id) {
-		Staff staff = staffRepository.findOneById(id);
-		List<LongLeave> longLeaves = request.getLongLeaveRequests().stream()
-				.map(longLeaveRequest -> {
-					LongLeave longLeave = new LongLeave();
-					longLeave.setType(longLeaveRequest.getType());
-					longLeave.setStartAt(longLeaveRequest.getStartAt());
-					longLeave.setEndAt(longLeaveRequest.getEndAt());
-					longLeave.setRemarks(longLeaveRequest.getRemarks());
-					return longLeave;
-				})
-				.collect(Collectors.toList());
-		staff.getLongLeaves().addAll(longLeaves);
-		return staffRepository.saveAndFlush(staff);
 	}
 
 	private StaffHistory addHistory(

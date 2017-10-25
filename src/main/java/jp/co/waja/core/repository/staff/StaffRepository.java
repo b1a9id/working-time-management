@@ -19,6 +19,8 @@ public interface StaffRepository extends StaffRepositoryCustom, JpaRepository<St
 
 	List<Staff> findAllByDisabled(boolean disabled);
 
+	List<Staff> findAllByEmploymentType(Staff.EmploymentType employmentType);
+
 	List<Staff> findAllByTeam(Team team);
 
 	long countByTeam(Team team);

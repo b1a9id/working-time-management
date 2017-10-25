@@ -1,6 +1,6 @@
 package jp.co.waja.app.controller.admin.staff;
 
-import jp.co.waja.core.entity.LongLeave;
+import jp.co.waja.core.entity.*;
 import jp.co.waja.core.model.staff.LongLeaveRequest;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +13,9 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class LongLeaveForm implements Serializable {
+
+	@NotNull
+	private Long staffId;
 
 	@NotNull
 	private LongLeave.Type type;
@@ -28,6 +31,7 @@ public class LongLeaveForm implements Serializable {
 
 	public LongLeaveRequest toLongLeaveRequest() {
 		LongLeaveRequest request = new LongLeaveRequest();
+		request.setStaffId(getStaffId());
 		request.setType(getType());
 		request.setStartAt(getStartAt());
 		request.setEndAt(getEndAt());
