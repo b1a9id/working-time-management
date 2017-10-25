@@ -7,7 +7,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "staff")
@@ -101,5 +102,11 @@ public class Staff extends AbstractEntity<Long> implements Serializable {
 
 	public String getNameKana() {
 		return getNameLastKana() + " " + getNameFirstKana();
+	}
+
+	public List<LongLeave> sortByEndAt() {
+		return getLongLeaves().stream()
+				.sorted(Comparator.comparing(LongLeave::getEndAt))
+				.collect(Collectors.toList());
 	}
 }

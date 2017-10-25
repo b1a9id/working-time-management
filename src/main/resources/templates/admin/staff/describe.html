@@ -52,6 +52,15 @@
 				</div>
 			</div>
 		</div>
+		<div th:if="${duringLongLeave}" class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-danger" role="alert">
+						<span th:text="${#temporals.format(duringLongLeave.endAt, 'yyyy/MM/dd')} + 'まで' + #{|longleave.type.${duringLongLeave.type}|} + 'です。'">2017/10/25まで産休です。</span>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="section">
 			<div class="container">
 				<div class="row">
@@ -143,7 +152,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="container">
+			<div class="container" th:unless="${#lists.isEmpty(staff.longLeaves)}">
 				<div class="row">
 					<div class="col-md-12">
 						<table class="table">

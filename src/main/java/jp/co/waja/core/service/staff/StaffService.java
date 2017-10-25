@@ -190,7 +190,7 @@ public class StaffService {
 					return longLeave;
 				})
 				.collect(Collectors.toList());
-		staff.setLongLeaves(longLeaves);
+		staff.getLongLeaves().addAll(longLeaves);
 		return staffRepository.saveAndFlush(staff);
 	}
 

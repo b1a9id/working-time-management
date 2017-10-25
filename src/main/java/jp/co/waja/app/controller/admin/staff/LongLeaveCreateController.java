@@ -76,7 +76,6 @@ public class LongLeaveCreateController {
 		redirectAttributes.getFlashAttributes().clear();
 		redirectAttributes.addAttribute("id", updatedStaff.getId());
 		redirectAttributes.addFlashAttribute("updatedStaff", updatedStaff);
-
-		return "redirect:/admin/staffs";
+		return "redirect:/admin/staffs/describe/{id}";
 	}
 }
