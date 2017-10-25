@@ -80,12 +80,7 @@ public class Staff extends AbstractEntity<Long> implements Serializable {
 	@OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<PaidVacation> paidVacations;
 
-	@Embedded
-	@ElementCollection(fetch = FetchType.LAZY)
-	@CollectionTable(
-			name = "long_leave",
-			joinColumns = @JoinColumn(name = "staff_id")
-	)
+	@OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<LongLeave> longLeaves;
 
 	@Embedded
