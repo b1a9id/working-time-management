@@ -1,4 +1,4 @@
-package jp.co.waja.app.controller.admin.staff;
+package jp.co.waja.app.controller.admin.longleave;
 
 import jp.co.waja.core.entity.*;
 import jp.co.waja.core.model.staff.LongLeaveRequest;
