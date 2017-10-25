@@ -62,7 +62,7 @@
 									<td th:classappend="${#fields.hasErrors('forms[' + __${stat.index}__ + '].staffId')}? has-error">
 										<select class="form-control" name="number" th:field="*{forms[__${stat.index}__].staffId}">
 											<option value=""></option>
-											<option th:each="staff : ${staffs}" th:value="${staff.id}" th:text="${staff.name}">田中 太郎</option>
+											<option th:each="staff : ${staffs}" th:value="${staff.id}" th:text="${staff.team.name} + ' ' + ${staff.name}">田中 太郎</option>
 										</select>
 										<p class="help-block" th:if="${#fields.hasErrors('forms[' + __${stat.index}__ + '].staffId')}" th:errors="*{forms[__${stat.index}__].staffId}">エラーメッセージ</p>
 									</td>

@@ -161,12 +161,19 @@
 								<th th:text="#{longleave.field.startat}">開始日</th>
 								<th th:text="#{longleave.field.endat}">終了日</th>
 								<th th:text="#{longleave.field.remarks}">備考</th>
+								<th></th>
 							</tr>
 							<tr th:each="longLeave : ${staff.longLeaves}">
 								<td th:text="#{|longleave.type.${longLeave.type}|}">産休</td>
 								<td th:text="${#temporals.format(longLeave.startAt, 'yyyy/MM/dd')}">2017/10/01</td>
 								<td th:text="${#temporals.format(longLeave.endAt, 'yyyy/MM/dd')}">2018/10/01</td>
 								<td th:text="${longLeave.remarks}">テスト</td>
+								<td>
+									<form method="post" th:action="@{/admin/staffs/long-leave/delete/{id}?staffId={staffId}(id=${longLeave.id}, staffId=${staff.id})}">
+										<input type="hidden" name="_method" value="delete"/>
+										<button class="btn btn-link glyphicon glyphicon-trash" data-toggle="tooltip" data-container="body" title="削除" data-placement="top"></button>
+									</form>
+								</td>
 							</tr>
 							</tbody>
 						</table>
@@ -174,5 +181,41 @@
 				</div>
 			</div>
 		</div>
+		<script>
+//			$.fn.editable.defaults.mode = 'popup';
+//
+//			$(document).ready(function () {
+//				$('.edit-type').editable({
+//					type: 'select',
+//					value: 'NONE',
+//					source: [
+//						{value: 'MATERNITY', text:'産休'},
+//						{value: 'CHILD', text:'育休'}
+//					],
+//					url: '/orders/payment-waiting/edit/staff-contact/655000',
+//					title: '種別'
+//				});
+//				$('.edit-start-at').editable({
+//					type: 'date',
+//					format: 'yyyy/mm/dd',
+//					viewformat: 'yyyy/mm/dd',
+//					url: '/orders/payment-waiting/edit/staff-contact/655000',
+//					title: '開始日'
+//				});
+//				$('.edit-end-at').editable({
+//					type: 'date',
+//					format: 'yyyy/mm/dd',
+//					viewformat: 'yyyy/mm/dd',
+//					url: '/orders/payment-waiting/edit/staff-contact/655000',
+//					title: '終了日'
+//				});
+//				$('.edit-remarks').editable({
+//					type: 'text',
+//					pk: 1,
+//					url: '/orders/payment-waiting/edit/staff-contact/655000',
+//					title: '備考'
+//				});
+//			});
+		</script>
 	</body>
 </html>

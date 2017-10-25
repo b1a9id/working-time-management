@@ -24,6 +24,10 @@ public class LongLeaveService {
 	@Autowired
 	private LongLeaveRepository longLeaveRepository;
 
+	public LongLeave getLongLeave(long id) {
+		return longLeaveRepository.findOne(id);
+	}
+
 	@PreAuthorize("hasRole('ADMIN')")
 	public List<LongLeave> create(LongLeaveCreateRequest request) {
 		List<LongLeave> savedLongLeaves = new ArrayList<>();
@@ -42,5 +46,12 @@ public class LongLeaveService {
 						}
 				);
 		return savedLongLeaves;
+	}
+
+	@PreAuthorize("hasRole('ADMIN')")
+	public String delete(LongLeave longLeave) {
+		String staffName = longLeave.getStaff().getName();
+		longLeaveRepository.delete(longLeave.getId());
+		return staffName;
 	}
 }
