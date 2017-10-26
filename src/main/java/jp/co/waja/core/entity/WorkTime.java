@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -15,16 +16,26 @@ import java.time.LocalTime;
 public class WorkTime {
 
 	public enum WorkType {
-		NORMAL,
-		LEGAL_VACATION,
-		FULL_PAID_VACATION,
-		HALF_PAID_VACATION,
-		FULL_PAID_VACATION_AFTER,
-		HALF_PAID_VACATION_AFTER,
-		ABSENCE,
-		HALF_ABSENCE,
-		COMPENSATORY_VACATION,
-		SPECIAL_VACATION
+		NORMAL(BigDecimal.ZERO),
+		LEGAL_VACATION(BigDecimal.valueOf(1)),
+		FULL_PAID_VACATION(BigDecimal.valueOf(1)),
+		HALF_PAID_VACATION(BigDecimal.valueOf(0.5)),
+		FULL_PAID_VACATION_AFTER(BigDecimal.valueOf(1)),
+		HALF_PAID_VACATION_AFTER(BigDecimal.valueOf(0.5)),
+		ABSENCE(BigDecimal.valueOf(1)),
+		HALF_ABSENCE(BigDecimal.valueOf(0.5)),
+		COMPENSATORY_VACATION(BigDecimal.valueOf(1)),
+		SPECIAL_VACATION(BigDecimal.valueOf(1));
+
+		private final BigDecimal day;
+
+		private WorkType(final BigDecimal day) {
+			this.day = day;
+		}
+
+		public BigDecimal getDay() {
+			return this.day;
+		}
 	}
 
 	public WorkTime(LocalDate date, WorkType workType) {
