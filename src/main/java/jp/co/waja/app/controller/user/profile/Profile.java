@@ -7,7 +7,11 @@ import lombok.Setter;
 @Setter
 public class Profile {
 
+	private String teamName;
+
 	private String name;
 
-	private String teamName;
+	private String nameKana;
+
+	private String enteredDate;
 }

@@ -22,12 +22,13 @@ public class TeamService {
 	@Autowired
 	private StaffRepository staffRepository;
 
+	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
 	public List<Team> getTeams() {
 		return teamRepository.findAll();
 	}
 
 	public Team getTeam(long teamId) {
-		return teamRepository.findOneById(teamId);
+		return teamRepository.findOne(teamId);
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")

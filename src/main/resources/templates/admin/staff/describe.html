@@ -5,7 +5,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 		<script type="text/javascript" th:src="@{/webjars/jquery/3.2.0/jquery.min.js}"></script>
 		<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
-		<script type="text/javascript" th:src="@{/js/common/describe-search.js}"></script>
 		<link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
@@ -20,7 +19,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1 th:text="${staff.nameLast} + ${staff.nameFirst}">テスト太郎</h1>
+						<h1 th:text="${staff.getName()}">テスト太郎</h1>
 					</div>
 				</div>
 				<div class="row">
@@ -52,12 +51,21 @@
 				</div>
 			</div>
 		</div>
+		<div th:if="${duringLongLeave}" class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-danger" role="alert">
+						<span th:text="${#temporals.format(duringLongLeave.endAt, 'yyyy/MM/dd')} + 'まで' + #{|longleave.type.${duringLongLeave.type}|} + 'です。'">2017/10/25まで産休です。</span>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="section">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12 text-right">
 						<div class="btn-group">
-							<a class="btn btn-default" th:href="@{/admin/staffs/histories/1}">変更履歴</a>
+							<a class="btn btn-default" th:href="@{/admin/staffs/edit-history/{id}(id=${staff.id})}">変更履歴</a>
 						</div>
 						<div class="btn-group">
 							<form method="post" th:action="@{/admin/staffs/delete/{id}(id=${staff.id})}">
@@ -70,7 +78,7 @@
 							<ul class="dropdown-menu" role="menu">
 								<li>
 									<a th:href="@{/admin/staffs/edit/{staffId}(staffId=${staff.id})}">編集</a>
-									<!--<a href="#">有給管理</a>-->
+									<!--<a href="#">有休管理</a>-->
 									<a th:href="@{/admin/staffs/password/edit/{id}(id=${staff.id})}">パスワード変更</a>
 								</li>
 							</ul>
@@ -91,11 +99,11 @@
 								</tr>
 								<tr>
 									<th th:text="#{staff.field.name}">名前</th>
-									<td th:text="${staff.nameLast} + ${staff.nameFirst}">テスト太郎</td>
+									<td th:text="${staff.getName()}">テスト太郎</td>
 								</tr>
 								<tr>
-									<th th:text="#{staff.field.name.kana}">ふりがな</th>
-									<td th:text="${staff.nameLastKana} + ${staff.nameFirstKana}">てすとたろう</td>
+									<th th:text="#{staff.field.nameKana}">ふりがな</th>
+									<td th:text="${staff.getNameKana()}">てすとたろう</td>
 								</tr>
 								<tr>
 									<th th:text="#{staff.field.employment.type}">ふりがな</th>
@@ -114,11 +122,11 @@
 									<td th:text="${#temporals.format(staff.enteredDate, 'yyyy/MM/dd')}">2015/06/01</td>
 								</tr>
 								<!--<tr>-->
-									<!--<th>有給付与日</th>-->
+									<!--<th>有休付与日</th>-->
 									<!--<td>2015/12/01</td>-->
 								<!--</tr>-->
 								<!--<tr>-->
-									<!--<th>残有給日数</th>-->
+									<!--<th>残有休日数</th>-->
 									<!--<td>10日</td>-->
 								<!--</tr>-->
 								<tr>
@@ -142,6 +150,72 @@
 					</div>
 				</div>
 			</div>
+			<div class="container" th:unless="${#lists.isEmpty(staff.longLeaves)}">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table">
+							<caption th:text="#{longleave.describe.title}">長期休暇</caption>
+							<tbody>
+							<tr>
+								<th th:text="#{longleave.field.type}">種別</th>
+								<th th:text="#{longleave.field.startat}">開始日</th>
+								<th th:text="#{longleave.field.endat}">終了日</th>
+								<th th:text="#{longleave.field.remarks}">備考</th>
+								<th></th>
+							</tr>
+							<tr th:each="longLeave : ${staff.longLeaves}">
+								<td th:text="#{|longleave.type.${longLeave.type}|}">産休</td>
+								<td th:text="${#temporals.format(longLeave.startAt, 'yyyy/MM/dd')}">2017/10/01</td>
+								<td th:text="${#temporals.format(longLeave.endAt, 'yyyy/MM/dd')}">2018/10/01</td>
+								<td th:text="${longLeave.remarks}">テスト</td>
+								<td>
+									<form method="post" th:action="@{/admin/staffs/long-leave/delete/{id}?staffId={staffId}(id=${longLeave.id}, staffId=${staff.id})}">
+										<input type="hidden" name="_method" value="delete"/>
+										<button class="btn btn-link glyphicon glyphicon-trash" data-toggle="tooltip" data-container="body" title="削除" data-placement="top"></button>
+									</form>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
 		</div>
+		<script>
+//			$.fn.editable.defaults.mode = 'popup';
+//
+//			$(document).ready(function () {
+//				$('.edit-type').editable({
+//					type: 'select',
+//					value: 'NONE',
+//					source: [
+//						{value: 'MATERNITY', text:'産休'},
+//						{value: 'CHILD', text:'育休'}
+//					],
+//					url: '/orders/payment-waiting/edit/staff-contact/655000',
+//					title: '種別'
+//				});
+//				$('.edit-start-at').editable({
+//					type: 'date',
+//					format: 'yyyy/mm/dd',
+//					viewformat: 'yyyy/mm/dd',
+//					url: '/orders/payment-waiting/edit/staff-contact/655000',
+//					title: '開始日'
+//				});
+//				$('.edit-end-at').editable({
+//					type: 'date',
+//					format: 'yyyy/mm/dd',
+//					viewformat: 'yyyy/mm/dd',
+//					url: '/orders/payment-waiting/edit/staff-contact/655000',
+//					title: '終了日'
+//				});
+//				$('.edit-remarks').editable({
+//					type: 'text',
+//					pk: 1,
+//					url: '/orders/payment-waiting/edit/staff-contact/655000',
+//					title: '備考'
+//				});
+//			});
+		</script>
 	</body>
 </html>

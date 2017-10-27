@@ -39,7 +39,7 @@
 			<div class="col-md-12">
 				<form class="form-horizontal" role="form" th:action="@{/admin/work-time/edit/{id}?displayYearMonth={displayYearMonth}(id=${workTimeYearMonth.staff.id}, displayYearMonth=${yearMonth})}" method="post" th:object="${form}">
 					<input type="hidden" th:field="*{id}" th:value="*{id}" />
-					<table class="table table-bordered form-group">
+					<table class="table table-bordered table-condensed form-group">
 						<thead>
 						<tr>
 							<th class="col-md-1" th:text="#{worktime.list.header.date}">日付</th>
@@ -97,8 +97,8 @@
 						</tbody>
 					</table>
 					<div class="form-group">
-						<a th:href="@{/work-time}" type="button" class="btn btn-default col-md-offset-5">戻る</a>
 						<button type="submit" class="btn btn-success">保存</button>
+						<a th:href="@{/work-time}" type="button" class="btn btn-default col-md-offset-5">戻る</a>
 					</div>
 				</form>
 			</div>

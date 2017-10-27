@@ -13,8 +13,10 @@ public class ProfileRestController {
 	public Profile describe(@AuthenticationPrincipal StaffDetails staffDetails) {
 		Staff staff = staffDetails.getStaff();
 		Profile profile = new Profile();
-		profile.setName(staff.getName());
 		profile.setTeamName(staff.getTeam().getName());
+		profile.setName(staff.getName());
+		profile.setNameKana(staff.getNameKana());
+		profile.setEnteredDate(staff.getEnteredDate().toString());
 		return profile;
 	}
 }

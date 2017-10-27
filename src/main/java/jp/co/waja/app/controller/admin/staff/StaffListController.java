@@ -3,6 +3,7 @@ package jp.co.waja.app.controller.admin.staff;
 import jp.co.waja.app.support.PageWrapper;
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.entity.Team;
+import jp.co.waja.core.model.Role;
 import jp.co.waja.core.service.staff.StaffDetails;
 import jp.co.waja.core.service.staff.StaffService;
 import jp.co.waja.core.service.team.TeamService;
@@ -50,6 +51,11 @@ public class StaffListController {
 	@ModelAttribute("employmentTypes")
 	public List<Staff.EmploymentType> setUpWorkTypes() {
 		return Arrays.asList(Staff.EmploymentType.values());
+	}
+
+	@ModelAttribute("roles")
+	public List<Role> setUpRoles() {
+		return Arrays.asList(Role.values());
 	}
 
 	@GetMapping

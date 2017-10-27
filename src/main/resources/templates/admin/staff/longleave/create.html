@@ -1,0 +1,104 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ja">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<script type="text/javascript" th:src="@{/webjars/jquery/3.2.0/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+		<script type="text/javascript" th:src="@{/lib/datetimepicker/jquery.datetimepicker.js}"></script>
+		<link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
+		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
+		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
+		<link th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}" rel="stylesheet" type="text/css" >
+		<link th:src="@{/lib/datetimepicker/jquery.datetimepicker.css}" type="text/css"/>
+
+		<title th:text="#{longleave.create.title}">長期休暇登録</title>
+	</head>
+
+	<body>
+		<div th:replace="common/layout::navbar-layout"></div>
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1 th:text="#{longleave.create.title}">長期休暇登録</h1>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="breadcrumb">
+							<li><a th:href="@{/}" th:text="#{dashboard.title}">ダッシュボード</a></li>
+							<li><a th:href="@{/admin/staffs}" th:text="#{staff.list.title}">スタッフ一覧</a></li>
+							<li class="active" th:text="#{longleave.create.title}">長期休暇登録</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-12">
+						<form class="form-horizontal" method="post" th:action="@{/admin/staffs/long-leave/create}" th:object="${form}">
+							<div th:if="${#fields.hasErrors()}">
+								<div class="alert alert-danger" role="alert">
+									<span th:text="#{global.error}">入力項目にエラーがあります。</span>
+								</div>
+							</div>
+							<table class="table">
+								<thead>
+								<tr>
+									<th th:text="#{longleave.field.staff}">スタッフ</th>
+									<th th:text="#{longleave.field.type}">種別</th>
+									<th th:text="#{longleave.field.startat}">開始日</th>
+									<th th:text="#{longleave.field.endat}">終了日</th>
+									<th th:text="#{longleave.field.remarks}">備考</th>
+									<th></th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr th:each="llForm,stat : *{forms}">
+									<td th:classappend="${#fields.hasErrors('forms[' + __${stat.index}__ + '].staffId')}? has-error">
+										<select class="form-control" name="number" th:field="*{forms[__${stat.index}__].staffId}">
+											<option value=""></option>
+											<option th:each="staff : ${staffs}" th:value="${staff.id}" th:text="${staff.team.name} + ' ' + ${staff.name}">田中 太郎</option>
+										</select>
+										<p class="help-block" th:if="${#fields.hasErrors('forms[' + __${stat.index}__ + '].staffId')}" th:errors="*{forms[__${stat.index}__].staffId}">エラーメッセージ</p>
+									</td>
+									<td th:classappend="${#fields.hasErrors('forms[' + __${stat.index}__ + '].type')}? has-error">
+										<select class="form-control" name="number" th:field="*{forms[__${stat.index}__].type}">
+											<option value=""></option>
+											<option th:each="type : ${types}" th:value="${type}" th:text="#{|longleave.type.${type}|}">産休</option>
+										</select>
+										<p class="help-block" th:if="${#fields.hasErrors('forms[' + __${stat.index}__ + '].type')}" th:errors="*{forms[__${stat.index}__].type}">エラーメッセージ</p>
+									</td>
+									<td th:classappend="${#fields.hasErrors('forms[' + __${stat.index}__ + '].startAt')}? has-error">
+										<input class="form-control date-picker" th:field="*{forms[__${stat.index}__].startAt}"/>
+										<p class="help-block" th:if="${#fields.hasErrors('forms[' + __${stat.index}__ + '].startAt')}" th:errors="*{forms[__${stat.index}__].startAt}">エラーメッセージ</p>
+									</td>
+									<td th:classappend="${#fields.hasErrors('forms[' + __${stat.index}__ + '].endAt')}? has-error">
+										<input class="form-control date-picker" th:field="*{forms[__${stat.index}__].endAt}"/>
+										<p class="help-block" th:if="${#fields.hasErrors('forms[' + __${stat.index}__ + '].endAt')}" th:errors="*{forms[__${stat.index}__].endAt}">エラーメッセージ</p>
+									</td>
+									<td th:classappend="${#fields.hasErrors('forms[' + __${stat.index}__ + '].remarks')}? has-error">
+										<input th:field="*{forms[__${stat.index}__].remarks}" class="form-control" placeholder="備考" />
+										<p class="help-block" th:if="${#fields.hasErrors('forms[' + __${stat.index}__ + '].remarks')}" th:errors="*{forms[__${stat.index}__].remarks}">エラーメッセージ</p>
+									</td>
+									<!--<td><i data-index="0" class="add-btn form-control-static glyphicon glyphicon-plus"></i></td>-->
+								</tr>
+								</tbody>
+							</table>
+							<div class="form-group">
+								<a th:href="@{/admin/staffs}" type="button" class="btn btn-default col-md-offset-5">戻る</a>
+								<button type="submit" class="btn btn-success" th:text="#{save}">保存</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
+		<script type="text/javascript" th:src="@{/js/common/datepicker.js}"></script>
+	</body>
+</html>

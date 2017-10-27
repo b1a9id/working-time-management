@@ -5,7 +5,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 		<script type="text/javascript" th:src="@{/webjars/jquery/3.2.0/jquery.min.js}"></script>
 		<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
-		<script type="text/javascript" th:src="@{/js/common/describe-search.js}"></script>
 		<link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
@@ -69,7 +68,7 @@
 		</div>
 	</div>
 	<div class="section">
-		<div id="describe-search" class="section" style="display: none;">
+		<div id="accordion-block" class="section" style="display: none;">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-10">
@@ -97,15 +96,22 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<div class="col-sm-offset-2 col-sm-10">
-									<div class="checkbox">
-										<label><input th:field="*{telework}" type="checkbox" />在宅勤務可</label>
-									</div>
+								<div class="col-sm-2">
+									<label class="control-label">権限</label>
+								</div>
+								<div class="col-sm-10">
+									<select class="form-control" th:field="*{role}">
+										<option value=""></option>
+										<option th:each="role : ${roles}" th:value="${role}" th:text="#{|role.${role}|}">管理者</option>
+									</select>
 								</div>
 							</div>
 							<div class="form-group">
-								<div class="col-sm-offset-2 col-sm-10">
-									<div class="checkbox">
+								<div class="col-sm-offset-2">
+									<div class="col-sm-3 checkbox">
+										<label><input th:field="*{telework}" type="checkbox" />在宅勤務可</label>
+									</div>
+									<div class="col-sm-3 checkbox">
 										<label><input th:field="*{disabled}" type="checkbox" />無効アカウントのみ</label>
 									</div>
 								</div>
@@ -122,6 +128,20 @@
 		</div>
 		<div sec:authorize="hasAnyRole('ADMIN')" class="container">
 			<div class="row">
+				<div class="col-md-2">
+					<a id="accordion-btn"><i class="fa fa-2x fa-search-plus"></i> 詳細検索</a>
+				</div>
+				<div class="col-md-10 text-right">
+					<div class="btn-group">
+						<a class="btn btn-success dropdown-toggle" data-toggle="dropdown"> メニュー <span class="fa fa-caret-down"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li>
+								<a th:href="@{/admin/staffs/create}" th:text="#{registration}">新規登録</a>
+								<a th:href="@{/admin/staffs/long-leave/create}">長期休暇登録</a>
+							</li>
+						</ul>
+					</div>
+				</div>
 				<!--<div class="col-md-3">-->
 					<!--<form class="form-inline">-->
 						<!--<div class="form-group text-right">-->
@@ -134,20 +154,18 @@
 						<!--</div>-->
 					<!--</form>-->
 				<!--</div>-->
-				<div class="col-md-2">
-					<a id="describe-search-btn"><i class="fa fa-2x fa-search-plus"></i> 詳細検索</a>
-				</div>
 			</div>
 		</div>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 text-right">
-					<div class="btn-group">
-						<a class="btn btn-success" th:href="@{/admin/staffs/create}" th:text="#{registration}">登録</a>
-					</div>
-				</div>
-			</div>
-		</div>
+		<!--<div class="container">-->
+			<!--<div class="row">-->
+				<!--&lt;!&ndash;<div class="col-md-12 text-right">&ndash;&gt;-->
+					<!--&lt;!&ndash;<div class="btn-group">&ndash;&gt;-->
+						<!--&lt;!&ndash;<a class="btn btn-success" th:href="@{/admin/staffs/create}" th:text="#{registration}">新規登録</a>&ndash;&gt;-->
+					<!--&lt;!&ndash;</div>&ndash;&gt;-->
+				<!--&lt;!&ndash;</div>&ndash;&gt;-->
+				<!---->
+			<!--</div>-->
+		<!--</div>-->
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 text-right">
@@ -159,7 +177,7 @@
 							<a th:href="@{/admin/staffs?page={page}(page=${pagination.getNumber() - 1})}" th:disabled="!${pagination.hasPrevious()}" th:style="!${pagination.hasPrevious()} ? 'pointer-events : none;'"><i class="fa fa-angle-left fa-fw fa-lg"></i></a>
 						</li>
 						<li class = 'active'>
-							<a th:href="@{/admin/staffs?page={page}(page=${pagination.getNumber()})}" th:text="${pagination.currentNumber}">2</a>
+							<a th:href="@{/admin/staffs?page={page}(page=${pagination.getNumber()})}" disabled="disabled" style="pointer-events : none;" th:text="${pagination.currentNumber}">2</a>
 						</li>
 						<li>
 							<a th:href="@{/admin/staffs?page={page}(page=${pagination.getNumber() + 1})}" th:disabled="!${pagination.hasNext()}" th:style="!${pagination.hasNext()} ? 'pointer-events : none;'"><i class="fa fa-angle-right fa-fw fa-lg"></i></a>
@@ -181,11 +199,11 @@
 							<th th:text="#{staff.field.team}">チーム名</th>
 							<th th:text="#{staff.field.name}">名前</th>
 							<th th:text="#{staff.field.employment.type}">雇用形態</th>
-							<th>有給付与日</th>
-							<th>残有給日数</th>
+							<th>入社日</th>
+							<th>有休付与日</th>
+							<th>残有休日数</th>
 							<th class="text-center">フレックス</th>
 							<th class="text-center" th:text="#{staff.field.telework}">在宅</th>
-							<th class="text-center">無効</th>
 							<th th:text="#{role.label}">権限</th>
 							<th></th>
 							<th></th>
@@ -195,20 +213,20 @@
 						<tbody>
 						<tr th:each="staff : ${staffs}">
 							<td th:text="${staff.team.shortName}">クリエイティブチーム</td>
-							<td><a th:href="@{/admin/staffs/describe/{id}(id=${staff.id})}" th:text="${staff.nameLast} + ${staff.nameFirst}">テスト太郎</a></td>
+							<td><a th:href="@{/admin/staffs/describe/{id}(id=${staff.id})}" th:text="${staff.getName()}">テスト太郎</a></td>
 							<td th:text="#{|staff.employmenttype.${staff.employmentType}|}">正社員</td>
+							<td th:text="${#temporals.format(staff.enteredDate, 'yyyy/MM/dd')}">2015/04/01</td>
 							<td>06/01</td>
-							<td>10日</td>
+							<td th:text="${staff.}">10日</td>
 							<td class="text-center"><i th:class="${staff.flextime} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
 							<td class="text-center"><i th:class="${staff.telework} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
-							<td class="text-center"><i th:class="${staff.disabled} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
 							<td th:text="|#{|role.${staff.role}|}">スタッフ</td>
-							<td><a class="btn btn-link glyphicon glyphicon-time" th:href="@{/admin/work-time/{id}(id=${staff.id})}"></a></td>
-							<td><a class="btn btn-link glyphicon glyphicon-pencil" th:href="@{/admin/staffs/edit/{id}(id=${staff.id})}"></a></td>
+							<td><a class="btn btn-link glyphicon glyphicon-time" data-toggle="tooltip" data-container="body" title="今月の稼働実績" data-placement="top" th:href="@{/admin/work-time/{id}(id=${staff.id})}"></a></td>
+							<td><a class="btn btn-link glyphicon glyphicon-pencil" data-toggle="tooltip" data-container="body" title="編集" data-placement="top" th:href="@{/admin/staffs/edit/{id}(id=${staff.id})}"></a></td>
 							<td>
 								<form method="post" th:action="@{/admin/staffs/delete/{id}(id=${staff.id})}">
 									<input type="hidden" name="_method" value="delete"/>
-									<button class="btn btn-link glyphicon glyphicon-trash"></button>
+									<button class="btn btn-link glyphicon glyphicon-trash" data-toggle="tooltip" data-container="body" title="削除" data-placement="top" ></button>
 								</form>
 							</td>
 						</tr>
@@ -218,6 +236,7 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
 	</body>
 
 </html>

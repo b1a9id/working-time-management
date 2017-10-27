@@ -44,6 +44,10 @@ public class StaffRepositoryImpl implements StaffRepositoryCustom {
 			where.add(builder.equal(root.get(Staff_.employmentType), request.getEmploymentType()));
 		}
 
+		if (request.getRole() != null) {
+			where.add(builder.equal(root.get(Staff_.role), request.getRole()));
+		}
+
 		if (request.getTelework() != null) {
 			Predicate truePredicate = builder.isTrue(root.get(Staff_.telework));
 			Predicate falsePredicate = builder.isFalse(root.get(Staff_.telework));
