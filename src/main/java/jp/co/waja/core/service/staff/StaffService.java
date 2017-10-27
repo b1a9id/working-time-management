@@ -77,6 +77,7 @@ public class StaffService {
 		LocalDateTime updatedAt = LocalDateTime.now();
 
 		Staff staff = staffRepository.findOneById(id);
+		//TODO:うまい方法考える
 		if (!staff.getTeam().getId().equals(request.getTeam().getId())) {
 			StaffHistory history = addHistory("team", staff.getTeam().getName(), request.getTeam().getName(), updatedBy, updatedAt);
 			histories.add(history);
