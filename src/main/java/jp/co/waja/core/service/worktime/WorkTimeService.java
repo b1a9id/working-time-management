@@ -40,6 +40,10 @@ public class WorkTimeService {
 		return workTimeYearMonthRepository.findOneByStaffAndWorkYearMonth(staff, yearMonth);
 	}
 
+	public List<WorkTimeYearMonth> getNonApprovedWorkTimeYearMonth(List<Staff> staffs) {
+		return workTimeYearMonthRepository.findAllByStaffInAndCompletedAtIsNotNullAndApproved1AtIsNull(staffs);
+	}
+
 	public WorkTimeYearMonth createWorkTimeYearMonth(Staff staff, int yearMonth) {
 		WorkTimeYearMonth workTimeYearMonth = new WorkTimeYearMonth(staff, yearMonth);
 		List<WorkTime> workTimes = createWorkTimes(workTimeYearMonth);
