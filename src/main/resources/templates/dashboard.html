@@ -17,7 +17,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1>ダッシュボード</h1>
+						<h1 th:with="today=${#temporals.createNow()}" th:text="'今日は ' + ${#temporals.format(today, 'yyyy/MM/dd(E)')}"></h1>
 					</div>
 				</div>
 			</div>
