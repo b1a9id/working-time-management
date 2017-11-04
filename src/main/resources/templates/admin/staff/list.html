@@ -217,7 +217,7 @@
 							<td th:text="#{|staff.employmenttype.${staff.employmentType}|}">正社員</td>
 							<td th:text="${#temporals.format(staff.enteredDate, 'yyyy/MM/dd')}">2015/04/01</td>
 							<td>06/01</td>
-							<td th:text="${staff.}">10日</td>
+							<td>10日</td>
 							<td class="text-center"><i th:class="${staff.flextime} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
 							<td class="text-center"><i th:class="${staff.telework} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
 							<td th:text="|#{|role.${staff.role}|}">スタッフ</td>

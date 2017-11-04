@@ -4,6 +4,7 @@ import jp.co.waja.core.service.staff.StaffDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,6 +27,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
+	@Bean
+	public RoleHierarchy roleHierarchy(SecurityRolesProperties rolesProperties) {
+		return rolesProperties.getRoleHierarchy();
+	}
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
@@ -34,15 +40,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/**").authenticated()
 				.and()
 				.formLogin()
-				.loginPage("/loginForm")
+				.loginPage("/login-form")
 				.loginProcessingUrl("/login")
 				.usernameParameter("email")
 				.passwordParameter("password")
 				.defaultSuccessUrl("/", true)
-				.failureUrl("/loginForm?error=true").permitAll()
+				.failureUrl("/login-form?error=true").permitAll()
 				.and()
 				.csrf()
-				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+				.and()
+				.rememberMe()
+				.key("worldrobe")
+				.useSecureCookie(true);
 	}
 
 	@Override

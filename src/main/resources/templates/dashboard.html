@@ -1,5 +1,5 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ja">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="ja">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,69 +17,47 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1>ダッシュボード</h1>
+						<h1 th:with="today=${#temporals.createNow()}" th:text="'今日は ' + ${#temporals.format(today, 'yyyy/MM/dd(E)')}"></h1>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!--<div class="section">-->
-			<!--<div class="container">-->
-				<!--<div class="row">-->
-					<!--<div class="col-md-12">-->
-						<!--<ul class="media-list">-->
-							<!--<li class="media">-->
-								<!--<a class="pull-left" th:href="@{/clients}"><i class="fa fa-4x fa-fw fa-users"></i></a>-->
-								<!--<div class="media-body">-->
-									<!--<h4 class="media-heading">顧客管理</h4>-->
-									<!--<p></p>-->
-								<!--</div>-->
-							<!--</li>-->
-							<!--<li class="media">-->
-								<!--<a class="pull-left" th:href="@{/orders}"><i class="fa fa-4x fa-fw s fa-cart-arrow-down"></i></a>-->
-								<!--<div class="media-body">-->
-									<!--<h4 class="media-heading">注文管理</h4>-->
-									<!--<p></p>-->
-								<!--</div>-->
-							<!--</li>-->
-							<!--<li class="media">-->
-								<!--<a class="pull-left" href="#"><i class="fa fa-4x fa-fw s fa-archive"></i></a>-->
-								<!--<div class="media-body">-->
-									<!--<h4 class="media-heading">在庫管理</h4>-->
-									<!--<p></p>-->
-								<!--</div>-->
-							<!--</li>-->
-							<!--<li class="media">-->
-								<!--<a class="pull-left" href="#"><i class="fa fa-4x fa-fw s fa-book"></i></a>-->
-								<!--<div class="media-body">-->
-									<!--<h4 class="media-heading">データ管理</h4>-->
-									<!--<p></p>-->
-								<!--</div>-->
-							<!--</li>-->
-							<!--<li class="media">-->
-								<!--<a class="pull-left" href="#"><i class="fa fa-4x fa-fw s fa-folder"></i></a>-->
-								<!--<div class="media-body">-->
-									<!--<h4 class="media-heading">マスタ管理</h4>-->
-									<!--<p></p>-->
-								<!--</div>-->
-							<!--</li>-->
-							<!--<li class="media">-->
-								<!--<a class="pull-left" href="#"><i class="fa fa-4x fa-fw s fa-briefcase"></i></a>-->
-								<!--<div class="media-body">-->
-									<!--<h4 class="media-heading">販促</h4>-->
-									<!--<p></p>-->
-								<!--</div>-->
-							<!--</li>-->
-							<!--<li class="media">-->
-								<!--<a class="pull-left" th:href="@{/contact}"><i class="fa fa-4x fa-fw s fa-envelope"></i></a>-->
-								<!--<div class="media-body">-->
-									<!--<h4 class="media-heading">お問い合わせ</h4>-->
-									<!--<p></p>-->
-								<!--</div>-->
-							<!--</li>-->
-						<!--</ul>-->
-					<!--</div>-->
-				<!--</div>-->
-			<!--</div>-->
-		<!--</div>-->
+		<!--/*/<th:block sec:authorize="hasAnyRole('MANAGER')">/*/-->
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="alert alert-danger" role="alert">
+							<span th:text="${#lists.size(nonApprovedWorkTimeYearMonths)} + '件未承認があります。'">2件未承認があります。</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table">
+							<thead>
+							<tr>
+								<th>年月</th>
+								<th>スタッフ名</th>
+								<th>入力完了日時</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="workTimeYearMonth : ${nonApprovedWorkTimeYearMonths}">
+								<td th:with="yearMonth=${#workTimes.intToYearMonth(workTimeYearMonth.workYearMonth)}"><a th:href="@{/admin/work-time/{id}(id=${workTimeYearMonth.staff.id})}" th:text="${#temporals.format(yearMonth, 'yyyy年MM月')}">2017年10月</a></td>
+								<td th:text="${workTimeYearMonth.staff.getName()}">山田太郎</td>
+								<td th:text="${#temporals.format(workTimeYearMonth.completedAt, 'yyyy/MM/dd HH:dd')}">2017/10/01 10:20</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/*/</th:block>/*/-->
 	</body>
 </html>

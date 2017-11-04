@@ -13,5 +13,7 @@ public interface WorkTimeYearMonthRepository extends JpaRepository<WorkTimeYearM
 
 	List<WorkTimeYearMonth> findAllByStaff(Staff staff);
 
+	List<WorkTimeYearMonth> findAllByStaffInAndCompletedAtIsNotNullAndApproved1AtIsNull(List<Staff> staffs);
+
 	long countByStaff(Staff staff);
 }
