@@ -90,8 +90,12 @@
 								</tbody>
 							</table>
 							<div class="form-group">
-								<a th:href="@{/admin/staffs}" type="button" class="btn btn-default col-md-offset-5">戻る</a>
-								<button type="submit" class="btn btn-success" th:text="#{save}">保存</button>
+								<div class="com-sm-12">
+									<div class="text-right">
+										<button type="submit" class="btn btn-success" th:text="#{save}">保存</button>
+										<a th:href="@{/admin/staffs}" type="button" class="btn btn-default">戻る</a>
+									</div>
+								</div>
 							</div>
 						</form>
 					</div>

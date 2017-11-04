@@ -294,8 +294,8 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<a class="btn btn-default" data-dismiss="modal">キャンセル</a>
 						<button @click="save" class="btn btn-primary" th:text="#{save}">保存</button>
+						<a class="btn btn-default" data-dismiss="modal">キャンセル</a>
 					</div>
 				</div>
 			</div>
@@ -312,7 +312,7 @@
 						<p>編集する場合は、マネージャにステータスを修正にしてもらってください。</p>
 					</div>
 					<div class="modal-footer">
-						<button @click="complete" class="btn btn-primary">保存</button>
+						<button @click="complete" class="btn btn-primary" th:text="#{save}">保存</button>
 						<a class="btn btn-default" data-dismiss="modal">キャンセル</a>
 					</div>
 				</div>
