@@ -48,7 +48,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.failureUrl("/login-form?error=true").permitAll()
 				.and()
 				.csrf()
-				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+				.and()
+				.rememberMe()
+				.key("worldrobe")
+				.useSecureCookie(true);
 	}
 
 	@Override
