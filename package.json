@@ -1,0 +1,22 @@
+{
+  "name": "working-time-management",
+  "version": "1.0.0",
+  "description": "create database wtm character set utf8; grant all privileges on wtm.* to 'wtm'@'localhost' identified by 'wtm' with grant option; grant all privileges on wtm.* to 'wtm'@'%' identified by 'wtm' with grant option;",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2016": "^6.24.1",
+    "webpack": "^3.8.1"
+  },
+  "dependencies": {
+    "axios": "^0.17.1",
+    "vue": "^2.5.3",
+    "vue-multiselect": "^2.0.6"
+  }
+}
