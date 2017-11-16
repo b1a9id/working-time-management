@@ -4,9 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * チーム
@@ -23,7 +25,4 @@ public class Team extends AbstractEntity<Long> implements Serializable {
 
 	@Column(nullable = false, name = "short_name")
 	private String shortName;
-
-	@OneToMany(mappedBy = "team", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Staff> staffs;
 }

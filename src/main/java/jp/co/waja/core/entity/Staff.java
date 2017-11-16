@@ -77,8 +77,6 @@ public class Staff extends AbstractEntity<Long> implements Serializable {
 	@Column(name = "role", length = 20, nullable = false)
 	private Role role;
 
-	@OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<PaidVacation> paidVacations;
 
 	@OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<LongLeave> longLeaves;

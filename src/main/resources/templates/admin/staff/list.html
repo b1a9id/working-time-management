@@ -3,6 +3,8 @@
 	<head>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<script th:src="@{/webjars/vue/2.4.2/dist/vue.min.js}"></script>
+		<script th:src="@{/webjars/axios/0.16.1/dist/axios.min.js}"></script>
 		<script type="text/javascript" th:src="@{/webjars/jquery/3.2.0/jquery.min.js}"></script>
 		<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 		<link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
@@ -67,12 +69,12 @@
 			</div>
 		</div>
 	</div>
-	<div class="section">
+	<div class="section" id="staffs">
 		<div id="accordion-block" class="section" style="display: none;">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-10">
-						<form class="form-horizontal" method="post" th:action="@{/admin/staffs}" th:object="${form}">
+						<div class="form-horizontal" th:object="${form}">
 							<div class="form-group">
 								<div class="col-sm-2">
 									<label class="control-label" th:text="#{staff.field.team}">チーム</label>
@@ -109,7 +111,7 @@
 							<div class="form-group">
 								<div class="col-sm-offset-2">
 									<div class="col-sm-3 checkbox">
-										<label><input th:field="*{telework}" type="checkbox" />在宅勤務可</label>
+										<label><input name="telework" type="checkbox" v-model="telework" />在宅勤務可</label>
 									</div>
 									<div class="col-sm-3 checkbox">
 										<label><input th:field="*{disabled}" type="checkbox" />無効アカウントのみ</label>
@@ -118,10 +120,10 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
-									<button class="btn btn-default">検索</button>
+									<button class="btn btn-default" @click="searchStaffs">検索</button>
 								</div>
 							</div>
-						</form>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -211,20 +213,20 @@
 						</tr>
 						</thead>
 						<tbody>
-						<tr th:each="staff : ${staffs}">
-							<td th:text="${staff.team.shortName}">クリエイティブチーム</td>
-							<td><a th:href="@{/admin/staffs/describe/{id}(id=${staff.id})}" th:text="${staff.getName()}">テスト太郎</a></td>
-							<td th:text="#{|staff.employmenttype.${staff.employmentType}|}">正社員</td>
-							<td th:text="${#temporals.format(staff.enteredDate, 'yyyy/MM/dd')}">2015/04/01</td>
+						<tr v-for="staff in staffs">
+							<td>{{staff.team.name}}</td>
+							<td><a href="#">{{staff.name}}</a></td>
+							<td>{{staff.employmentType}}</td>
+							<td>2015/04/01</td>
 							<td>06/01</td>
 							<td>10日</td>
-							<td class="text-center"><i th:class="${staff.flextime} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
-							<td class="text-center"><i th:class="${staff.telework} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
-							<td th:text="|#{|role.${staff.role}|}">スタッフ</td>
-							<td><a class="btn btn-link glyphicon glyphicon-time" data-toggle="tooltip" data-container="body" title="今月の稼働実績" data-placement="top" th:href="@{/admin/work-time/{id}(id=${staff.id})}"></a></td>
-							<td><a class="btn btn-link glyphicon glyphicon-pencil" data-toggle="tooltip" data-container="body" title="編集" data-placement="top" th:href="@{/admin/staffs/edit/{id}(id=${staff.id})}"></a></td>
+							<td class="text-center"></td>
+							<td class="text-center"></td>
+							<td>{{staff.role}}</td>
+							<td><a class="btn btn-link glyphicon glyphicon-time" data-toggle="tooltip" data-container="body" title="今月の稼働実績" data-placement="top" href="#"></a></td>
+							<td><a class="btn btn-link glyphicon glyphicon-pencil" data-toggle="tooltip" data-container="body" title="編集" data-placement="top" href="#"></a></td>
 							<td>
-								<form method="post" th:action="@{/admin/staffs/delete/{id}(id=${staff.id})}">
+								<form method="post">
 									<input type="hidden" name="_method" value="delete"/>
 									<button class="btn btn-link glyphicon glyphicon-trash" data-toggle="tooltip" data-container="body" title="削除" data-placement="top" ></button>
 								</form>
@@ -237,6 +239,47 @@
 		</div>
 	</div>
 	<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
+	<script>
+		var url = '/admin/staffs/rest';
+		new Vue({
+			el: '#staffs',
+			data: {
+				staffs: [],
+				teamId: '',
+				employmentType: null,
+				role: null,
+				enteredDate: null,
+				telework: '',
+				disabled: false
+			},
+			methods: {
+				getStaffs() {
+					axios.get(url)
+						.then(response => {
+							this.staffs = response.data.page.content;
+						});
+				},
+				searchStaffs() {
+					console.log('TEST');
+					axios.post(url, {
+						teamId: this.teamId,
+						employmentType: this.employmentType,
+						role: this.role,
+						enteredDate: this.enteredDate,
+						telework: this.telework,
+						disabled: this.disabled
+					})
+						.then(response => {
+							console.log(this.telework);
+							this.staffs = response.data.page.content;
+						})
+				}
+			},
+			mounted() {
+				this.getStaffs();
+			}
+		})
+	</script>
 	</body>
 
 </html>
