@@ -68,10 +68,10 @@
 		<div class="row">
 			<div class="col-md-12">
 				<ul class="pager">
-					<li th:if="${workTimeYearMonth.completedAt}">
+					<li>
 						<a th:href="@{/admin/work-time/{id}?displayYearMonth={displayYearMonth}(id=${workTimeYearMonth.staff.id},displayYearMonth=${yearMonth.minusMonths(1)})}" th:text="'←  ' + ${#temporals.format(yearMonth.minusMonths(1), 'yyyy年MM月')}">←  2017年6月</a>
 					</li>
-					<li th:unless="${yearMonth.plusMonths(1).getMonthValue() > thisMonth}">
+					<li>
 						<a th:href="@{/admin/work-time/{id}?displayYearMonth={displayYearMonth}(id=${workTimeYearMonth.staff.id},displayYearMonth=${yearMonth.plusMonths(1)})}" th:text="${#temporals.format(yearMonth.plusMonths(1), 'yyyy年MM月')} + '  →'">2017年8月  →</a>
 					</li>
 				</ul>
