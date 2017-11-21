@@ -1,13 +1,10 @@
 package jp.co.waja.core.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 
 @Getter
 @Setter
@@ -15,8 +12,12 @@ import java.time.LocalTime;
 @Embeddable
 public class WorkTime {
 
+	public enum WorkTypeGroup {
+		NORMAL, PAID_VACATION, PAID_VACATION_AFTER, ABSENCE, NORMAL_VACATION
+	}
+
 	public enum WorkType {
-		NORMAL(BigDecimal.ZERO),
+		NORMAL(BigDecimal.valueOf(1)),
 		LEGAL_VACATION(BigDecimal.valueOf(1)),
 		FULL_PAID_VACATION(BigDecimal.valueOf(1)),
 		HALF_PAID_VACATION(BigDecimal.valueOf(0.5)),
@@ -63,4 +64,32 @@ public class WorkTime {
 	private Integer restTime;
 
 	private String remarks;
+
+	public WorkTypeGroup getWorkTypeGroup() {
+		if (workType == WorkType.NORMAL) {
+			return WorkTypeGroup.NORMAL;
+		}
+		if (isPaidVacation()) {
+			return WorkTypeGroup.PAID_VACATION;
+		}
+		if (isPaidVacationAfter()) {
+			return WorkTypeGroup.PAID_VACATION_AFTER;
+		}
+		if (isAbsence()) {
+			return WorkTypeGroup.ABSENCE;
+		}
+		return WorkTypeGroup.NORMAL_VACATION;
+	}
+
+	public boolean isPaidVacation() {
+		return workType == WorkType.FULL_PAID_VACATION || workType == WorkType.HALF_PAID_VACATION;
+	}
+
+	public boolean isPaidVacationAfter() {
+		return workType == WorkType.FULL_PAID_VACATION_AFTER || workType == WorkType.HALF_PAID_VACATION_AFTER;
+	}
+
+	public boolean isAbsence() {
+		return workType == WorkType.ABSENCE || workType == WorkType.HALF_ABSENCE;
+	}
 }

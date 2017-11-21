@@ -21,7 +21,7 @@ public class WorkTimes {
 		return WorkTimeUtils.formattedYearMonth(yearMonthInt);
 	}
 
-	public long workTypeDays(WorkTimeYearMonth workTimeYearMonth, String workType) {
+	public BigDecimal workTypeDays(WorkTimeYearMonth workTimeYearMonth, String workType) {
 		return WorkTimeUtils.workTypeDays(workTimeYearMonth, workType);
 	}
 

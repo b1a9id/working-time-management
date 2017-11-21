@@ -4,8 +4,7 @@ import jp.co.waja.core.entity.WorkTime;
 import jp.co.waja.core.entity.WorkTimeYearMonth;
 import jp.co.waja.core.support.WorkTimeUtil;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.math.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.YearMonth;
@@ -42,10 +41,12 @@ public final class WorkTimeUtils {
 		return formatter.format(yearMonth);
 	}
 
-	public static long workTypeDays(WorkTimeYearMonth workTimeYearMonth, String workType) {
+	public static BigDecimal workTypeDays(WorkTimeYearMonth workTimeYearMonth, String workTypeGroup) {
 		return workTimeYearMonth.getWorkTimes().stream()
-				.filter(workTime -> workTime.getWorkType() == WorkTime.WorkType.valueOf(workType))
-				.count();
+				.filter(workTime -> workTime.getWorkTypeGroup() == WorkTime.WorkTypeGroup.valueOf(workTypeGroup))
+				.map(workTime -> workTime.getWorkType().getDay())
+				.reduce(BigDecimal::add)
+				.orElse(BigDecimal.ZERO);
 	}
 
 	/**

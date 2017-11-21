@@ -107,20 +107,20 @@
 					<tr>
 						<th>有休/半有休取得日数</th>
 						<td>
-							<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION')}">22</span><span>日</span>
+							<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'PAID_VACATION')}">22</span><span>日</span>
 						</td>
 					</tr>
 					<!--/*/ <th:block th:unless="${workTimeYearMonth.staff.flextime}"> /*/-->
 					<tr>
 						<th>欠勤/半欠勤日数</th>
 						<td>
-							<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'ABSENCE')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_ABSENCE')}">22</span><span>日</span>
+							<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'ABSENCE')}">22</span><span>日</span>
 						</td>
 					</tr>
 					<tr>
 						<th>事後有休/事後半有休取得日数</th>
 						<td>
-							<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION_AFTER')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION_AFTER')}">22</span><span>日</span>
+							<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'PAID_VACATION_AFTER')}">22</span><span>日</span>
 						</td>
 					</tr>
 					<!--/*/ </th:block> /*/-->
@@ -128,7 +128,7 @@
 					<tr>
 						<th>前月不足勤務時間</th>
 						<td>
-							<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION_AFTER')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION_AFTER')}">22</span><span>日</span>
+							<!--<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION_AFTER')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION_AFTER')}">22</span><span>日</span>-->
 						</td>
 					</tr>
 					<tr>
