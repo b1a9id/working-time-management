@@ -11,7 +11,7 @@
 
 		<title>ダッシュホード</title>
 	</head>
-	<body th:with="nonApproves=${#lists.size(nonApprovedWorkTimeYearMonths)}">
+	<body>
 		<div th:replace="common/layout::navbar-layout"></div>
 		<div class="section">
 			<div class="container">
@@ -27,17 +27,17 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<div th:if="${nonApproves} > 0" class="alert alert-danger" role="alert">
-							<span th:text="${nonApproves} + '件未承認があります。'">2件未承認があります。</span>
+						<div th:if="${#lists.size(nonApprovedWorkTimeYearMonths)} > 0" class="alert alert-danger" role="alert">
+							<span th:text="${#lists.size(nonApprovedWorkTimeYearMonths)} + '件未承認があります。'">2件未承認があります。</span>
 						</div>
-						<div th:unless="${nonApproves} > 0" class="alert alert-success">
+						<div th:unless="${#lists.size(nonApprovedWorkTimeYearMonths)} > 0" class="alert alert-success">
 							<span>未承認はありません。</span>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div th:if="${nonApproves} > 0" class="section">
+		<div th:if="${#lists.size(nonApprovedWorkTimeYearMonths)} > 0" class="section">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
