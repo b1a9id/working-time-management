@@ -55,6 +55,11 @@ public class StaffService {
 		return staffRepository.findAllByTeam(loginStaff.getTeam());
 	}
 
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	public List<Staff> getAllByAdminAndManager() {
+		return staffRepository.findAllByRoleIn(Arrays.asList(Role.ADMIN, Role.MANAGER));
+	}
+
 	@PreAuthorize("hasRole('ADMIN')")
 	public Staff create(StaffCreateRequest request) {
 		Staff staff = new Staff();
