@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class PaidVacation extends AbstractEntity<Long> implements Serializable {
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "staff_id")
 	private Staff staff;
 
