@@ -51,7 +51,7 @@ public class TeamEditController {
 		redirectAttributes.addFlashAttribute(FORM_MODEL_KEY, form);
 		redirectAttributes.addFlashAttribute(ERRORS_MODEL_KEYS, errors);
 		if (errors.hasErrors()) {
-			return "redirect:/admin/teams/edit?error";
+			return "redirect:/admin/teams/edit/{id}?error";
 		}
 
 		Team updateTeam = teamService.edit(form.toTeamEditRequest(), id);
