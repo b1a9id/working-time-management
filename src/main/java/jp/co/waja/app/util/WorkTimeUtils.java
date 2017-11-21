@@ -16,6 +16,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static jp.co.waja.core.entity.WorkTime.WorkTypeGroup.NORMAL;
+
 public final class WorkTimeUtils {
 
 	public static BigDecimal workTime(LocalTime startAt, LocalTime endAt, Integer restTime) {
@@ -41,9 +43,20 @@ public final class WorkTimeUtils {
 		return formatter.format(yearMonth);
 	}
 
-	public static BigDecimal workTypeDays(WorkTimeYearMonth workTimeYearMonth, String workTypeGroup) {
+	public static BigDecimal workTypeDays(WorkTimeYearMonth workTimeYearMonth, String workTypeGroupStr) {
+		WorkTime.WorkTypeGroup workTypeGroup = WorkTime.WorkTypeGroup.valueOf(workTypeGroupStr);
+		if (workTypeGroup == NORMAL) {
+			BigDecimal dayOfMonth = BigDecimal.valueOf(workTimeYearMonth.getWorkTimes().size());
+			BigDecimal vacationCount = workTimeYearMonth.getWorkTimes().stream()
+					.filter(workTime -> workTime.getWorkTypeGroup() != NORMAL)
+					.map(workTime -> workTime.getWorkType().getDay())
+					.reduce(BigDecimal::add)
+					.orElse(BigDecimal.ZERO);
+			return dayOfMonth.subtract(vacationCount);
+		}
+
 		return workTimeYearMonth.getWorkTimes().stream()
-				.filter(workTime -> workTime.getWorkTypeGroup() == WorkTime.WorkTypeGroup.valueOf(workTypeGroup))
+				.filter(workTime -> workTime.getWorkTypeGroup() == workTypeGroup)
 				.map(workTime -> workTime.getWorkType().getDay())
 				.reduce(BigDecimal::add)
 				.orElse(BigDecimal.ZERO);
