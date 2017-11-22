@@ -1,6 +1,7 @@
 package jp.co.waja.app.util;
 
 import jp.co.waja.core.entity.WorkTimeYearMonth;
+import jp.co.waja.core.model.Role;
 import jp.co.waja.core.support.WorkTimeUtil;
 
 import java.math.BigDecimal;
@@ -29,8 +30,8 @@ public class WorkTimes {
 		return WorkTimeUtil.intToYearMonth(yearMonthInt);
 	}
 
-	public boolean disabledApprove(WorkTimeYearMonth workTimeYearMonth) {
-		return WorkTimeUtil.disabledApprove(workTimeYearMonth);
+	public boolean disabledApprove(WorkTimeYearMonth workTimeYearMonth, Role role) {
+		return WorkTimeUtil.disabledApprove(workTimeYearMonth, role);
 	}
 
 	public boolean invalidEdit(WorkTimeYearMonth workTimeYearMonth) {
