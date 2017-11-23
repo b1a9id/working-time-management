@@ -47,10 +47,10 @@
 								</div>
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('team')}? has-error">
-								<div class="col-sm-2">
-									<label class="control-label" th:text="#{staff.field.team}">チーム名</label>
+								<div class="col-sm-3">
+									<label class="control-label"><span th:text="#{staff.field.team}">チーム名</span><span class="text-danger">*</span></label>
 								</div>
-								<div class="col-sm-10">
+								<div class="col-sm-9">
 									<select class="form-control" name="number" th:field="*{team}">
 										<option value=""></option>
 										<option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}">クリエイティブチーム</option>
@@ -59,10 +59,10 @@
 								</div>
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('nameLast') or #fields.hasErrors('nameFirst')}? has-error">
-								<div class="col-sm-2">
-									<label class="control-label" th:text="#{staff.field.name}">名前</label>
+								<div class="col-sm-3">
+									<label class="control-label"><span th:text="#{staff.field.name}">名前</span><span class="text-danger">*</span></label>
 								</div>
-								<div class="col-sm-10 row">
+								<div class="col-sm-9 row">
 									<div class="col-sm-6">
 										<input th:field="*{nameLast}" class="form-control" placeholder="山田" />
 										<p class="help-block" th:if="${#fields.hasErrors('nameLast')}" th:errors="*{nameLast}">エラーメッセージ</p>
@@ -74,10 +74,10 @@
 								</div>
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('nameLastKana') or #fields.hasErrors('nameFirstKana')}? has-error">
-								<div class="col-sm-2">
-									<label class="control-label" th:text="#{staff.field.nameKana}">ふりがな</label>
+								<div class="col-sm-3">
+									<label class="control-label"><span th:text="#{staff.field.nameKana}">ふりがな</span><span class="text-danger">*</span></label>
 								</div>
-								<div class="col-sm-10 row">
+								<div class="col-sm-9 row">
 									<div class="col-sm-6">
 										<input th:field="*{nameLastKana}" class="form-control" placeholder="やまだ" />
 										<p class="help-block" th:if="${#fields.hasErrors('nameLastKana')}" th:errors="*{nameLastKana}">エラーメッセージ</p>
@@ -89,19 +89,19 @@
 								</div>
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('email')}? has-error">
-								<div class="col-sm-2">
-									<label class="control-label" th:text="#{staff.field.email}">メールアドレス</label>
+								<div class="col-sm-3">
+									<label class="control-label"><span th:text="#{staff.field.email}">メールアドレス</span><span class="text-danger">*</span></label>
 								</div>
-								<div class="col-sm-10">
+								<div class="col-sm-9">
 									<input class="form-control" th:field="*{email}"/>
 									<p class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">エラーメッセージ</p>
 								</div>
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('gender')}? has-error">
-								<div class="col-sm-2">
-									<label class="control-label" th:text="#{staff.field.gender}">性別</label>
+								<div class="col-sm-3">
+									<label class="control-label"><span th:text="#{staff.field.gender}">性別</span><span class="text-danger">*</span></label>
 								</div>
-								<div class="col-sm-10">
+								<div class="col-sm-9">
 									<select class="form-control" th:field="*{gender}">
 										<option value="" selected="selected"></option>
 										<option th:each="gender : ${genders}" th:value="${gender}" th:text="#{|gender.${gender}|}">男</option>
@@ -110,10 +110,10 @@
 								</div>
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('employmentType')}? has-error">
-								<div class="col-sm-2">
-									<label class="control-label" th:text="#{staff.field.employment.type}">雇用形態</label>
+								<div class="col-sm-3">
+									<label class="control-label"><span th:text="#{staff.field.employment.type}">雇用形態</span><span class="text-danger">*</span></label>
 								</div>
-								<div class="col-sm-10">
+								<div class="col-sm-9">
 									<select class="form-control" th:field="*{employmentType}">
 										<option value=""></option>
 										<option th:each="employmentType : ${employmentTypes}" th:value="${employmentType}" th:text="#{|staff.employmenttype.${employmentType}|}">正社員</option>
@@ -122,16 +122,16 @@
 								</div>
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('enteredDate')}? has-error">
-								<div class="col-sm-2">
-									<label class="control-label" th:text="#{staff.field.entereddate}">入社日</label>
+								<div class="col-sm-3">
+									<label class="control-label"><span th:text="#{staff.field.entereddate}">入社日</span><span class="text-danger">*</span></label>
 								</div>
-								<div class="col-sm-10">
+								<div class="col-sm-9">
 									<input class="form-control date-picker" th:field="*{enteredDate}"/>
 									<p class="help-block" th:if="${#fields.hasErrors('enteredDate')}" th:errors="*{enteredDate}">エラーメッセージ</p>
 								</div>
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('flextime')}? has-error">
-								<div class="col-sm-offset-2 col-sm-10">
+								<div class="col-sm-offset-3 col-sm-6">
 									<div class="checkbox">
 										<label><input th:field="*{flextime}" type="checkbox" />フレックス適用</label>
 										<p class="help-block" th:if="${#fields.hasErrors('flextime')}" th:errors="*{flextime}">エラーメッセージ</p>
@@ -139,7 +139,7 @@
 								</div>
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('telework')}? has-error">
-								<div class="col-sm-offset-2 col-sm-10">
+								<div class="col-sm-offset-3 col-sm-6">
 									<div class="checkbox">
 										<label><input th:field="*{telework}" type="checkbox" />在宅勤務可</label>
 										<p class="help-block" th:if="${#fields.hasErrors('telework')}" th:errors="*{telework}">エラーメッセージ</p>
@@ -147,7 +147,7 @@
 								</div>
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('disabled')}? has-error">
-								<div class="col-sm-offset-2 col-sm-10">
+								<div class="col-sm-offset-3 col-sm-6">
 									<div class="checkbox">
 										<label><input th:field="*{disabled}" type="checkbox" />アカウント無効</label>
 										<p class="help-block" th:if="${#fields.hasErrors('disabled')}" th:errors="*{disabled}">エラーメッセージ</p>
@@ -155,19 +155,19 @@
 								</div>
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('password')}? has-error">
-								<div class="col-sm-2">
-									<label class="control-label" th:text="#{staff.field.password}">パスワード</label>
+								<div class="col-sm-3">
+									<label class="control-label"><span th:text="#{staff.field.password}">パスワード</span><span class="text-danger">*</span></label>
 								</div>
-								<div class="col-sm-10">
+								<div class="col-sm-9">
 									<input class="form-control" type="password" th:field="*{password}"/>
 									<p class="help-block" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">エラーメッセージ</p>
 								</div>
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('role')}? has-error">
-								<div class="col-sm-2">
-									<label class="control-label" th:text="#{role.label}">権限</label>
+								<div class="col-sm-3">
+									<label class="control-label"><span th:text="#{role.label}">権限</span><span class="text-danger">*</span></label>
 								</div>
-								<div class="col-sm-10">
+								<div class="col-sm-9">
 									<select class="form-control" th:field="*{role}">
 										<option value=""></option>
 										<option th:each="role : ${roles}" th:value="${role}" th:text="#{|role.${role}|}">スタッフ</option>

@@ -1,5 +1,6 @@
 package jp.co.waja.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jp.co.waja.core.model.Role;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -70,15 +71,13 @@ public class Staff extends AbstractEntity<Long> implements Serializable {
 	private boolean disabled;
 
 	@Column(nullable = false)
+	@JsonIgnore
 	private String password;
 
 	@JoinTable(name = "user_role")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "role", length = 20, nullable = false)
 	private Role role;
-
-	@OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<PaidVacation> paidVacations;
 
 	@OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<LongLeave> longLeaves;

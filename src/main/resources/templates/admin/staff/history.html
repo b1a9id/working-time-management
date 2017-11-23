@@ -14,7 +14,6 @@
 
 	<body>
 		<div th:replace="common/layout::navbar-layout"></div>
-		<div class="section"></div>
 		<div class="section">
 			<div class="container">
 				<div class="row">
@@ -27,7 +26,7 @@
 						<ul class="breadcrumb">
 							<li><a th:href="@{/}" th:text="#{dashboard.title}">ダッシュボード</a></li>
 							<li><a th:href="@{/admin/staffs}" th:text="#{staff.list.title}">スタッフ一覧</a></li>
-							<li><a th:href="@{/staff/describe/1}" th:text="${staff.getName()} + '詳細'">テスト太郎詳細</a></li>
+							<li><a th:href="@{/admin/staffs/describe/{id}(id=${staff.id})}" th:text="${staff.getName()} + '詳細'">テスト太郎詳細</a></li>
 							<li class="active" th:text="#{staff.history.title(${staff.getName()})}">変更履歴</li>
 						</ul>
 					</div>
@@ -35,14 +34,21 @@
 			</div>
 		</div>
 		<div class="section">
-			<div class="container" th:each="key : ${histories.keySet()}">
+			<div th:if="${#maps.isEmpty(histories)}" class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h2>変更履歴はありません</h2>
+					</div>
+				</div>
+			</div>
+			<div th:unless="${#maps.isEmpty(histories)}" class="container" th:each="key : ${histories.keySet()}">
 				<div class="row">
 					<div class="col-md-12 text-left">
 						<table class="table">
 							<caption th:text="${#temporals.format(key, 'yyyy/MM/dd HH:mm:ss')} + ' ' + ${editors.get(key)}">2017/07/02 17:45 内立良介</caption>
 							<tbody>
 							<tr th:each="history : ${histories.get(key)}">
-								<td th:text="#{|staff.field.${history.fieldName}|}">有休日数</td>
+								<td th:text="#{|staff.field.${#strings.toLowerCase(history.fieldName)}|}">有休日数</td>
 								<td th:text="${history.beforeValue}">0日</td>
 								<td th:text="${history.afterValue}">10日</td>
 							</tr>

@@ -1,5 +1,5 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ja">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="ja">
 	<head>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -67,7 +67,7 @@
 						<div class="btn-group">
 							<a class="btn btn-default" th:href="@{/admin/staffs/edit-history/{id}(id=${staff.id})}">変更履歴</a>
 						</div>
-						<div class="btn-group">
+						<div sec:authorize="hasRole('ADMIN')" class="btn-group">
 							<form method="post" th:action="@{/admin/staffs/delete/{id}(id=${staff.id})}">
 								<input type="hidden" name="_method" value="delete"/>
 								<button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> 削除</button>
@@ -79,7 +79,7 @@
 								<li>
 									<a th:href="@{/admin/staffs/edit/{staffId}(staffId=${staff.id})}">編集</a>
 									<!--<a href="#">有休管理</a>-->
-									<a th:href="@{/admin/staffs/password/edit/{id}(id=${staff.id})}">パスワード変更</a>
+									<a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/staffs/password/edit/{id}(id=${staff.id})}">パスワード変更</a>
 								</li>
 							</ul>
 						</div>

@@ -27,14 +27,17 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<div class="alert alert-danger" role="alert">
+						<div th:if="${#lists.size(nonApprovedWorkTimeYearMonths)} > 0" class="alert alert-danger" role="alert">
 							<span th:text="${#lists.size(nonApprovedWorkTimeYearMonths)} + '件未承認があります。'">2件未承認があります。</span>
+						</div>
+						<div th:unless="${#lists.size(nonApprovedWorkTimeYearMonths)} > 0" class="alert alert-success">
+							<span>未承認はありません。</span>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="section">
+		<div th:if="${#lists.size(nonApprovedWorkTimeYearMonths)} > 0" class="section">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
@@ -48,7 +51,7 @@
 							</thead>
 							<tbody>
 							<tr th:each="workTimeYearMonth : ${nonApprovedWorkTimeYearMonths}">
-								<td th:with="yearMonth=${#workTimes.intToYearMonth(workTimeYearMonth.workYearMonth)}"><a th:href="@{/admin/work-time/{id}(id=${workTimeYearMonth.staff.id})}" th:text="${#temporals.format(yearMonth, 'yyyy年MM月')}">2017年10月</a></td>
+								<td th:with="yearMonth=${#workTimes.intToYearMonth(workTimeYearMonth.workYearMonth)}"><a th:href="@{/admin/work-time/{id}(id=${workTimeYearMonth.staff.id})}" target="_blank" th:text="${#temporals.format(yearMonth, 'yyyy年MM月')}">2017年10月</a></td>
 								<td th:text="${workTimeYearMonth.staff.getName()}">山田太郎</td>
 								<td th:text="${#temporals.format(workTimeYearMonth.completedAt, 'yyyy/MM/dd HH:dd')}">2017/10/01 10:20</td>
 							</tr>

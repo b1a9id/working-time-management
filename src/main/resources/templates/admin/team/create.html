@@ -44,7 +44,7 @@
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('name')}? has-error">
 								<div class="col-sm-2">
-									<label class="control-label" th:text="#{team.field.name}">チーム名</label>
+									<label class="control-label"><span th:text="#{team.field.name}">チーム名</span><span class="text-danger">*</span></label>
 								</div>
 								<div class="col-sm-10">
 									<div th:classappend="${#fields.hasErrors('name')}? 'error'">
@@ -55,7 +55,7 @@
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('shortName')}? has-error">
 								<div class="col-sm-2">
-									<label class="control-label" th:text="#{team.field.short.name}">略称</label>
+									<label class="control-label"><span th:text="#{team.field.short.name}">略称</span><span class="text-danger">*</span></label>
 								</div>
 								<div class="col-sm-10">
 									<div th:classappend="${#fields.hasErrors('shortName')}? 'error'">

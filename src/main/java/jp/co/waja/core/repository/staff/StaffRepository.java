@@ -2,6 +2,7 @@ package jp.co.waja.core.repository.staff;
 
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.entity.Team;
+import jp.co.waja.core.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Repository;
@@ -22,6 +23,8 @@ public interface StaffRepository extends StaffRepositoryCustom, JpaRepository<St
 	List<Staff> findAllByEmploymentType(Staff.EmploymentType employmentType);
 
 	List<Staff> findAllByTeam(Team team);
+
+	List<Staff> findAllByRoleIn(List<Role> roles);
 
 	long countByTeam(Team team);
 }

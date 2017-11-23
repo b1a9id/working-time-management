@@ -83,8 +83,9 @@
 					<table class="table">
 						<thead>
 						<tr>
-							<th class="col-md-4" th:text="#{team.field.name}">チーム名</th>
-							<th class="col-md-4" th:text="#{team.field.short.name}">略称</th>
+							<th class="col-md-3" th:text="#{team.field.name}">チーム名</th>
+							<th class="col-md-3" th:text="#{team.field.short.name}">略称</th>
+							<th class="col-md-3" th:text="#{team.field.manager}">マネージャ</th>
 							<th></th>
 							<th></th>
 						</tr>
@@ -93,6 +94,7 @@
 							<tr th:each="team : ${teams}">
 								<td th:text="${team.name}">クリエイティブチーム</td>
 								<td th:text="${team.shortName}">CR</td>
+								<td th:text="${managers.get(team)}">田中 太郎</td>
 								<td><a class="btn btn-link glyphicon glyphicon-pencil" data-toggle="tooltip" data-container="body" title="編集" data-placement="top" th:href="@{/admin/teams/edit/{id}(id=${team.id})}"></a></td>
 								<td>
 									<form method="post" th:action="@{/admin/teams/delete/{id}(id=${team.id})}">
