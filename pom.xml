@@ -210,6 +210,15 @@
 			<version>2.18.1</version>
 		</dependency>
 
+		<!-- Configuration Processor-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<version>1.5.8.RELEASE</version>
+			<scope>compile</scope>
+		</dependency>
+
+
 		<!--<dependency>-->
 			<!--<groupId>com.google.api-client</groupId>-->
 			<!--<artifactId>google-api-client-appengine</artifactId>-->

@@ -1,6 +1,6 @@
 package jp.co.waja.core.model;
 
-public enum  Role {
+public enum Role {
 	ADMIN,
 	MANAGER,
 	STAFF,
