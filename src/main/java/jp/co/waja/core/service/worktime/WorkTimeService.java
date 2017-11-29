@@ -96,16 +96,13 @@ public class WorkTimeService {
 		if (Objects.isNull(workTimeYearMonth)) {
 			throw new NotFoundException();
 		}
-
-		Staff completedBy = complete ? completedStaff : null;
-		workTimeYearMonth.setCompletedBy(completedBy.getName());
-		LocalDateTime completedAt = complete ? LocalDateTime.now() : null;
-		workTimeYearMonth.setCompletedAt(completedAt);
+		workTimeYearMonth.setCompletedBy(complete ? completedStaff.getName() : null);
+		workTimeYearMonth.setCompletedAt(complete ? LocalDateTime.now() : null);
 
 		return workTimeYearMonthRepository.saveAndFlush(workTimeYearMonth);
 	}
 
-	@PreAuthorize("hasRole('MANAGER')")
+	@PreAuthorize("hasPermission(#approve1Staff.role, 'APPROVE_TEAM_WORK_TIME')")
 	public WorkTimeYearMonth approve1(Staff approve1Staff, Long id, boolean approve1) throws NotFoundException {
 		WorkTimeYearMonth workTimeYearMonth = getWorkTimeYearMonth(id);
 		if (Objects.isNull(workTimeYearMonth)) {
@@ -117,6 +114,25 @@ public class WorkTimeService {
 		LocalDateTime now = approve1 ? LocalDateTime.now() : null;
 		workTimeYearMonth.setApproved1At(now);
 		if (!approve1) {
+			workTimeYearMonth.setCompletedBy(null);
+			workTimeYearMonth.setCompletedAt(null);
+		}
+
+		return workTimeYearMonthRepository.saveAndFlush(workTimeYearMonth);
+	}
+
+	@PreAuthorize("hasPermission(#approve2Staff.role, 'APPROVE_TEAM_WORK_TIME')")
+	public WorkTimeYearMonth approve2(Staff approve2Staff, Long id, boolean approve2) throws NotFoundException {
+		WorkTimeYearMonth workTimeYearMonth = getWorkTimeYearMonth(id);
+		if (Objects.isNull(workTimeYearMonth)) {
+			throw new NotFoundException();
+		}
+
+		String approvedByName = approve2 ? approve2Staff.getName() : null;
+		workTimeYearMonth.setApproved2By(approvedByName);
+		LocalDateTime now = approve2 ? LocalDateTime.now() : null;
+		workTimeYearMonth.setApproved2At(now);
+		if (!approve2) {
 			workTimeYearMonth.setCompletedBy(null);
 			workTimeYearMonth.setCompletedAt(null);
 		}
