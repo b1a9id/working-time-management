@@ -15,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -104,7 +105,9 @@ public class StaffService {
 		ModifiedChecker modifiedChecker = new ModifiedChecker();
 		List<History> histories = modifiedChecker.check(unModifiedStaff, staff, loginStaff.getStaff().getName());
 
-		staff.getHistories().addAll(histories);
+		if (!CollectionUtils.isEmpty(histories)) {
+			staff.getHistories().addAll(histories);
+		}
 
 		return staffRepository.saveAndFlush(staff);
 	}
