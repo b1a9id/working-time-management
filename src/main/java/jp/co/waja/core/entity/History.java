@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Embeddable
-public class StaffHistory {
+public class History {
 
 	@Column(name = "field_name")
 	private String fieldName;

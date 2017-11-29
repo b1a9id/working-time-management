@@ -88,7 +88,7 @@ public class Staff extends AbstractEntity<Long> implements Serializable {
 			name = "staff_history",
 			joinColumns = @JoinColumn(name = "staff_id")
 	)
-	private List<StaffHistory> histories;
+	private List<History> histories;
 
 	public String getName() {
 		return getNameLast() + " " + getNameFirst();
