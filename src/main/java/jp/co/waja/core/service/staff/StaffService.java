@@ -155,12 +155,12 @@ public class StaffService {
 			String afterValue;
 			switch (history.getFieldName()) {
 				case "gender":
-					beforeValue = messageSource.getMessage("gender." + history.getBeforeValue(), null, Locale.getDefault());
-					afterValue = messageSource.getMessage("gender." + history.getAfterValue(), null, Locale.getDefault());
+					beforeValue = getMessage("gender." + history.getBeforeValue(), null);
+					afterValue = getMessage("gender." + history.getAfterValue(), null);
 					break;
 				case "employmentType":
-					beforeValue = messageSource.getMessage("staff.employmenttype." + history.getBeforeValue(), null, Locale.getDefault());
-					afterValue = messageSource.getMessage("staff.employmenttype." + history.getAfterValue(), null, Locale.getDefault());
+					beforeValue = getMessage("staff.employmenttype." + history.getBeforeValue(), null);
+					afterValue = getMessage("staff.employmenttype." + history.getAfterValue(), null);
 					break;
 				case "enteredDate":
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -177,8 +177,8 @@ public class StaffService {
 					afterValue = valueOf(history.getAfterValue()) ? "無効" : "有効";
 					break;
 				case "role":
-					beforeValue = messageSource.getMessage("role." + history.getBeforeValue(), null, Locale.getDefault());
-					afterValue = messageSource.getMessage("role." + history.getAfterValue(), null, Locale.getDefault());
+					beforeValue = getMessage("role." + history.getBeforeValue(), null);
+					afterValue = getMessage("role." + history.getAfterValue(), null);
 					break;
 				default:
 					beforeValue = history.getBeforeValue();
@@ -188,5 +188,9 @@ public class StaffService {
 			history.setBeforeValue(beforeValue);
 			history.setAfterValue(afterValue);
 		});
+	}
+	
+	private String getMessage(String code, Object[] args) {
+		return messageSource.getMessage(code, args, Locale.getDefault());
 	}
 }
