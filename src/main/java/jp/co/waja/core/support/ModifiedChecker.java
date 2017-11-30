@@ -1,15 +1,13 @@
 package jp.co.waja.core.support;
 
-import jp.co.waja.core.entity.History;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jp.co.waja.core.entity.*;
+import org.slf4j.*;
 
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import static java.util.Objects.isNull;
+import static java.util.Objects.*;
 
 public class ModifiedChecker<T> {
 
@@ -23,10 +21,9 @@ public class ModifiedChecker<T> {
 
 		LocalDateTime now = LocalDateTime.now();
 		for (Field beforeField : before.getClass().getDeclaredFields()) {
-			beforeField.setAccessible(true);
-
 			Field afterField;
 			try {
+				beforeField.setAccessible(true);
 				afterField = after.getClass().getDeclaredField(beforeField.getName());
 				afterField.setAccessible(true);
 			} catch (NoSuchFieldException e) {

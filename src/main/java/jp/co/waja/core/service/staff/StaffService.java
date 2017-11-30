@@ -10,6 +10,7 @@ import jp.co.waja.exception.*;
 import org.slf4j.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,8 +18,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+
+import static java.lang.Boolean.*;
 
 @Service
 @Transactional
@@ -34,6 +38,9 @@ public class StaffService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private MessageSource messageSource;
 
 	public Staff getStaff(long id) {
 		return staffRepository.findOne(id);
@@ -106,6 +113,7 @@ public class StaffService {
 		List<History> histories = modifiedChecker.check(unModifiedStaff, staff, loginStaff.getStaff().getName());
 
 		if (!CollectionUtils.isEmpty(histories)) {
+			parseValues(histories);
 			staff.getHistories().addAll(histories);
 		}
 
@@ -141,19 +149,44 @@ public class StaffService {
 		return Optional.ofNullable(staff.getName());
 	}
 
-	private History addHistory(
-			String fieldName,
-			String beforeValue,
-			String afterValue,
-			String updatedBy,
-			LocalDateTime updatedAt) {
-		History history = new History();
-		history.setFieldName(fieldName);
-		history.setBeforeValue(beforeValue);
-		history.setAfterValue(afterValue);
-		history.setUpdatedBy(updatedBy);
-		history.setUpdatedAt(updatedAt);
-
-		return history;
+	private void parseValues(List<History> histories) {
+		histories.forEach(history -> {
+			String beforeValue;
+			String afterValue;
+			switch (history.getFieldName()) {
+				case "gender":
+					beforeValue = messageSource.getMessage("gender." + history.getBeforeValue(), null, Locale.getDefault());
+					afterValue = messageSource.getMessage("gender." + history.getAfterValue(), null, Locale.getDefault());
+					break;
+				case "employmentType":
+					beforeValue = messageSource.getMessage("staff.employmenttype." + history.getBeforeValue(), null, Locale.getDefault());
+					afterValue = messageSource.getMessage("staff.employmenttype." + history.getAfterValue(), null, Locale.getDefault());
+					break;
+				case "enteredDate":
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+					beforeValue = formatter.format(LocalDate.parse(history.getBeforeValue()));
+					afterValue = formatter.format(LocalDate.parse(history.getAfterValue()));
+					break;
+				case "flextime":
+				case "telework":
+					beforeValue = valueOf(history.getBeforeValue()) ? "可" : "不可";
+					afterValue = valueOf(history.getAfterValue()) ? "可" : "不可";
+					break;
+				case "disabled":
+					beforeValue = valueOf(history.getBeforeValue()) ? "無効" : "有効";
+					afterValue = valueOf(history.getAfterValue()) ? "無効" : "有効";
+					break;
+				case "role":
+					beforeValue = messageSource.getMessage("role." + history.getBeforeValue(), null, Locale.getDefault());
+					afterValue = messageSource.getMessage("role." + history.getAfterValue(), null, Locale.getDefault());
+					break;
+				default:
+					beforeValue = history.getBeforeValue();
+					afterValue = history.getAfterValue();
+					break;
+			}
+			history.setBeforeValue(beforeValue);
+			history.setAfterValue(afterValue);
+		});
 	}
 }

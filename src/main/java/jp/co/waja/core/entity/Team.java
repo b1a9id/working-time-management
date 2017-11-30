@@ -21,4 +21,9 @@ public class Team extends AbstractEntity<Long> implements Serializable {
 
 	@Column(nullable = false, name = "short_name")
 	private String shortName;
+
+	@Override
+	public String toString() {
+		return this.name;
+	}
 }
