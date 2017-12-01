@@ -53,7 +53,7 @@
 							<tr th:each="workTimeYearMonth : ${nonApprovedWorkTimeYearMonths}">
 								<td th:with="yearMonth=${#workTimes.intToYearMonth(workTimeYearMonth.workYearMonth)}"><a th:href="@{/admin/work-time/{id}(id=${workTimeYearMonth.staff.id})}" target="_blank" th:text="${#temporals.format(yearMonth, 'yyyy年MM月')}">2017年10月</a></td>
 								<td th:text="${workTimeYearMonth.staff.getName()}">山田太郎</td>
-								<td th:text="${#temporals.format(workTimeYearMonth.completedAt, 'yyyy/MM/dd HH:dd')}">2017/10/01 10:20</td>
+								<td th:text="${#temporals.format(workTimeYearMonth.completedAt, 'yyyy/MM/dd HH:mm')}">2017/10/01 10:20</td>
 							</tr>
 							</tbody>
 						</table>
