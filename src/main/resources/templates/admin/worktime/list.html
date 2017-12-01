@@ -64,9 +64,6 @@
 					</div>
 				</div>
 				<!--/*/ </th:block> /*/-->
-				<p th:with="completedAt=${#temporals.format(workTimeYearMonth.completedAt, 'yyyy/MM/dd HH:mm')}" th:if="${workTimeYearMonth.completedAt}" th:text="#{worktime.completed.message(${workTimeYearMonth.completedBy}, ${completedAt})}">完了:田中太郎(2017/08/10 10:30)</p>
-				<p th:with="approved1At=${#temporals.format(workTimeYearMonth.approved1At, 'yyyy/MM/dd HH:mm')}" th:if="${workTimeYearMonth.approved1At}" th:text="#{worktime.approved.message(${workTimeYearMonth.approved1By}, ${approved1At})}">承認:田中二郎(2017/08/10 11:10)</p>
-				<p th:with="approved2At=${#temporals.format(workTimeYearMonth.approved2At, 'yyyy/MM/dd HH:mm')}" th:if="${workTimeYearMonth.approved2At}" th:text="#{worktime.approved.message(${workTimeYearMonth.approved2By}, ${approved2At})}">承認:田中二郎(2017/08/10 11:10)</p>
 			</div>
 		</div>
 	</div>
@@ -84,6 +81,21 @@
 			</div>
 		</div>
 	</div>
+	<div class="container">
+		<table class="table table-bordered">
+			<caption>完了・承認日時</caption>
+			<tr class="active">
+				<th th:text="#{worktime.completedat}">入力者</th>
+				<th th:text="#{worktime.approved1at}">マネージャ</th>
+				<th th:text="#{worktime.approved2at}">管理者</th>
+			</tr>
+			<tr>
+				<td th:with="completedAt=${#temporals.format(workTimeYearMonth.completedAt, 'yyyy/MM/dd HH:mm')}" th:if="${workTimeYearMonth.completedAt}" th:text="${workTimeYearMonth.completedAt} ? ${workTimeYearMonth.completedBy} + '　' + ${completedAt} : 'glyphicon glyphicon-minus'"></td>
+				<td th:with="approved1At=${#temporals.format(workTimeYearMonth.approved1At, 'yyyy/MM/dd HH:mm')}" th:if="${workTimeYearMonth.approved1At}" th:text="${workTimeYearMonth.approved1At} ? ${workTimeYearMonth.approved1By} + '　' + ${approved1At} : 'glyphicon glyphicon-minus'"></td>
+				<td th:with="approved2At=${#temporals.format(workTimeYearMonth.approved2At, 'yyyy/MM/dd HH:mm')}" th:if="${workTimeYearMonth.approved2At}" th:text="${workTimeYearMonth.approved2At} ? ${workTimeYearMonth.approved2By} + '　' + ${approved2At} : 'glyphicon glyphicon-minus'"></td>
+			</tr>
+		</table>
+	</div>
 </div>
 <div class="section">
 	<div class="container">
@@ -100,7 +112,7 @@
 			<div class="col-md-12">
 				<table class="table table-bordered table-condensed">
 					<thead>
-					<tr>
+					<tr class="active">
 						<th>内容</th>
 						<th>日数</th>
 					</tr>
