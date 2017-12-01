@@ -102,7 +102,7 @@ public class WorkTimeService {
 		return workTimeYearMonthRepository.saveAndFlush(workTimeYearMonth);
 	}
 
-	@PreAuthorize("hasPermission(#approve1Staff.role, 'APPROVE_TEAM_WORK_TIME')")
+	@PreAuthorize("@permissionEvaluatorCustom.hasPermission(authentication, #approve1Staff.role, 'APPROVE_TEAM_WORK_TIME')")
 	public WorkTimeYearMonth approve1(Staff approve1Staff, Long id, boolean approve1) throws NotFoundException {
 		WorkTimeYearMonth workTimeYearMonth = getWorkTimeYearMonth(id);
 		if (Objects.isNull(workTimeYearMonth)) {
@@ -121,7 +121,7 @@ public class WorkTimeService {
 		return workTimeYearMonthRepository.saveAndFlush(workTimeYearMonth);
 	}
 
-	@PreAuthorize("hasPermission(#approve2Staff.role, 'APPROVE_TEAM_WORK_TIME')")
+	@PreAuthorize("@permissionEvaluatorCustom.hasPermission(authentication, #approve2Staff.role, 'APPROVE_TEAM_WORK_TIME')")
 	public WorkTimeYearMonth approve2(Staff approve2Staff, Long id, boolean approve2) throws NotFoundException {
 		WorkTimeYearMonth workTimeYearMonth = getWorkTimeYearMonth(id);
 		if (Objects.isNull(workTimeYearMonth)) {

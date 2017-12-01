@@ -19,7 +19,7 @@ public class WorkTimeApproveController {
 	@Autowired
 	private WorkTimeService workTimeService;
 
-	@PostMapping(value = "/{id}", params = "approver1")
+	@PostMapping(value = "/{id}", params = "approve1")
 	public String approve1(
 			@AuthenticationPrincipal StaffDetails loginUser,
 			@PathVariable Long id,
@@ -32,7 +32,7 @@ public class WorkTimeApproveController {
 		return "redirect:/admin/work-time/{id}";
 	}
 
-	@PostMapping(value = "/{id}", params = "approver2")
+	@PostMapping(value = "/{id}", params = "approve2")
 	public String approve2(
 			@AuthenticationPrincipal StaffDetails loginUser,
 			@PathVariable Long id,

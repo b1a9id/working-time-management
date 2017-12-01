@@ -3,11 +3,13 @@ package jp.co.waja.core.support;
 import jp.co.waja.core.model.*;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
 import static java.util.Objects.*;
 
+@Component
 public class PermissionEvaluatorCustom implements PermissionEvaluator {
 
 	@Override
