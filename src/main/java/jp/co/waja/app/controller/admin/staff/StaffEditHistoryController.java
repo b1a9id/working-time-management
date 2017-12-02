@@ -27,25 +27,25 @@ public class StaffEditHistoryController {
 			throw new NotFoundException();
 		}
 
-		List<StaffHistory> staffHistories = staff.getHistories();
+		List<History> staffHistories = staff.getHistories();
 
 		Map<LocalDateTime, String> editors = new LinkedHashMap<>();
 		staffHistories
-				.forEach(staffHistory -> {
-					if (!editors.keySet().contains(staffHistory.getUpdatedAt())) {
-						editors.put(staffHistory.getUpdatedAt(), staffHistory.getUpdatedBy());
+				.forEach(history -> {
+					if (!editors.keySet().contains(history.getUpdatedAt())) {
+						editors.put(history.getUpdatedAt(), history.getUpdatedBy());
 					}
 				});
 
-		Map<LocalDateTime, List<StaffHistory>> histories = new LinkedHashMap<>();
+		Map<LocalDateTime, List<History>> histories = new LinkedHashMap<>();
 		staffHistories.stream()
-				.sorted(Comparator.comparing(StaffHistory::getUpdatedAt).reversed())
-				.forEach(staffHistory -> histories.put(staffHistory.getUpdatedAt(), new ArrayList<>()));
+				.sorted(Comparator.comparing(History::getUpdatedAt).reversed())
+				.forEach(history -> histories.put(history.getUpdatedAt(), new ArrayList<>()));
 		staffHistories
-				.forEach(staffHistory -> {
-					List<StaffHistory> list = histories.get(staffHistory.getUpdatedAt());
-					list.add(staffHistory);
-					histories.put(staffHistory.getUpdatedAt(), list);
+				.forEach(history -> {
+					List<History> list = histories.get(history.getUpdatedAt());
+					list.add(history);
+					histories.put(history.getUpdatedAt(), list);
 				});
 
 		model.addAttribute("staff", staff);

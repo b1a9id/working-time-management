@@ -1,109 +1,110 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ja">
-<head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="shortcut icon" th:href="@{/img/common/favicon.ico}" />
+		<link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
+		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
+		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
+
+		<title th:text="#{worktime.edit.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績入力</title>
+	</head>
+	<body th:with="yearMonth=${#workTimes.intToYearMonth(workTimeYearMonth.workYearMonth)}">
+	<div th:replace="common/layout::navbar-layout"></div>
+	<div class="section"></div>
+	<div class="section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h1 th:text="#{worktime.edit.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}  +  ' ' + ${workTimeYearMonth.staff.name}">2017年07月稼働実績入力 山田太郎</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<ul class="breadcrumb">
+						<li><a th:href="@{/}">ダッシュボード</a></li>
+						<li><a th:href="@{/staffs}" th:text="#{staff.list.title}">スタッフ一覧</a></li>
+						<li th:text="#{worktime.edit.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績入力</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<form class="form-horizontal" role="form" th:action="@{/admin/work-time/edit/{id}?displayYearMonth={displayYearMonth}(id=${workTimeYearMonth.staff.id}, displayYearMonth=${yearMonth})}" method="post" th:object="${form}">
+						<input type="hidden" th:field="*{id}" th:value="*{id}" />
+						<table class="table table-bordered table-condensed form-group">
+							<thead>
+							<tr>
+								<th class="col-md-1" th:text="#{worktime.list.header.date}">日付</th>
+								<th class="col-md-2" th:text="#{worktime.list.header.type}">種別</th>
+								<th th:unless="${workTimeYearMonth.staff.flextime}" class="col-md-1" th:text="#{worktime.list.header.traindelay}">電車遅延</th>
+								<th th:text="#{worktime.list.header.startat}">始業時間</th>
+								<th th:text="#{worktime.list.header.endat}">就業時間</th>
+								<th class="col-md-1" th:text="#{worktime.list.header.resttime}">休憩時間</th>
+								<th th:text="#{worktime.list.header.remarks}">備考</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="workTime, workTimeStat : ${form.workTimes}">
+								<input type="hidden" th:field="*{workTimes[__${workTimeStat.index}__].date}" th:value="${workTime.date}" />
+								<td th:text="${#temporals.format(workTime.date, 'MM/dd(E)')}">6/1（木）</td>
+								<td>
+									<select class="form-control workType-choice" th:field="*{workTimes[__${workTimeStat.index}__].workType}">
+										<option value=""></option>
+										<option th:each="workType : ${workTypes}" th:text="#{|worktime.worktype.${workType}|}" th:value="${workType}" th:selected="${workType eq workTime.workType}">出勤</option>
+									</select>
+								</td>
+								<td th:unless="${workTimeYearMonth.staff.flextime}"><input class="show-item" th:field="*{workTimes[__${workTimeStat.index}__].trainDelay}" type="checkbox" /></td>
+								<td>
+									<div class="form-inline show-item">
+										<select class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].startAtHour}">
+											<option value=""></option>
+											<option th:each="hour : ${workTimeHour}" th:text="|${hour}時|" th:value="${hour}" th:selected="${hour eq workTime.startAtHour}">9時</option>
+										</select>
+										<select class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].startAtMinute}">
+											<option value=""></option>
+											<option th:each="minute : ${workTimeMinute}" th:text="|${minute}分|" th:value="${minute}" th:selected="${minute eq workTime.startAtMinute}">15分</option>
+										</select>
+									</div>
+								</td>
+								<td>
+									<div class="form-inline show-item">
+										<select class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].endAtHour}">
+											<option value=""></option>
+											<option th:each="hour : ${workTimeHour}" th:text="|${hour}時|" th:value="${hour}" th:selected="${hour eq workTime.endAtHour}">9時</option>
+										</select>
+										<select class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].endAtMinute}">
+											<option value=""></option>
+											<option th:each="minute : ${workTimeMinute}" th:text="|${minute}分|" th:value="${minute}" th:selected="${minute eq workTime.startAtMinute}">15分</option>
+										</select>
+									</div>
+								</td>
+								<td>
+									<select class="form-control show-item" th:field="*{workTimes[__${workTimeStat.index}__].restTime}">
+										<option value=""></option>
+										<option th:each="restTime : ${restTimes}" th:text="${restTime}" th:value="${restTime}" th:selected="${restTime eq workTime.restTime}"></option>
+									</select>
+								</td>
+								<td><input class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].remarks}" type="text" placeholder="備考" /></td>
+							</tr>
+							</tbody>
+						</table>
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary">保存</button>
+							<a th:href="@{/work-time}" type="button" class="btn btn-default col-md-offset-5">戻る</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script type="text/javascript" th:src="@{/webjars/jquery/3.2.0/jquery.min.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/worktime/edit.js}"></script>
-	<link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
-	<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
-	<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
-
-	<title th:text="#{worktime.edit.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績入力</title>
-</head>
-<body th:with="yearMonth=${#workTimes.intToYearMonth(workTimeYearMonth.workYearMonth)}">
-<div th:replace="common/layout::navbar-layout"></div>
-<div class="section"></div>
-<div class="section">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<h1 th:text="#{worktime.edit.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}  +  ' ' + ${workTimeYearMonth.staff.name}">2017年07月稼働実績入力 山田太郎</h1>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<ul class="breadcrumb">
-					<li><a th:href="@{/}">ダッシュボード</a></li>
-					<li><a th:href="@{/staffs}" th:text="#{staff.list.title}">スタッフ一覧</a></li>
-					<li th:text="#{worktime.edit.title(${#workTimes.formattedYearMonth(workTimeYearMonth.workYearMonth)})}">2017年07月稼働実績入力</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="section">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<form class="form-horizontal" role="form" th:action="@{/admin/work-time/edit/{id}?displayYearMonth={displayYearMonth}(id=${workTimeYearMonth.staff.id}, displayYearMonth=${yearMonth})}" method="post" th:object="${form}">
-					<input type="hidden" th:field="*{id}" th:value="*{id}" />
-					<table class="table table-bordered table-condensed form-group">
-						<thead>
-						<tr>
-							<th class="col-md-1" th:text="#{worktime.list.header.date}">日付</th>
-							<th class="col-md-2" th:text="#{worktime.list.header.type}">種別</th>
-							<th th:unless="${workTimeYearMonth.staff.flextime}" class="col-md-1" th:text="#{worktime.list.header.traindelay}">電車遅延</th>
-							<th th:text="#{worktime.list.header.startat}">始業時間</th>
-							<th th:text="#{worktime.list.header.endat}">就業時間</th>
-							<th class="col-md-1" th:text="#{worktime.list.header.resttime}">休憩時間</th>
-							<th th:text="#{worktime.list.header.remarks}">備考</th>
-						</tr>
-						</thead>
-						<tbody>
-						<tr th:each="workTime, workTimeStat : ${form.workTimes}">
-							<input type="hidden" th:field="*{workTimes[__${workTimeStat.index}__].date}" th:value="${workTime.date}" />
-							<td th:text="${#temporals.format(workTime.date, 'MM/dd(E)')}">6/1（木）</td>
-							<td>
-								<select class="form-control workType-choice" th:field="*{workTimes[__${workTimeStat.index}__].workType}">
-									<option value=""></option>
-									<option th:each="workType : ${workTypes}" th:text="#{|worktime.worktype.${workType}|}" th:value="${workType}" th:selected="${workType eq workTime.workType}">出勤</option>
-								</select>
-							</td>
-							<td th:unless="${workTimeYearMonth.staff.flextime}"><input class="show-item" th:field="*{workTimes[__${workTimeStat.index}__].trainDelay}" type="checkbox" /></td>
-							<td>
-								<div class="form-inline show-item">
-									<select class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].startAtHour}">
-										<option value=""></option>
-										<option th:each="hour : ${workTimeHour}" th:text="|${hour}時|" th:value="${hour}" th:selected="${hour eq workTime.startAtHour}">9時</option>
-									</select>
-									<select class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].startAtMinute}">
-										<option value=""></option>
-										<option th:each="minute : ${workTimeMinute}" th:text="|${minute}分|" th:value="${minute}" th:selected="${minute eq workTime.startAtMinute}">15分</option>
-									</select>
-								</div>
-							</td>
-							<td>
-								<div class="form-inline show-item">
-									<select class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].endAtHour}">
-										<option value=""></option>
-										<option th:each="hour : ${workTimeHour}" th:text="|${hour}時|" th:value="${hour}" th:selected="${hour eq workTime.endAtHour}">9時</option>
-									</select>
-									<select class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].endAtMinute}">
-										<option value=""></option>
-										<option th:each="minute : ${workTimeMinute}" th:text="|${minute}分|" th:value="${minute}" th:selected="${minute eq workTime.startAtMinute}">15分</option>
-									</select>
-								</div>
-							</td>
-							<td>
-								<select class="form-control show-item" th:field="*{workTimes[__${workTimeStat.index}__].restTime}">
-									<option value=""></option>
-									<option th:each="restTime : ${restTimes}" th:text="${restTime}" th:value="${restTime}" th:selected="${restTime eq workTime.restTime}"></option>
-								</select>
-							</td>
-							<td><input class="form-control" th:field="*{workTimes[__${workTimeStat.index}__].remarks}" type="text" placeholder="備考" /></td>
-						</tr>
-						</tbody>
-					</table>
-					<div class="form-group">
-						<button type="submit" class="btn btn-success">保存</button>
-						<a th:href="@{/work-time}" type="button" class="btn btn-default col-md-offset-5">戻る</a>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
-</body>
+	</body>
 </html>

@@ -2,7 +2,7 @@ package jp.co.waja.app.controller;
 
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.entity.WorkTimeYearMonth;
-import jp.co.waja.core.model.Role;
+import jp.co.waja.core.model.*;
 import jp.co.waja.core.service.staff.StaffDetails;
 import jp.co.waja.core.service.staff.StaffService;
 import jp.co.waja.core.service.worktime.WorkTimeService;
@@ -28,7 +28,7 @@ public class DashBoardController {
 	@GetMapping
 	public String dashBoard(@AuthenticationPrincipal StaffDetails staffDetails, Model model) {
 		Staff loginStaff = staffDetails.getStaff();
-		if (loginStaff.getRole() != Role.MANAGER) {
+		if (loginStaff.getRole().getGroup() == Permission.PermissionGroup.DEFAULT) {
 			return "dashboard";
 		}
 		List<Staff> staffs = staffService.getAllByTeam(loginStaff);

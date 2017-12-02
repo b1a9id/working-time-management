@@ -3,10 +3,7 @@
 	<head>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
-		<script type="text/javascript" th:src="@{/webjars/jquery/3.2.0/jquery.min.js}"></script>
-		<script type="text/javascript" th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
-		<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
-		<script type="text/javascript" th:src="@{/lib/datetimepicker/jquery.datetimepicker.js}"></script>
+		<link rel="shortcut icon" th:href="@{/img/common/favicon.ico}" />
 		<link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}" rel="stylesheet" type="text/css" >
@@ -111,7 +108,7 @@
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('employmentType')}? has-error">
 								<div class="col-sm-3">
-									<label class="control-label"><span th:text="#{staff.field.employment.type}">雇用形態</span><span class="text-danger">*</span></label>
+									<label class="control-label"><span th:text="#{staff.field.employmenttype}">雇用形態</span><span class="text-danger">*</span></label>
 								</div>
 								<div class="col-sm-9">
 									<select class="form-control" th:field="*{employmentType}">
@@ -178,7 +175,7 @@
 							<div class="form-group">
 								<div class="col-sm-12">
 									<div class="text-right">
-										<button class="btn btn-success" th:text="#{save}">保存</button>
+										<button class="btn btn-primary" th:text="#{save}">保存</button>
 										<a type="submit" class="btn btn-default" th:href="@{/admin/staffs}" th:text="#{back}">戻る</a>
 									</div>
 								</div>
@@ -188,6 +185,10 @@
 				</div>
 			</div>
 		</div>
+		<script type="text/javascript" th:src="@{/webjars/jquery/3.2.0/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+		<script type="text/javascript" th:src="@{/lib/datetimepicker/jquery.datetimepicker.js}"></script>
 		<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
 		<script type="text/javascript" th:src="@{/js/common/datepicker.js}"></script>
 	</body>

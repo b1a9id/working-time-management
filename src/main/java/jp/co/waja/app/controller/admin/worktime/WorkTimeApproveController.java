@@ -19,13 +19,26 @@ public class WorkTimeApproveController {
 	@Autowired
 	private WorkTimeService workTimeService;
 
-	@PostMapping("/{id}")
-	public String approve(
+	@PostMapping(value = "/{id}", params = "approve1")
+	public String approve1(
 			@AuthenticationPrincipal StaffDetails loginUser,
 			@PathVariable Long id,
 			@RequestParam Boolean approve1,
 			RedirectAttributes redirectAttributes) {
 		WorkTimeYearMonth updatedWorkTimeYearMonth = workTimeService.approve1(loginUser.getStaff(), id, approve1);
+
+		redirectAttributes.addFlashAttribute("updatedWorkTimeYearMonth", updatedWorkTimeYearMonth);
+		redirectAttributes.addAttribute("id", updatedWorkTimeYearMonth.getStaff().getId());
+		return "redirect:/admin/work-time/{id}";
+	}
+
+	@PostMapping(value = "/{id}", params = "approve2")
+	public String approve2(
+			@AuthenticationPrincipal StaffDetails loginUser,
+			@PathVariable Long id,
+			@RequestParam Boolean approve2,
+			RedirectAttributes redirectAttributes) {
+		WorkTimeYearMonth updatedWorkTimeYearMonth = workTimeService.approve2(loginUser.getStaff(), id, approve2);
 
 		redirectAttributes.addFlashAttribute("updatedWorkTimeYearMonth", updatedWorkTimeYearMonth);
 		redirectAttributes.addAttribute("id", updatedWorkTimeYearMonth.getStaff().getId());

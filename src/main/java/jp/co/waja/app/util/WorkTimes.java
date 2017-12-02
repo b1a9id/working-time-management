@@ -1,5 +1,6 @@
 package jp.co.waja.app.util;
 
+import jp.co.waja.core.entity.WorkTime;
 import jp.co.waja.core.entity.WorkTimeYearMonth;
 import jp.co.waja.core.model.Role;
 import jp.co.waja.core.support.WorkTimeUtil;
@@ -36,5 +37,13 @@ public class WorkTimes {
 
 	public boolean invalidEdit(WorkTimeYearMonth workTimeYearMonth) {
 		return WorkTimeUtil.invalidEdit(workTimeYearMonth);
+	}
+
+	public boolean isNotBusinessDay(WorkTime workTime) {
+		return !WorkTimeUtil.isBusinessDay(workTime.getDate());
+	}
+
+	public String label(WorkTime workTime) {
+		return WorkTimeUtils.label(workTime);
 	}
 }

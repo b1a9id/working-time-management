@@ -1,11 +1,18 @@
 package jp.co.waja.core.support;
 
-import jp.co.waja.core.entity.*;
+import jp.co.waja.core.entity.Staff;
+import jp.co.waja.core.entity.WorkTime;
+import jp.co.waja.core.entity.WorkTimeYearMonth;
 import jp.co.waja.core.model.Role;
 
-import java.time.*;
-import java.util.*;
-import java.util.stream.*;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.Arrays;
+import java.util.List;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.util.Objects.isNull;
 import static jp.co.waja.core.entity.WorkTime.WorkType.*;
@@ -31,12 +38,7 @@ public class WorkTimeUtil {
 		if (date == null) {
 			return null;
 		}
-		List<LocalDate> publicHolidays = PublicHolidays.getPublicHolidays();
-		boolean isHoliday = publicHolidays.stream()
-				.anyMatch(publicHoliday -> publicHoliday.isEqual(date));
-
-		DayOfWeek dayOfWeek = date.getDayOfWeek();
-		if (isHoliday || dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
+		if (!isBusinessDay(date)) {
 			return LEGAL_VACATION;
 		}
 		return NORMAL;
@@ -102,5 +104,17 @@ public class WorkTimeUtil {
 			return false;
 		}
 		return true;
+	}
+
+	public static boolean isBusinessDay(LocalDate date) {
+		if (isNull(date)) {
+			return false;
+		}
+		List<LocalDate> publicHolidays = PublicHolidays.getPublicHolidays();
+		boolean isHoliday = publicHolidays.stream()
+				.anyMatch(publicHoliday -> publicHoliday.isEqual(date));
+
+		DayOfWeek dayOfWeek = date.getDayOfWeek();
+		return !isHoliday && dayOfWeek != DayOfWeek.SATURDAY && dayOfWeek != DayOfWeek.SUNDAY;
 	}
 }

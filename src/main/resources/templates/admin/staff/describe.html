@@ -3,8 +3,7 @@
 	<head>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
-		<script type="text/javascript" th:src="@{/webjars/jquery/3.2.0/jquery.min.js}"></script>
-		<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+		<link rel="shortcut icon" th:href="@{/img/common/favicon.ico}" />
 		<link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
 		<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
@@ -74,7 +73,7 @@
 							</form>
 						</div>
 						<div class="btn-group">
-							<a class="btn btn-success dropdown-toggle" data-toggle="dropdown"> メニュー <span class="fa fa-caret-down"></span></a>
+							<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> メニュー <span class="fa fa-caret-down"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
 									<a th:href="@{/admin/staffs/edit/{staffId}(staffId=${staff.id})}">編集</a>
@@ -106,7 +105,7 @@
 									<td th:text="${staff.getNameKana()}">てすとたろう</td>
 								</tr>
 								<tr>
-									<th th:text="#{staff.field.employment.type}">ふりがな</th>
+									<th th:text="#{staff.field.employmenttype}">雇用形態</th>
 									<td th:text="#{|staff.employmenttype.${staff.employmentType}|}">正社員</td>
 								</tr>
 								<tr>
@@ -217,5 +216,7 @@
 //				});
 //			});
 		</script>
+		<script type="text/javascript" th:src="@{/webjars/jquery/3.2.0/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 	</body>
 </html>

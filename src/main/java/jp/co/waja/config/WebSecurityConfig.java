@@ -22,6 +22,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private StaffDetailsService staffDetailsService;
 
+	@Autowired
+	public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+		authenticationManagerBuilder
+				.userDetailsService(this.staffDetailsService);
+	}
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -40,12 +46,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/**").authenticated()
 				.and()
 				.formLogin()
-				.loginPage("/login-form")
+				.loginPage("/login")
 				.loginProcessingUrl("/login")
 				.usernameParameter("email")
 				.passwordParameter("password")
 				.defaultSuccessUrl("/", true)
-				.failureUrl("/login-form?error=true").permitAll()
+				.failureUrl("/login?error=true").permitAll()
 				.and()
 				.csrf()
 				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())

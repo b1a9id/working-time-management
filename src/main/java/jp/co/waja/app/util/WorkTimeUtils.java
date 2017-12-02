@@ -4,7 +4,8 @@ import jp.co.waja.core.entity.WorkTime;
 import jp.co.waja.core.entity.WorkTimeYearMonth;
 import jp.co.waja.core.support.WorkTimeUtil;
 
-import java.math.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.YearMonth;
@@ -48,7 +49,7 @@ public final class WorkTimeUtils {
 		if (workTypeGroup == NORMAL) {
 			BigDecimal dayOfMonth = BigDecimal.valueOf(workTimeYearMonth.getWorkTimes().size());
 			BigDecimal vacationCount = workTimeYearMonth.getWorkTimes().stream()
-					.filter(workTime -> workTime.getWorkTypeGroup() != NORMAL)
+					.filter(workTime -> workTime.getWorkType().getGroup() != NORMAL)
 					.map(workTime -> workTime.getWorkType().getDay())
 					.reduce(BigDecimal::add)
 					.orElse(BigDecimal.ZERO);
@@ -56,7 +57,7 @@ public final class WorkTimeUtils {
 		}
 
 		return workTimeYearMonth.getWorkTimes().stream()
-				.filter(workTime -> workTime.getWorkTypeGroup() == workTypeGroup)
+				.filter(workTime -> workTime.getWorkType().getGroup() == workTypeGroup)
 				.map(workTime -> workTime.getWorkType().getDay())
 				.reduce(BigDecimal::add)
 				.orElse(BigDecimal.ZERO);
@@ -88,5 +89,24 @@ public final class WorkTimeUtils {
 		return workTimes.stream()
 				.filter(workTime -> workTime.getWorkType() == workType)
 				.count();
+	}
+
+	public static String label(WorkTime workTime) {
+		WorkTime.WorkType workType = workTime.getWorkType();
+		switch (workType.getGroup()) {
+			case NORMAL:
+				return "label-default";
+			case NORMAL_VACATION:
+				return "label-danger";
+			case PAID_VACATION:
+				return "label-success";
+			case PAID_VACATION_AFTER:
+				return "label-success";
+			case ABSENCE:
+				return "label-info";
+			case ILLEGAL_VACATION:
+				return "label-warning";
+		}
+		return "label-default";
 	}
 }

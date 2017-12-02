@@ -6,6 +6,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.format.DateTimeFormatter;
+
 @RestController
 public class ProfileRestController {
 
@@ -16,7 +18,8 @@ public class ProfileRestController {
 		profile.setTeamName(staff.getTeam().getName());
 		profile.setName(staff.getName());
 		profile.setNameKana(staff.getNameKana());
-		profile.setEnteredDate(staff.getEnteredDate().toString());
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		profile.setEnteredDate(formatter.format(staff.getEnteredDate()));
 		return profile;
 	}
 }
