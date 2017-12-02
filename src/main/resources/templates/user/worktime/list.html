@@ -76,7 +76,7 @@
 							</a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<a th:href="@{/work-time/edit/{displayYearMonth}(displayYearMonth=${yearMonth})}">稼働実績入力</a>
+									<a th:href="@{/work-time/edit/{id}(id=${workTimeYearMonth.id})}">稼働実績入力</a>
 								</li>
 								<li>
 									<a href="#bulk-input" data-toggle="modal">一括入力</a>
@@ -109,9 +109,9 @@
 						<th class="col-md-4" th:text="#{worktime.approved2at}">管理者</th>
 					</tr>
 					<tr>
-						<td th:with="completedAt=${workTimeYearMonth.completedAt} ? ${#temporals.format(workTimeYearMonth.completedAt, 'yyyy/MM/dd HH:mm')}" th:text="${workTimeYearMonth.completedAt} ? ${workTimeYearMonth.completedBy} + '　' + ${completedAt} : ''"></td>
-						<td th:with="approved1At=${workTimeYearMonth.approved1At} ? ${#temporals.format(workTimeYearMonth.approved1At, 'yyyy/MM/dd HH:mm')}" th:text="${workTimeYearMonth.approved1At} ? ${workTimeYearMonth.approved1By} + '　' + ${approved1At} : ''"></td>
-						<td th:with="approved2At=${workTimeYearMonth.approved2At} ? ${#temporals.format(workTimeYearMonth.approved2At, 'yyyy/MM/dd HH:mm')}" th:text="${workTimeYearMonth.approved2At} ? ${workTimeYearMonth.approved2By} + '　' + ${approved2At} : ''"></td>
+						<td th:with="completedAt=${workTimeYearMonth.completedAt} ? ${#temporals.format(workTimeYearMonth.completedAt, 'yyyy/MM/dd HH:mm')}" th:text="${workTimeYearMonth.completedAt} ? ${workTimeYearMonth.completedBy} + '　' + ${completedAt} : 'ー'"></td>
+						<td th:with="approved1At=${workTimeYearMonth.approved1At} ? ${#temporals.format(workTimeYearMonth.approved1At, 'yyyy/MM/dd HH:mm')}" th:text="${workTimeYearMonth.approved1At} ? ${workTimeYearMonth.approved1By} + '　' + ${approved1At} : 'ー'"></td>
+						<td th:with="approved2At=${workTimeYearMonth.approved2At} ? ${#temporals.format(workTimeYearMonth.approved2At, 'yyyy/MM/dd HH:mm')}" th:text="${workTimeYearMonth.approved2At} ? ${workTimeYearMonth.approved2By} + '　' + ${approved2At} : 'ー'"></td>
 					</tr>
 				</table>
 			</div>
@@ -131,7 +131,7 @@
 					<div class="col-md-12">
 						<table class="table table-bordered table-condensed">
 							<thead>
-							<tr>
+							<tr class="active">
 								<th>内容</th>
 								<th>日数</th>
 							</tr>
@@ -252,8 +252,8 @@
 							</tfoot>
 							<tbody>
 							<tr th:each="workTime : ${workTimeYearMonth.workTimes}" th:with="dayTotal=${#workTimes.workTime(workTime.startAt, workTime.endAt, workTime.restTime)}" th:classappend="${#workTimes.overTime(dayTotal)} ? 'bg-danger'">
-								<td class="text-left" th:text="${#temporals.format(workTime.date, 'MM/dd(E)')}">6/1（木）</td>
-								<td class="text-left" th:text="#{|worktime.worktype.${workTime.workType}|}">出勤</td>
+								<td class="text-left" th:classappend="${#workTimes.isNotBusinessDay(workTime)} ? 'text-danger'" th:text="${#temporals.format(workTime.date, 'MM/dd(E)')}">6/1（木）</td>
+								<td class="text-left"><span class="label" th:classappend="${#workTimes.label(workTime)}" th:text="#{|worktime.worktype.${workTime.workType}|}">出勤</span></td>
 								<td th:unless="${workTimeYearMonth.staff.flextime}" class="text-left"><i th:classappend="${workTime.trainDelay} ? 'glyphicon glyphicon-ok'"></i></td>
 								<td class="text-left" th:text="${workTime.startAt}">9:00</td>
 								<td class="text-left" th:text="${workTime.endAt}">18:00</td>

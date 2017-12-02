@@ -1,12 +1,11 @@
 package jp.co.waja.app.controller.user.worktime;
 
-import jp.co.waja.core.entity.*;
-import jp.co.waja.core.model.worktime.WorkTimeYearMonthEditRequest;
+import jp.co.waja.core.entity.WorkTime;
+import jp.co.waja.core.entity.WorkTimeYearMonth;
 import jp.co.waja.core.service.staff.StaffDetails;
 import jp.co.waja.core.service.worktime.WorkTimeService;
 import jp.co.waja.core.support.WorkTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.YearMonth;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/work-time/edit")
@@ -33,8 +32,8 @@ public class WorkTimeEditController {
 	@ModelAttribute(TARGET_ENTITY_KEY)
 	public WorkTimeYearMonth setUpWorkTime(
 			@AuthenticationPrincipal StaffDetails loginUser,
-			@PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth displayYearMonth) {
-		return workTimeService.getWorkTimeYearMonth(loginUser.getStaff(), WorkTimeUtil.yearMonthToInt(displayYearMonth));
+			@PathVariable Long id) {
+		return workTimeService.getWorkTimeYearMonth(loginUser.getStaff(), id);
 	}
 
 	@ModelAttribute("workTypes")
@@ -42,9 +41,9 @@ public class WorkTimeEditController {
 		return WorkTimeUtil.workTypes(loginUser.getStaff());
 	}
 
-	@GetMapping("/{displayYearMonth}")
+	@GetMapping("/{id}")
 	public String edit(
-			@PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth displayYearMonth,
+			@PathVariable Long id,
 			Model model) {
 		WorkTimeYearMonth workTimeYearMonth = (WorkTimeYearMonth) model.asMap().get(TARGET_ENTITY_KEY);
 		WorkTimeYearMonthEditForm form = (WorkTimeYearMonthEditForm) model.asMap().get(FORM_MODEL_KEY);
@@ -56,21 +55,21 @@ public class WorkTimeEditController {
 		return "user/worktime/edit";
 	}
 
-	@PostMapping("/{displayYearMonth}")
+	@PostMapping("/{id}")
 	public String edit(
 			@AuthenticationPrincipal StaffDetails loginUser,
-			@PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth displayYearMonth,
+			@PathVariable Long id,
 			@ModelAttribute(FORM_MODEL_KEY) WorkTimeYearMonthEditForm form,
 			BindingResult errors,
 			RedirectAttributes redirectAttributes) {
 		if (errors.hasErrors()) {
 			return "redirect:/work-time/edit/{displayDate}?error";
 		}
-		WorkTimeYearMonthEditRequest request = form.toWorkTimeYearMonthEditRequest();
-		WorkTimeYearMonth updatedWorkTimeYearMonth = workTimeService.edit(loginUser.getStaff(), request);
+		WorkTimeYearMonth updatedWorkTimeYearMonth = workTimeService.edit(loginUser.getStaff(), form.toWorkTimeYearMonthEditRequest());
 
 		redirectAttributes.getFlashAttributes().clear();
 		redirectAttributes.addFlashAttribute("updatedWorkTimeYearMonth", updatedWorkTimeYearMonth);
-		return "redirect:/work-time";
+		redirectAttributes.addAttribute("yearMonth", WorkTimeUtil.intToYearMonth(updatedWorkTimeYearMonth.getWorkYearMonth()));
+		return "redirect:/work-time?displayYearMonth={yearMonth}";
 	}
 }

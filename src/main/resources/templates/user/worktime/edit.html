@@ -36,7 +36,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<form class="form-horizontal" role="form" th:action="@{/work-time/edit/{displayYearMonth}(displayYearMonth=${yearMonth})}" method="post" th:object="${form}">
+				<form class="form-horizontal" role="form" th:action="@{/work-time/edit/{id}(id=${workTimeYearMonth.id})}" method="post" th:object="${form}">
 					<input type="hidden" th:field="*{id}" th:value="*{id}" />
 					<table class="table table-bordered table-condensed">
 						<thead>

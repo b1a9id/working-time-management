@@ -13,29 +13,35 @@ import java.time.*;
 public class WorkTime {
 
 	public enum WorkTypeGroup {
-		NORMAL, PAID_VACATION, PAID_VACATION_AFTER, ABSENCE, NORMAL_VACATION
+		NORMAL, PAID_VACATION, PAID_VACATION_AFTER, ABSENCE, NORMAL_VACATION, ILLEGAL_VACATION
 	}
 
 	public enum WorkType {
-		NORMAL(BigDecimal.valueOf(1)),
-		LEGAL_VACATION(BigDecimal.valueOf(1)),
-		FULL_PAID_VACATION(BigDecimal.valueOf(1)),
-		HALF_PAID_VACATION(BigDecimal.valueOf(0.5)),
-		FULL_PAID_VACATION_AFTER(BigDecimal.valueOf(1)),
-		HALF_PAID_VACATION_AFTER(BigDecimal.valueOf(0.5)),
-		ABSENCE(BigDecimal.valueOf(1)),
-		HALF_ABSENCE(BigDecimal.valueOf(0.5)),
-		COMPENSATORY_VACATION(BigDecimal.valueOf(1)),
-		SPECIAL_VACATION(BigDecimal.valueOf(1));
+		NORMAL(BigDecimal.valueOf(1), WorkTypeGroup.NORMAL),
+		LEGAL_VACATION(BigDecimal.valueOf(1), WorkTypeGroup.NORMAL_VACATION),
+		FULL_PAID_VACATION(BigDecimal.valueOf(1), WorkTypeGroup.PAID_VACATION),
+		HALF_PAID_VACATION(BigDecimal.valueOf(0.5), WorkTypeGroup.PAID_VACATION),
+		FULL_PAID_VACATION_AFTER(BigDecimal.valueOf(1), WorkTypeGroup.PAID_VACATION_AFTER),
+		HALF_PAID_VACATION_AFTER(BigDecimal.valueOf(0.5), WorkTypeGroup.PAID_VACATION_AFTER),
+		ABSENCE(BigDecimal.valueOf(1), WorkTypeGroup.ABSENCE),
+		HALF_ABSENCE(BigDecimal.valueOf(0.5), WorkTypeGroup.ABSENCE),
+		COMPENSATORY_VACATION(BigDecimal.valueOf(1), WorkTypeGroup.ILLEGAL_VACATION),
+		SPECIAL_VACATION(BigDecimal.valueOf(1), WorkTypeGroup.ILLEGAL_VACATION);
 
 		private final BigDecimal day;
+		private final WorkTypeGroup group;
 
-		private WorkType(final BigDecimal day) {
+		private WorkType(final BigDecimal day, final WorkTypeGroup group) {
 			this.day = day;
+			this.group = group;
 		}
 
 		public BigDecimal getDay() {
 			return this.day;
+		}
+
+		public WorkTypeGroup getGroup() {
+			return this.group;
 		}
 	}
 
@@ -64,32 +70,4 @@ public class WorkTime {
 	private Integer restTime;
 
 	private String remarks;
-
-	public WorkTypeGroup getWorkTypeGroup() {
-		if (workType == WorkType.NORMAL) {
-			return WorkTypeGroup.NORMAL;
-		}
-		if (isPaidVacation()) {
-			return WorkTypeGroup.PAID_VACATION;
-		}
-		if (isPaidVacationAfter()) {
-			return WorkTypeGroup.PAID_VACATION_AFTER;
-		}
-		if (isAbsence()) {
-			return WorkTypeGroup.ABSENCE;
-		}
-		return WorkTypeGroup.NORMAL_VACATION;
-	}
-
-	public boolean isPaidVacation() {
-		return workType == WorkType.FULL_PAID_VACATION || workType == WorkType.HALF_PAID_VACATION;
-	}
-
-	public boolean isPaidVacationAfter() {
-		return workType == WorkType.FULL_PAID_VACATION_AFTER || workType == WorkType.HALF_PAID_VACATION_AFTER;
-	}
-
-	public boolean isAbsence() {
-		return workType == WorkType.ABSENCE || workType == WorkType.HALF_ABSENCE;
-	}
 }

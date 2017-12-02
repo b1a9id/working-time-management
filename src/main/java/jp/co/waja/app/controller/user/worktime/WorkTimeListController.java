@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.YearMonth;
 import java.util.*;
 
+import static java.util.Objects.isNull;
+
 @Controller
 @RequestMapping("/work-time")
 public class WorkTimeListController {
@@ -24,8 +26,7 @@ public class WorkTimeListController {
 
 	@ModelAttribute("workTypes")
 	public List<WorkTime.WorkType> setUpWorkTypes() {
-		WorkTime.WorkType[] workTypes = WorkTime.WorkType.values();
-		return Arrays.asList(workTypes);
+		return Arrays.asList(WorkTime.WorkType.values());
 	}
 
 	@GetMapping
@@ -35,10 +36,9 @@ public class WorkTimeListController {
 			Model model) {
 		displayYearMonth = Optional.ofNullable(displayYearMonth).orElse(YearMonth.now());
 		int yearMonth = WorkTimeUtil.yearMonthToInt(displayYearMonth);
-		Staff staff = loginUser.getStaff();
-		WorkTimeYearMonth workTimeYearMonth = workTimeService.getWorkTimeYearMonth(staff, yearMonth);
-		if (Objects.isNull(workTimeYearMonth)) {
-			workTimeYearMonth = workTimeService.createWorkTimeYearMonth(staff, yearMonth);
+		WorkTimeYearMonth workTimeYearMonth = workTimeService.getWorkTimeYearMonth(loginUser.getStaff(), yearMonth);
+		if (isNull(workTimeYearMonth)) {
+			workTimeYearMonth = workTimeService.createWorkTimeYearMonth(loginUser.getStaff(), yearMonth);
 		}
 
 		model.addAttribute("workTimeYearMonth", workTimeYearMonth);
