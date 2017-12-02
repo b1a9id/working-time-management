@@ -292,25 +292,18 @@
 	<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
 	<script>
 		new Vue({
-			el:'#modal-approve2',
+			el:'#modal-approve1',
 			methods: {
 				approve1() {
-					this.approve('approve1=true');
-				},
+					approve('approve1=true');
+				}
+			}
+		});
+		new Vue({
+			el:'#modal-approve2',
+			methods: {
 				approve2() {
-					this.approve('approve2=true');
-				},
-				approve(requestParam) {
-					const id = '[[${workTimeYearMonth.id}]]';
-
-					axios.post('/work-time/approve/' + id + '?' + requestParam)
-						.then(response => {
-							console.log(response.data);
-							// TODO:Vue.jsでバインドする
-							location.reload();
-						}).catch(error => {
-						console.log(error);
-					})
+					approve('approve2=true');
 				}
 			}
 		});
@@ -331,6 +324,18 @@
 				}
 			}
 		});
+		function approve(requestParam) {
+			const id = '[[${workTimeYearMonth.id}]]';
+
+			axios.post('/work-time/approve/' + id + '?' + requestParam)
+				.then(response => {
+					console.log(response.data);
+					// TODO:Vue.jsでバインドする
+					location.reload();
+				}).catch(error => {
+				console.log(error);
+			})
+		}
 	</script>
 	</body>
 </html>
