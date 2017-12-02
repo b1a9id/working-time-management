@@ -5,7 +5,7 @@
 
 	<groupId>jp.co.waja</groupId>
 	<artifactId>working-time-management</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>working-time-management</name>
