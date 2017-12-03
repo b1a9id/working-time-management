@@ -86,9 +86,9 @@
 					<th th:text="#{worktime.approved2at}">管理者</th>
 				</tr>
 				<tr>
-					<td th:with="completedAt=${#temporals.format(workTimeYearMonth.completedAt, 'yyyy/MM/dd HH:mm')}" th:if="${workTimeYearMonth.completedAt}" th:text="${workTimeYearMonth.completedAt} ? ${workTimeYearMonth.completedBy} + '　' + ${completedAt} : 'glyphicon glyphicon-minus'"></td>
-					<td th:with="approved1At=${#temporals.format(workTimeYearMonth.approved1At, 'yyyy/MM/dd HH:mm')}" th:if="${workTimeYearMonth.approved1At}" th:text="${workTimeYearMonth.approved1At} ? ${workTimeYearMonth.approved1By} + '　' + ${approved1At} : 'glyphicon glyphicon-minus'"></td>
-					<td th:with="approved2At=${#temporals.format(workTimeYearMonth.approved2At, 'yyyy/MM/dd HH:mm')}" th:if="${workTimeYearMonth.approved2At}" th:text="${workTimeYearMonth.approved2At} ? ${workTimeYearMonth.approved2By} + '　' + ${approved2At} : 'glyphicon glyphicon-minus'"></td>
+					<td th:with="completedAt=${workTimeYearMonth.completedAt} ? ${#temporals.format(workTimeYearMonth.completedAt, 'yyyy/MM/dd HH:mm')}" th:text="${workTimeYearMonth.completedAt} ? ${workTimeYearMonth.completedBy} + '　' + ${completedAt} : 'ー'"></td>
+					<td th:with="approved1At=${workTimeYearMonth.approved1At} ? ${#temporals.format(workTimeYearMonth.approved1At, 'yyyy/MM/dd HH:mm')}" th:text="${workTimeYearMonth.approved1At} ? ${workTimeYearMonth.approved1By} + '　' + ${approved1At} : 'ー'"></td>
+					<td th:with="approved2At=${workTimeYearMonth.approved2At} ? ${#temporals.format(workTimeYearMonth.approved2At, 'yyyy/MM/dd HH:mm')}" th:text="${workTimeYearMonth.approved2At} ? ${workTimeYearMonth.approved2By} + '　' + ${approved2At} : 'ー'"></td>
 				</tr>
 			</table>
 		</div>
