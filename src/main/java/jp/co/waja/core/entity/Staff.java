@@ -74,6 +74,14 @@ public class Staff extends AbstractEntity<Long> implements Serializable {
 	@JsonIgnore
 	private String password;
 
+	@Embedded
+	@ElementCollection(fetch = FetchType.LAZY)
+	@CollectionTable(
+			name = "paid_vacation",
+			joinColumns = @JoinColumn(name = "staff_id")
+	)
+	private List<PaidVacation> paidVacations;
+
 	@JoinTable(name = "user_role")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "role", length = 20, nullable = false)

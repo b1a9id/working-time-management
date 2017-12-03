@@ -51,18 +51,12 @@ create table staff_history (
   engine=InnoDB;
 
 create table paid_vacation (
-  id bigint not null auto_increment,
-  staff_id bigint,
+  staff_id bigint not null,
   days integer not null,
   provide_date date not null,
-  disappear_date date not null,
-  created_at datetime,
-  created_by varchar(30),
-  last_modified_at datetime,
-  last_modified_by varchar(30),
-  primary key (id)
+  disappear_date date not null
 )
-engine=InnoDB;
+  engine=InnoDB;
 
 create table long_leave (
   id bigint not null auto_increment,
@@ -136,14 +130,14 @@ VALUES (7, 4, '管理者', '太郎', 'かんりしゃ', 'たろう', 'kanrisya_t
 INSERT INTO staff(id, team_id, name_last, name_first, name_last_kana, name_first_kana, email, gender, employment_type, entered_date, flextime, telework, disabled, password, role, created_at, created_by)
 VALUES (8, 4, '利用者', '花子', 'りしょうしゃ', 'はなこ', 'riyousya_hanako@waja.jp', 'MAN', 'PERMANENT_STAFF', '2017/02/04', 0, 0, 0, '$2a$10$7FWRtqvPeMcU/J57SrlFN.U0neZpe2hu8qllj7Ajqw2IhNG0C1FPG', 'STAFF', '2017/07/01 00:00:00', '内立良介');
 
-INSERT INTO paid_vacation (id, staff_id, days, provide_date, disappear_date, created_at, created_by) VALUES (1, 1, 10, '2017/07/01', '2019/06/30', '2017/07/01 00:00:00', '内立良介');
-INSERT INTO paid_vacation (id, staff_id, days, provide_date, disappear_date, created_at, created_by) VALUES (2, 2, 13, '2017/07/01', '2019/06/30', '2017/07/01 00:00:00', '内立良介');
-INSERT INTO paid_vacation (id, staff_id, days, provide_date, disappear_date, created_at, created_by) VALUES (3, 3, 12, '2017/07/01', '2019/06/30', '2017/07/01 00:00:00', '内立良介');
-INSERT INTO paid_vacation (id, staff_id, days, provide_date, disappear_date, created_at, created_by) VALUES (4, 4, 10, '2017/07/01', '2019/06/30', '2017/07/01 00:00:00', '内立良介');
-INSERT INTO paid_vacation (id, staff_id, days, provide_date, disappear_date, created_at, created_by) VALUES (5, 5, 10, '2017/07/01', '2019/06/30', '2017/07/01 00:00:00', '内立良介');
-INSERT INTO paid_vacation (id, staff_id, days, provide_date, disappear_date, created_at, created_by) VALUES (6, 6, 10, '2017/07/01', '2019/06/30', '2017/07/01 00:00:00', '内立良介');
-INSERT INTO paid_vacation (id, staff_id, days, provide_date, disappear_date, created_at, created_by) VALUES (7, 7, 21, '2015/08/01', '2017/07/31', '2017/07/01 00:00:00', '内立良介');
-INSERT INTO paid_vacation (id, staff_id, days, provide_date, disappear_date, created_at, created_by) VALUES (8, 8, 10, '2015/04/01', '2017/03/30', '2017/07/01 00:00:00', '内立良介');
+INSERT INTO paid_vacation (staff_id, days, provide_date, disappear_date) VALUES (1, 10, '2017/07/01', '2019/06/30');
+INSERT INTO paid_vacation (staff_id, days, provide_date, disappear_date) VALUES (2, 13, '2017/07/01', '2019/06/30');
+INSERT INTO paid_vacation (staff_id, days, provide_date, disappear_date) VALUES (3, 12, '2017/07/01', '2019/06/30');
+INSERT INTO paid_vacation (staff_id, days, provide_date, disappear_date) VALUES (4, 10, '2017/07/01', '2019/06/30');
+INSERT INTO paid_vacation (staff_id, days, provide_date, disappear_date) VALUES (5, 10, '2017/07/01', '2019/06/30');
+INSERT INTO paid_vacation (staff_id, days, provide_date, disappear_date) VALUES (6, 10, '2017/07/01', '2019/06/30');
+INSERT INTO paid_vacation (staff_id, days, provide_date, disappear_date) VALUES (7, 21, '2015/08/01', '2017/07/31');
+INSERT INTO paid_vacation (staff_id, days, provide_date, disappear_date) VALUES (8, 10, '2015/04/01', '2017/03/30');
 
 INSERT INTO work_time_year_month (id, staff_id, work_year_month, created_at, created_by) VALUES (1, 1, 20178, '2017/07/01 00:00:00', '内立良介');
 

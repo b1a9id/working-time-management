@@ -12,6 +12,27 @@ import java.time.*;
 @Embeddable
 public class WorkTime {
 
+	@Column(nullable = false)
+	private LocalDate date;
+
+	@Column(name = "work_type", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private WorkType workType;
+
+	@Column(name = "train_delay")
+	private Boolean trainDelay;
+
+	@Column(name = "start_at")
+	private LocalTime startAt;
+
+	@Column(name = "end_at")
+	private LocalTime endAt;
+
+	@Column(name = "rest_time")
+	private Integer restTime;
+
+	private String remarks;
+
 	public enum WorkTypeGroup {
 		NORMAL, PAID_VACATION, PAID_VACATION_AFTER, ABSENCE, NORMAL_VACATION, ILLEGAL_VACATION
 	}
@@ -49,25 +70,4 @@ public class WorkTime {
 		this.date = date;
 		this.workType = workType;
 	}
-
-	@Column(nullable = false)
-	private LocalDate date;
-
-	@Column(name = "work_type", nullable = false)
-	@Enumerated(EnumType.STRING)
-	private WorkType workType;
-
-	@Column(name = "train_delay")
-	private Boolean trainDelay;
-
-	@Column(name = "start_at")
-	private LocalTime startAt;
-
-	@Column(name = "end_at")
-	private LocalTime endAt;
-
-	@Column(name = "rest_time")
-	private Integer restTime;
-
-	private String remarks;
 }

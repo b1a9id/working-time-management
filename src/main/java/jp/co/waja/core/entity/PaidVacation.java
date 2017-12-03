@@ -6,23 +6,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "paid_vacation")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaidVacation extends AbstractEntity<Long> implements Serializable {
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "staff_id")
-	private Staff staff;
+@Embeddable
+public class PaidVacation {
 
 	@Column(nullable = false)
-	private Integer days;
+	private int days;
 
 	@Column(name = "provide_date", nullable = false)
 	private LocalDate provideDate;
