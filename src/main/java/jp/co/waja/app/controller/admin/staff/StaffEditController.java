@@ -4,6 +4,7 @@ import jp.co.waja.core.entity.*;
 import jp.co.waja.core.model.Role;
 import jp.co.waja.core.service.staff.*;
 import jp.co.waja.core.service.team.TeamService;
+import jp.co.waja.exception.ForbiddenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -57,7 +58,11 @@ public class StaffEditController {
 	}
 
 	@GetMapping
-	public String edit(Model model) {
+	public String edit(@AuthenticationPrincipal StaffDetails loginUser, Model model) {
+		if (loginUser.getStaff().getRole() != Role.ADMIN) {
+			throw new ForbiddenException();
+		}
+
 		Staff staff = (Staff) model.asMap().get(TARGET_ENTITY_KEY);
 		StaffEditForm form = (StaffEditForm) model.asMap().get(FORM_MODEL_KEY);
 		form = Optional.ofNullable(form).orElse(new StaffEditForm(staff));
