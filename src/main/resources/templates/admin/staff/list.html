@@ -205,8 +205,8 @@
 							<th class="text-center" th:text="#{staff.field.telework}">在宅</th>
 							<th th:text="#{role.label}">権限</th>
 							<th></th>
-							<th></th>
-							<th></th>
+							<th sec:authorize="hasAnyRole('ADMIN')"></th>
+							<th sec:authorize="hasAnyRole('ADMIN')"></th>
 						</tr>
 						</thead>
 						<tbody>
@@ -221,8 +221,8 @@
 							<td class="text-center"><i th:class="${staff.telework} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
 							<td th:text="|#{|role.${staff.role}|}">スタッフ</td>
 							<td><a class="btn btn-link glyphicon glyphicon-time" data-toggle="tooltip" data-container="body" title="今月の稼働実績" data-placement="top" th:href="@{/admin/work-time/{id}(id=${staff.id})}"></a></td>
-							<td><a class="btn btn-link glyphicon glyphicon-pencil" data-toggle="tooltip" data-container="body" title="編集" data-placement="top" th:href="@{/admin/staffs/edit/{id}(id=${staff.id})}"></a></td>
-							<td>
+							<td sec:authorize="hasAnyRole('ADMIN')"><a class="btn btn-link glyphicon glyphicon-pencil" data-toggle="tooltip" data-container="body" title="編集" data-placement="top" th:href="@{/admin/staffs/edit/{id}(id=${staff.id})}"></a></td>
+							<td sec:authorize="hasAnyRole('ADMIN')">
 								<form method="post" th:action="@{/admin/staffs/delete/{id}(id=${staff.id})}">
 									<input type="hidden" name="_method" value="delete"/>
 									<button class="btn btn-link glyphicon glyphicon-trash" data-toggle="tooltip" data-container="body" title="削除" data-placement="top" ></button>
@@ -239,5 +239,4 @@
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
 	</body>
-
 </html>
