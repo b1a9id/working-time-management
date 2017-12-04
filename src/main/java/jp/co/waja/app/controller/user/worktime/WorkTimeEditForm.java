@@ -27,8 +27,7 @@ public class WorkTimeEditForm implements Serializable {
 	private Integer endAtHour;
 
 	private Integer endAtMinute;
-
-	@NotNull
+	
 	private Integer restTime;
 
 	private String remarks;

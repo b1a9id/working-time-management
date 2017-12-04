@@ -1,7 +1,6 @@
 package jp.co.waja.app.controller.user.worktime;
 
-import jp.co.waja.core.entity.WorkTime;
-import jp.co.waja.core.entity.WorkTimeYearMonth;
+import jp.co.waja.core.entity.*;
 import jp.co.waja.core.service.staff.StaffDetails;
 import jp.co.waja.core.service.worktime.WorkTimeService;
 import jp.co.waja.core.support.WorkTimeUtil;
@@ -10,11 +9,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/work-time/edit")
@@ -59,11 +58,11 @@ public class WorkTimeEditController {
 	public String edit(
 			@AuthenticationPrincipal StaffDetails loginUser,
 			@PathVariable Long id,
-			@ModelAttribute(FORM_MODEL_KEY) WorkTimeYearMonthEditForm form,
+			@ModelAttribute(FORM_MODEL_KEY) @Validated WorkTimeYearMonthEditForm form,
 			BindingResult errors,
 			RedirectAttributes redirectAttributes) {
 		if (errors.hasErrors()) {
-			return "redirect:/work-time/edit/{displayDate}?error";
+			return "redirect:/work-time/edit/{id}?error";
 		}
 		WorkTimeYearMonth updatedWorkTimeYearMonth = workTimeService.edit(loginUser.getStaff(), form.toWorkTimeYearMonthEditRequest());
 

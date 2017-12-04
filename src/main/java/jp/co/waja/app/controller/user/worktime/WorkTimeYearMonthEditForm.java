@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -23,6 +25,8 @@ import static jp.co.waja.core.entity.WorkTime.WorkType.*;
 public class WorkTimeYearMonthEditForm implements Serializable {
 	private Long id;
 
+	@NotNull
+	@Valid
 	private List<WorkTimeEditForm> workTimes;
 
 	public WorkTimeYearMonthEditForm(WorkTimeYearMonth workTimeYearMonth) {

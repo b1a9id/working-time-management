@@ -5,6 +5,10 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.*;
+import java.util.*;
+
+import static java.util.Objects.isNull;
+import static jp.co.waja.core.entity.WorkTime.WorkType.*;
 
 @Getter
 @Setter
@@ -69,5 +73,15 @@ public class WorkTime {
 	public WorkTime(LocalDate date, WorkType workType) {
 		this.date = date;
 		this.workType = workType;
+	}
+
+	public boolean isNoRestTimeType() {
+		if (isNull(this.workType)) {
+			return false;
+		}
+		List<WorkType> noRestTimeTypes = Arrays.asList(
+				LEGAL_VACATION, FULL_PAID_VACATION, FULL_PAID_VACATION_AFTER,
+				ABSENCE, COMPENSATORY_VACATION, SPECIAL_VACATION);
+		return noRestTimeTypes.contains(this.workType);
 	}
 }
