@@ -54,7 +54,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="alert alert-danger" role="alert">
-						<span th:text="${#temporals.format(duringLongLeave.endAt, 'yyyy/MM/dd')} + 'まで' + #{|longleave.type.${duringLongLeave.type}|} + 'です。'">2017/10/25まで産休です。</span>
+						<span th:text="${T(jp.co.waja.app.util.FormatUtils).longLeave(duringLongLeave.endAt, duringLongLeave.type.name())}">2017/10/25まで産休です。</span>
 					</div>
 				</div>
 			</div>
@@ -163,7 +163,7 @@
 							<tr th:each="longLeave : ${staff.longLeaves}">
 								<td th:text="#{|longleave.type.${longLeave.type}|}">産休</td>
 								<td th:text="${#temporals.format(longLeave.startAt, 'yyyy/MM/dd')}">2017/10/01</td>
-								<td th:text="${#temporals.format(longLeave.endAt, 'yyyy/MM/dd')}">2018/10/01</td>
+								<td th:text="${longLeave.endAt} ? ${#temporals.format(longLeave.endAt, 'yyyy/MM/dd')}">2018/10/01</td>
 								<td th:text="${longLeave.remarks}">テスト</td>
 								<td>
 									<form method="post" th:action="@{/admin/staffs/long-leave/delete/{id}?staffId={staffId}(id=${longLeave.id}, staffId=${staff.id})}">
