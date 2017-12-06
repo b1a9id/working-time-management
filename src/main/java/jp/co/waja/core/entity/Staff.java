@@ -64,6 +64,8 @@ public class Staff extends AbstractEntity<Long> implements Serializable {
 	@Column(nullable = false, name = "entered_date")
 	private LocalDate enteredDate;
 
+	private Integer workTime;
+
 	private boolean flextime;
 
 	private boolean telework;
