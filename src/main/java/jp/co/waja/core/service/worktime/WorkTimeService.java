@@ -135,6 +135,9 @@ public class WorkTimeService {
 		if (!approve2) {
 			workTimeYearMonth.setCompletedBy(null);
 			workTimeYearMonth.setCompletedAt(null);
+		} else if (workTimeYearMonth.getStaff().getTeam().equals(approve2Staff.getTeam())) {
+			workTimeYearMonth.setApproved1By(approvedByName);
+			workTimeYearMonth.setApproved1At(now);
 		}
 
 		return workTimeYearMonthRepository.saveAndFlush(workTimeYearMonth);

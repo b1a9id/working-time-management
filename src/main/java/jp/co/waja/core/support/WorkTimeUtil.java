@@ -1,6 +1,7 @@
 package jp.co.waja.core.support;
 
 import jp.co.waja.core.entity.Staff;
+import jp.co.waja.core.entity.Team;
 import jp.co.waja.core.entity.WorkTime;
 import jp.co.waja.core.entity.WorkTimeYearMonth;
 import jp.co.waja.core.model.Role;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 import static jp.co.waja.core.entity.WorkTime.WorkType.*;
 
 /**
@@ -85,16 +87,20 @@ public class WorkTimeUtil {
 		return YearMonth.parse(joiner.add(year).add(month).toString());
 	}
 
-	public static boolean disabledApprove(WorkTimeYearMonth workTimeYearMonth, Role role) {
-		if (role == Role.MANAGER && !isNull(workTimeYearMonth.getCompletedAt()) && isNull(workTimeYearMonth.getApproved1At())) {
+	public static boolean disabledApprove(WorkTimeYearMonth workTimeYearMonth, Role role, Team team) {
+		if (role == Role.MANAGER && nonNull(workTimeYearMonth.getCompletedAt()) && isNull(workTimeYearMonth.getApproved1At())) {
 			return false;
 		}
 
-		if (role == Role.ADMIN
-				&&!isNull(workTimeYearMonth.getCompletedAt())
-					&& !isNull(workTimeYearMonth.getApproved1At())
-						&& isNull(workTimeYearMonth.getApproved2At())) {
-			return false;
+		if (role == Role.ADMIN) {
+			if (isNull(workTimeYearMonth.getApproved2At()) && workTimeYearMonth.getStaff().getTeam().equals(team)) {
+				return false;
+			}
+			if (nonNull(workTimeYearMonth.getCompletedAt())
+					&& nonNull(workTimeYearMonth.getApproved1At())
+					&& isNull(workTimeYearMonth.getApproved2At())) {
+				return false;
+			}
 		}
 		return true;
 	}

@@ -40,19 +40,19 @@
 		<!-- TODO:更新メッセージ -->
 		<div class="container">
 			<div class="row">
-				<div class="col-md-12 text-right">
+				<div class="col-md-12 text-right" th:with="loginUserTeam=${#authentication.principal.staff.team}">
 					<!--/*/ <th:block sec:authorize="hasAnyRole('MANAGER')"> /*/-->
 					<div class="btn-group">
-						<a class="btn btn-primary" href="#modal-approve1" data-toggle="modal" th:disabled="${#workTimes.disabledApprove(workTimeYearMonth, 'MANAGER')}" th:style="${#workTimes.disabledApprove(workTimeYearMonth, 'MANAGER')} ? 'pointer-events : none;'">承認</a>
+						<a class="btn btn-primary" href="#modal-approve1" data-toggle="modal" th:disabled="${#workTimes.disabledApprove(workTimeYearMonth, 'MANAGER', loginUserTeam)}" th:style="${#workTimes.disabledApprove(workTimeYearMonth, 'MANAGER', loginUserTeam)} ? 'pointer-events : none;'">承認</a>
 					</div>
 					<div class="btn-group">
-						<a class="btn btn-default" href="#modal-modify" data-toggle="modal" th:disabled="${#workTimes.disabledApprove(workTimeYearMonth, 'MANAGER')}" th:style="${#workTimes.disabledApprove(workTimeYearMonth, 'MANAGER')} ? 'pointer-events : none;'">修正</a>
+						<a class="btn btn-default" href="#modal-modify" data-toggle="modal" th:disabled="${#workTimes.disabledApprove(workTimeYearMonth, 'MANAGER', loginUserTeam)}" th:style="${#workTimes.disabledApprove(workTimeYearMonth, 'MANAGER', loginUserTeam)} ? 'pointer-events : none;'">修正</a>
 					</div>
 					<!--/*/ </th:block> /*/-->
 					<!--/*/ <th:block sec:authorize="hasAnyRole('ADMIN')"> /*/-->
 					<div>
 						<div class="btn-group">
-							<a class="btn btn-primary" href="#modal-approve2" data-toggle="modal" th:disabled="${#workTimes.disabledApprove(workTimeYearMonth, 'ADMIN')}" th:style="${#workTimes.disabledApprove(workTimeYearMonth, 'ADMIN')} ? 'pointer-events : none;'">管理者承認</a>
+							<a class="btn btn-primary" href="#modal-approve2" data-toggle="modal" th:disabled="${#workTimes.disabledApprove(workTimeYearMonth, 'ADMIN', loginUserTeam)}" th:style="${#workTimes.disabledApprove(workTimeYearMonth, 'ADMIN', loginUserTeam)} ? 'pointer-events : none;'">管理者承認</a>
 						</div>
 						<div class="btn-group">
 							<a class="btn btn-default" th:href="@{/admin/work-time/edit/{id}?displayYearMonth={displayYearMonth}(id=${workTimeYearMonth.staff.id},displayYearMonth=${yearMonth})}"
