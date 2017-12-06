@@ -55,7 +55,7 @@ public class StaffListController {
 
 	@ModelAttribute("roles")
 	public List<Role> setUpRoles() {
-		return Arrays.asList(Role.values());
+		return Arrays.asList(Role.ADMIN, Role.MANAGER, Role.STAFF);
 	}
 
 	@GetMapping
