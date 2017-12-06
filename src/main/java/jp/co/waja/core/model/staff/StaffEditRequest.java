@@ -35,6 +35,8 @@ public class StaffEditRequest implements Serializable {
 
 	private LocalDate enteredDate;
 
+	private int workTime;
+
 	private boolean flextime;
 
 	private boolean telework;

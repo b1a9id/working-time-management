@@ -31,6 +31,8 @@ public class StaffCreateRequest implements Serializable {
 
 	private LocalDate enteredDate;
 
+	private int workTime;
+
 	private Boolean flextime;
 
 	private Boolean telework;
