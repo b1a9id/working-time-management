@@ -18,6 +18,9 @@ import java.time.LocalDate;
 public class StaffCreateForm implements Serializable {
 
 	@NotNull
+	private Long code;
+
+	@NotNull
 	private Team team;
 
 	@NotNull
@@ -63,6 +66,7 @@ public class StaffCreateForm implements Serializable {
 
 	public StaffCreateRequest toStaffCreateRequest() {
 		StaffCreateRequest request = new StaffCreateRequest();
+		request.setCode(getCode());
 		request.setTeam(getTeam());
 		request.setNameLast(getNameLast());
 		request.setNameFirst(getNameFirst());

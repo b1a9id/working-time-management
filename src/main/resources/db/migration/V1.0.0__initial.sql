@@ -211,6 +211,7 @@ INSERT INTO public_holiday (id, year, month, day_of_month, created_at, created_b
 INSERT INTO public_holiday (id, year, month, day_of_month, created_at, created_by) VALUES (21, 2017, 1, 2, '2017/07/01 00:00:00', '内立良介');
 INSERT INTO public_holiday (id, year, month, day_of_month, created_at, created_by) VALUES (22, 2017, 1, 3, '2017/07/01 00:00:00', '内立良介');
 
+alter table staff add constraint UK_9iyphxhcq6d836q8vrykuw6vx unique (code);
 alter table staff add constraint UK_pvctx4dbua9qh4p4s3gm3scrh unique (email);
 alter table paid_vacation add constraint FKjk3lekaqd3mnn5432w6lsxtys foreign key (staff_id) references staff (id);
 alter table staff add constraint FKmdoqnc1maraqd1w8ptjpk1i9r foreign key (team_id) references team (id);

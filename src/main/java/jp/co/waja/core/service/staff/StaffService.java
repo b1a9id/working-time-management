@@ -73,6 +73,7 @@ public class StaffService {
 	@PreAuthorize("hasRole('ADMIN')")
 	public Staff create(StaffCreateRequest request) {
 		Staff staff = new Staff();
+		staff.setCode(request.getCode());
 		staff.setTeam(request.getTeam());
 		staff.setNameLast(request.getNameLast());
 		staff.setNameFirst(request.getNameFirst());

@@ -13,6 +13,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class StaffCreateRequest implements Serializable {
 
+	private Long code;
+
 	private Team team;
 
 	private String nameLast;

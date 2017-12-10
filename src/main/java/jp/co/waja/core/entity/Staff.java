@@ -34,6 +34,7 @@ public class Staff extends AbstractEntity<Long> implements Serializable {
 		CREW_FIVE
 	}
 
+	@Column(unique = true, nullable = true)
 	private Long code;
 
 	@ManyToOne
