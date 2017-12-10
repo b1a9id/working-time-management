@@ -23,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static java.lang.Boolean.*;
+import static java.util.Objects.isNull;
 
 @Service
 @Transactional
@@ -72,6 +73,12 @@ public class StaffService {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	public Staff create(StaffCreateRequest request) {
+		if (staffRepository.findOneByCode(request.getCode()).isPresent()) {
+			throw new DuplicatedException();
+		}
+		if (isNull(staffRepository.findOneByEmail(request.getEmail()))) {
+			throw new DuplicatedException();
+		}
 		Staff staff = new Staff();
 		staff.setCode(request.getCode());
 		staff.setTeam(request.getTeam());
@@ -139,7 +146,7 @@ public class StaffService {
 	@PreAuthorize("hasRole('ADMIN')")
 	public Optional<String> delete(Long id) throws NotFoundException, WrongDeleteException {
 		Staff staff = staffRepository.findOneById(id);
-		if (Objects.isNull(staff)) {
+		if (isNull(staff)) {
 			throw new NotFoundException("Staff");
 		}
 
