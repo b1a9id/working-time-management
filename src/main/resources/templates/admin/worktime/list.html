@@ -180,7 +180,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<table class="table" th:with="regularWorkTime=${normalCount} * 8.00">
+					<table class="table" th:with="regularWorkTime=${#lists.size(businessDays)} * ${workTimeYearMonth.staff.workTime}">
 						<thead>
 						<tr class="text-left">
 							<th class="col-md-1" th:text="#{worktime.list.header.date}">日付</th>
