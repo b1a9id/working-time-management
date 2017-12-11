@@ -41,7 +41,7 @@ public class WorkTimes {
 	}
 
 	public boolean isNotBusinessDay(WorkTime workTime) {
-		return !WorkTimeUtil.isBusinessDay(workTime.getDate());
+		return !WorkTimeUtil.isBusinessDay(workTime.getWorkType());
 	}
 
 	public String label(WorkTime workTime) {
