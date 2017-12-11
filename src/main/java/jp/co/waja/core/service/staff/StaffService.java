@@ -101,10 +101,18 @@ public class StaffService {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	public Staff edit(StaffDetails loginStaff, StaffEditRequest request, Long id) {
+		if (staffRepository.findOneByCode(request.getCode()).isPresent()) {
+			throw new DuplicatedException("code");
+		}
+		if (isNull(staffRepository.findOneByEmail(request.getEmail()))) {
+			throw new DuplicatedException("email");
+		}
+
 		Staff staff = staffRepository.findOneById(id);
 		Staff unModifiedStaff = new Staff();
 		BeanUtils.copyProperties(staff, unModifiedStaff);
 
+		staff.setCode(request.getCode());
 		staff.setTeam(request.getTeam());
 		staff.setNameLast(request.getNameLast());
 		staff.setNameFirst(request.getNameFirst());

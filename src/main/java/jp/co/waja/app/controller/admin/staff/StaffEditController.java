@@ -4,7 +4,7 @@ import jp.co.waja.core.entity.*;
 import jp.co.waja.core.model.Role;
 import jp.co.waja.core.service.staff.*;
 import jp.co.waja.core.service.team.TeamService;
-import jp.co.waja.exception.ForbiddenException;
+import jp.co.waja.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -99,7 +99,16 @@ public class StaffEditController {
 			return "redirect:/admin/staffs/edit/{id}?error";
 		}
 
-		Staff savedStaff = staffService.edit(loginUser, form.toStaffEditRequest(), id);
+		Staff savedStaff = null;
+		try {
+			savedStaff = staffService.edit(loginUser, form.toStaffEditRequest(), id);
+		} catch (DuplicatedException e) {
+			errors.rejectValue("code", "duplicated");
+		}
+
+		if (errors.hasErrors()) {
+			return "redirect:/admin/staffs/edit/{id}?error";
+		}
 		redirectAttributes.getFlashAttributes().clear();
 		redirectAttributes.addAttribute("id", savedStaff.getId());
 		redirectAttributes.addFlashAttribute("savedStaff", savedStaff);

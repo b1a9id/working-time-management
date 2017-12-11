@@ -15,6 +15,7 @@ public class ProfileRestController {
 	public Profile describe(@AuthenticationPrincipal StaffDetails staffDetails) {
 		Staff staff = staffDetails.getStaff();
 		Profile profile = new Profile();
+		profile.setCode(staff.getCode());
 		profile.setTeamName(staff.getTeam().getName());
 		profile.setName(staff.getName());
 		profile.setNameKana(staff.getNameKana());
