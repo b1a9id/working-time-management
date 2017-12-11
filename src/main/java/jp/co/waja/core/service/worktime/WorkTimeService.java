@@ -160,7 +160,7 @@ public class WorkTimeService {
 
 	public boolean isBusinessDay(LocalDate date) {
 		if (publicHolidayService.isPublicHolidays(date)) {
-			return true;
+			return false;
 		}
 		return !WorkTimeUtil.isWeekDay(date);
 	}
