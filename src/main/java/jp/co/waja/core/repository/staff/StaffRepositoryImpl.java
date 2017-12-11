@@ -1,8 +1,6 @@
 package jp.co.waja.core.repository.staff;
 
-import jp.co.waja.core.entity.Staff;
-import jp.co.waja.core.entity.Staff_;
-import jp.co.waja.core.entity.Team;
+import jp.co.waja.core.entity.*;
 import jp.co.waja.core.model.staff.StaffSearchRequest;
 import jp.co.waja.core.service.team.TeamService;
 import jp.co.waja.exception.NotFoundException;
@@ -10,14 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.*;
+import javax.persistence.criteria.*;
+import java.util.*;
 
 public class StaffRepositoryImpl implements StaffRepositoryCustom {
 
@@ -60,6 +53,7 @@ public class StaffRepositoryImpl implements StaffRepositoryCustom {
 		Predicate disabledPredicate = request.getDisabled() == null || !request.getDisabled() ? falsePredicate : truePredicate;
 		where.add(disabledPredicate);
 
+		query.orderBy(builder.asc(root.get(Staff_.code)));
 		query.where(where.toArray(new Predicate[where.size()]));
 
 		List<Staff> staffs = entityManager.createQuery(query).getResultList();

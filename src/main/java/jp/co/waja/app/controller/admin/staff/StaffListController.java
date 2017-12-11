@@ -61,7 +61,7 @@ public class StaffListController {
 	@GetMapping
 	public String list(
 			@AuthenticationPrincipal StaffDetails loginUser,
-			@PageableDefault(size = 25, sort = "id") Pageable pageable,
+			@PageableDefault(size = 25, sort = "code") Pageable pageable,
 			Model model) {
 		StaffSearchForm form = (StaffSearchForm) model.asMap().get(FORM_MODEL_KEY);
 		form = Optional.ofNullable(form).orElse(new StaffSearchForm());
