@@ -50,7 +50,7 @@ public class StaffCreateController {
 
 	@ModelAttribute("employmentTypes")
 	public List<Staff.EmploymentType> setUpEmploymentType() {
-		return Arrays.asList(Staff.EmploymentType.values());
+		return Arrays.asList(Staff.EmploymentType.PERMANENT_STAFF);
 	}
 
 	@ModelAttribute("roles")
