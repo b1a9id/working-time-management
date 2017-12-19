@@ -24,6 +24,7 @@ import java.util.*;
 
 import static java.lang.Boolean.*;
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @Service
 @Transactional
@@ -74,10 +75,10 @@ public class StaffService {
 	@PreAuthorize("hasRole('ADMIN')")
 	public Staff create(StaffCreateRequest request) {
 		if (staffRepository.findOneByCode(request.getCode()).isPresent()) {
-			throw new DuplicatedException();
+			throw new DuplicatedException("code");
 		}
-		if (isNull(staffRepository.findOneByEmail(request.getEmail()))) {
-			throw new DuplicatedException();
+		if (nonNull(staffRepository.findOneByEmail(request.getEmail()))) {
+			throw new DuplicatedException("email");
 		}
 		Staff staff = new Staff();
 		staff.setCode(request.getCode());
@@ -101,10 +102,12 @@ public class StaffService {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	public Staff edit(StaffDetails loginStaff, StaffEditRequest request, Long id) {
-		if (staffRepository.findOneByCode(request.getCode()).isPresent()) {
+		Optional<Staff> savedStaff = staffRepository.findOneByCode(request.getCode());
+		if (savedStaff.isPresent()) {
+			savedStaff.
 			throw new DuplicatedException("code");
 		}
-		if (isNull(staffRepository.findOneByEmail(request.getEmail()))) {
+		if (nonNull(staffRepository.findOneByEmail(request.getEmail()))) {
 			throw new DuplicatedException("email");
 		}
 
