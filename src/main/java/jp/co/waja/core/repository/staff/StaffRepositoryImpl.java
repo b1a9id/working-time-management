@@ -44,7 +44,7 @@ public class StaffRepositoryImpl implements StaffRepositoryCustom {
 		if (request.getTelework() != null) {
 			Predicate truePredicate = builder.isTrue(root.get(Staff_.telework));
 			Predicate falsePredicate = builder.isFalse(root.get(Staff_.telework));
-			Predicate teleworkPredicate = request.getTelework() ? truePredicate : builder.or(truePredicate, falsePredicate);
+			Predicate teleworkPredicate = request.getTelework() ? truePredicate : falsePredicate;
 			where.add(teleworkPredicate);
 		}
 
