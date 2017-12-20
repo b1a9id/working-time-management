@@ -103,7 +103,7 @@ public class StaffEditController {
 		try {
 			savedStaff = staffService.edit(loginUser, form.toStaffEditRequest(), id);
 		} catch (DuplicatedException e) {
-			errors.rejectValue("code", "duplicated");
+			errors.rejectValue(e.getMessage(), "duplicated");
 		}
 
 		if (errors.hasErrors()) {

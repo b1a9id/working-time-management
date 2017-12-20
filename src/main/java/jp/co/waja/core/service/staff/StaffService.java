@@ -101,17 +101,22 @@ public class StaffService {
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
-	public Staff edit(StaffDetails loginStaff, StaffEditRequest request, Long id) {
+	public Staff edit(StaffDetails loginStaff, StaffEditRequest request, Long staffId) {
 		Optional<Staff> savedStaff = staffRepository.findOneByCode(request.getCode());
 		if (savedStaff.isPresent()) {
-			savedStaff.
-			throw new DuplicatedException("code");
-		}
-		if (nonNull(staffRepository.findOneByEmail(request.getEmail()))) {
-			throw new DuplicatedException("email");
+			if (!savedStaff.get().getId().equals(staffId)) {
+				throw new DuplicatedException("code");
+			}
 		}
 
-		Staff staff = staffRepository.findOneById(id);
+		savedStaff = Optional.ofNullable(staffRepository.findOneByEmail(request.getEmail()));
+		if (savedStaff.isPresent()) {
+			if (!savedStaff.get().getId().equals(staffId)) {
+				throw new DuplicatedException("email");
+			}
+		}
+
+		Staff staff = staffRepository.findOneById(staffId);
 		Staff unModifiedStaff = new Staff();
 		BeanUtils.copyProperties(staff, unModifiedStaff);
 
