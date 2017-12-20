@@ -51,6 +51,7 @@ public class WorkTime {
 		ABSENCE(BigDecimal.valueOf(1), WorkTypeGroup.ABSENCE),
 		HALF_ABSENCE(BigDecimal.valueOf(0.5), WorkTypeGroup.ABSENCE),
 		COMPENSATORY_VACATION(BigDecimal.valueOf(1), WorkTypeGroup.ILLEGAL_VACATION),
+		HALF_COMPENSATORY_VACATION(BigDecimal.valueOf(0.5), WorkTypeGroup.ILLEGAL_VACATION),
 		SPECIAL_VACATION(BigDecimal.valueOf(1), WorkTypeGroup.ILLEGAL_VACATION);
 
 		private final BigDecimal day;

@@ -49,6 +49,7 @@ public class WorkTimeUtilTest {
 						ABSENCE,
 						HALF_ABSENCE,
 						COMPENSATORY_VACATION,
+						HALF_COMPENSATORY_VACATION,
 						SPECIAL_VACATION);
 	}
 
