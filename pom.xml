@@ -218,6 +218,14 @@
 			<scope>compile</scope>
 		</dependency>
 
+		<!-- Api Guardian -->
+		<dependency>
+			<groupId>org.apiguardian</groupId>
+			<artifactId>apiguardian-api</artifactId>
+			<version>1.0.0</version>
+			<scope>test</scope>
+		</dependency>
+
 
 		<!--<dependency>-->
 			<!--<groupId>com.google.api-client</groupId>-->
