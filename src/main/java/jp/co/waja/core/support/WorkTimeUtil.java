@@ -42,6 +42,8 @@ public class WorkTimeUtil {
 				HALF_PAID_VACATION,
 				ABSENCE,
 				HALF_ABSENCE,
+				COMPENSATORY_VACATION,
+				HALF_COMPENSATORY_VACATION,
 				SPECIAL_VACATION
 		);
 	}
@@ -101,6 +103,6 @@ public class WorkTimeUtil {
 		if (isNull(workType)) {
 			return false;
 		}
-		return workType == NORMAL || workType == HALF_PAID_VACATION || workType == HALF_PAID_VACATION_AFTER || workType == HALF_ABSENCE;
+		return workType == NORMAL || workType == HALF_PAID_VACATION || workType == HALF_PAID_VACATION_AFTER || workType == HALF_ABSENCE || workType == COMPENSATORY_VACATION || workType == HALF_COMPENSATORY_VACATION;
 	}
 }
