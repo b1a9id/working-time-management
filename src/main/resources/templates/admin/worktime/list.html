@@ -210,6 +210,16 @@
 							<td></td>
 							<td></td>
 							<td></td>
+							<td>労働時間</td>
+							<td th:text="${workTimeYearMonth.staff.workTime}">8</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
 							<td th:text="${workTimeYearMonth.staff.flextime} ? '有休消化数' : '規定時間'">規定時間</td>
 							<td th:text="${regularWorkTime}">154:00</td>
 							<td></td>
@@ -227,7 +237,7 @@
 						</tfoot>
 						<tbody>
 						<tr class="text-left" th:classappend="${dayTotal}" th:each="workTime : ${workTimeYearMonth.workTimes}" th:with="dayTotal=${#workTimes.workTime(workTime.startAt, workTime.endAt, workTime.restTime)}">
-							<td th:text="${#temporals.format(workTime.date, 'MM/dd(E)')}">6/1（木）</td>
+							<td class="text-left" th:classappend="${#workTimes.isNotBusinessDay(workTime)} ? 'text-danger'" th:text="${#temporals.format(workTime.date, 'MM/dd(E)')}">6/1（木）</td>
 							<td class="text-left"><span class="label" th:classappend="${#workTimes.label(workTime)}" th:text="#{|worktime.worktype.${workTime.workType}|}">出勤</span></td>
 							<td th:unless="${workTimeYearMonth.staff.flextime}"><i th:classappend="${workTime.trainDelay} ? 'glyphicon glyphicon-ok'"></i></td>
 							<td th:text="${workTime.startAt}">9:00</td>
