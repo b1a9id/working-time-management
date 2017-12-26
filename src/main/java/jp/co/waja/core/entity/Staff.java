@@ -34,6 +34,9 @@ public class Staff extends AbstractEntity<Long> implements Serializable {
 		CREW_FIVE
 	}
 
+	@Column(unique = true, nullable = true)
+	private Long code;
+
 	@ManyToOne
 	@JoinColumn(nullable = false, name = "team_id")
 	private Team team;
@@ -64,6 +67,8 @@ public class Staff extends AbstractEntity<Long> implements Serializable {
 	@Column(nullable = false, name = "entered_date")
 	private LocalDate enteredDate;
 
+	private Integer workTime;
+
 	private boolean flextime;
 
 	private boolean telework;
@@ -73,6 +78,14 @@ public class Staff extends AbstractEntity<Long> implements Serializable {
 	@Column(nullable = false)
 	@JsonIgnore
 	private String password;
+
+	@Embedded
+	@ElementCollection(fetch = FetchType.LAZY)
+	@CollectionTable(
+			name = "paid_vacation",
+			joinColumns = @JoinColumn(name = "staff_id")
+	)
+	private List<PaidVacation> paidVacations;
 
 	@JoinTable(name = "user_role")
 	@Enumerated(EnumType.STRING)

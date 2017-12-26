@@ -23,6 +23,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static java.lang.Boolean.*;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @Service
 @Transactional
@@ -72,7 +74,14 @@ public class StaffService {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	public Staff create(StaffCreateRequest request) {
+		if (staffRepository.findOneByCode(request.getCode()).isPresent()) {
+			throw new DuplicatedException("code");
+		}
+		if (nonNull(staffRepository.findOneByEmail(request.getEmail()))) {
+			throw new DuplicatedException("email");
+		}
 		Staff staff = new Staff();
+		staff.setCode(request.getCode());
 		staff.setTeam(request.getTeam());
 		staff.setNameLast(request.getNameLast());
 		staff.setNameFirst(request.getNameFirst());
@@ -82,6 +91,7 @@ public class StaffService {
 		staff.setGender(request.getGender());
 		staff.setEmploymentType(request.getEmploymentType());
 		staff.setEnteredDate(request.getEnteredDate());
+		staff.setWorkTime(request.getWorkTime());
 		staff.setFlextime(request.getFlextime());
 		staff.setTelework(request.getTelework());
 		staff.setDisabled(request.getDisabled());
@@ -91,11 +101,26 @@ public class StaffService {
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
-	public Staff edit(StaffDetails loginStaff, StaffEditRequest request, Long id) {
-		Staff staff = staffRepository.findOneById(id);
+	public Staff edit(StaffDetails loginStaff, StaffEditRequest request, Long staffId) {
+		Optional<Staff> savedStaff = staffRepository.findOneByCode(request.getCode());
+		if (savedStaff.isPresent()) {
+			if (!savedStaff.get().getId().equals(staffId)) {
+				throw new DuplicatedException("code");
+			}
+		}
+
+		savedStaff = Optional.ofNullable(staffRepository.findOneByEmail(request.getEmail()));
+		if (savedStaff.isPresent()) {
+			if (!savedStaff.get().getId().equals(staffId)) {
+				throw new DuplicatedException("email");
+			}
+		}
+
+		Staff staff = staffRepository.findOneById(staffId);
 		Staff unModifiedStaff = new Staff();
 		BeanUtils.copyProperties(staff, unModifiedStaff);
 
+		staff.setCode(request.getCode());
 		staff.setTeam(request.getTeam());
 		staff.setNameLast(request.getNameLast());
 		staff.setNameFirst(request.getNameFirst());
@@ -105,6 +130,7 @@ public class StaffService {
 		staff.setGender(request.getGender());
 		staff.setEmploymentType(request.getEmploymentType());
 		staff.setEnteredDate(request.getEnteredDate());
+		staff.setWorkTime(request.getWorkTime());
 		staff.setFlextime(request.isFlextime());
 		staff.setTelework(request.isTelework());
 		staff.setDisabled(request.isDisabled());
@@ -136,7 +162,7 @@ public class StaffService {
 	@PreAuthorize("hasRole('ADMIN')")
 	public Optional<String> delete(Long id) throws NotFoundException, WrongDeleteException {
 		Staff staff = staffRepository.findOneById(id);
-		if (Objects.isNull(staff)) {
+		if (isNull(staff)) {
 			throw new NotFoundException("Staff");
 		}
 

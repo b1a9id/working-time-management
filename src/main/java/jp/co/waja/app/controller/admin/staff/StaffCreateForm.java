@@ -18,6 +18,9 @@ import java.time.LocalDate;
 public class StaffCreateForm implements Serializable {
 
 	@NotNull
+	private Long code;
+
+	@NotNull
 	private Team team;
 
 	@NotNull
@@ -46,6 +49,9 @@ public class StaffCreateForm implements Serializable {
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate enteredDate;
 
+	@NotNull
+	private Integer workTime;
+
 	private Boolean flextime;
 
 	private Boolean telework;
@@ -60,6 +66,7 @@ public class StaffCreateForm implements Serializable {
 
 	public StaffCreateRequest toStaffCreateRequest() {
 		StaffCreateRequest request = new StaffCreateRequest();
+		request.setCode(getCode());
 		request.setTeam(getTeam());
 		request.setNameLast(getNameLast());
 		request.setNameFirst(getNameFirst());
@@ -69,6 +76,7 @@ public class StaffCreateForm implements Serializable {
 		request.setGender(getGender());
 		request.setEmploymentType(getEmploymentType());
 		request.setEnteredDate(getEnteredDate());
+		request.setWorkTime(getWorkTime());
 		request.setFlextime(getFlextime());
 		request.setTelework(getTelework());
 		request.setDisabled(getDisabled());

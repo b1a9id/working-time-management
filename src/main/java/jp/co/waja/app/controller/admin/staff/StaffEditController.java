@@ -4,6 +4,7 @@ import jp.co.waja.core.entity.*;
 import jp.co.waja.core.model.Role;
 import jp.co.waja.core.service.staff.*;
 import jp.co.waja.core.service.team.TeamService;
+import jp.co.waja.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -48,16 +49,20 @@ public class StaffEditController {
 
 	@ModelAttribute("employmentTypes")
 	public List<Staff.EmploymentType> setUpEmploymentType() {
-		return Arrays.asList(Staff.EmploymentType.values());
+		return Arrays.asList(Staff.EmploymentType.PERMANENT_STAFF);
 	}
 
 	@ModelAttribute("roles")
 	public List<Role> setUpRoles() {
-		return Arrays.asList(Role.values());
+		return Arrays.asList(Role.ADMIN, Role.MANAGER, Role.STAFF);
 	}
 
 	@GetMapping
-	public String edit(Model model) {
+	public String edit(@AuthenticationPrincipal StaffDetails loginUser, Model model) {
+		if (loginUser.getStaff().getRole() != Role.ADMIN) {
+			throw new ForbiddenException();
+		}
+
 		Staff staff = (Staff) model.asMap().get(TARGET_ENTITY_KEY);
 		StaffEditForm form = (StaffEditForm) model.asMap().get(FORM_MODEL_KEY);
 		form = Optional.ofNullable(form).orElse(new StaffEditForm(staff));
@@ -94,7 +99,16 @@ public class StaffEditController {
 			return "redirect:/admin/staffs/edit/{id}?error";
 		}
 
-		Staff savedStaff = staffService.edit(loginUser, form.toStaffEditRequest(), id);
+		Staff savedStaff = null;
+		try {
+			savedStaff = staffService.edit(loginUser, form.toStaffEditRequest(), id);
+		} catch (DuplicatedException e) {
+			errors.rejectValue(e.getMessage(), "duplicated");
+		}
+
+		if (errors.hasErrors()) {
+			return "redirect:/admin/staffs/edit/{id}?error";
+		}
 		redirectAttributes.getFlashAttributes().clear();
 		redirectAttributes.addAttribute("id", savedStaff.getId());
 		redirectAttributes.addFlashAttribute("savedStaff", savedStaff);

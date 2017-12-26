@@ -55,13 +55,13 @@ public class StaffListController {
 
 	@ModelAttribute("roles")
 	public List<Role> setUpRoles() {
-		return Arrays.asList(Role.values());
+		return Arrays.asList(Role.ADMIN, Role.MANAGER, Role.STAFF);
 	}
 
 	@GetMapping
 	public String list(
 			@AuthenticationPrincipal StaffDetails loginUser,
-			@PageableDefault(size = 25, sort = "id") Pageable pageable,
+			@PageableDefault(size = 25, sort = "code") Pageable pageable,
 			Model model) {
 		StaffSearchForm form = (StaffSearchForm) model.asMap().get(FORM_MODEL_KEY);
 		form = Optional.ofNullable(form).orElse(new StaffSearchForm());

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.*;
 
+import static java.util.Objects.isNull;
+
 @Controller
 @RequestMapping("/admin/staffs/describe/{id}")
 public class StaffDescribeController {
@@ -21,7 +23,7 @@ public class StaffDescribeController {
 	@GetMapping
 	public String describe(@PathVariable Long id, Model model) {
 		Staff staff = staffService.getStaff(id);
-		if (Objects.isNull(staff)) {
+		if (isNull(staff)) {
 			throw new NotFoundException();
 		}
 
@@ -41,6 +43,9 @@ public class StaffDescribeController {
 	}
 
 	private boolean isDuringLongLeave(LocalDate target, LocalDate startAt, LocalDate endAt) {
+		if (isNull(endAt)) {
+			return target.isAfter(startAt);
+		}
 		if (target.isEqual(startAt) || target.isEqual(endAt)) {
 			return true;
 		}

@@ -183,12 +183,6 @@
 									<!--<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION_AFTER')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION_AFTER')}">22</span><span>日</span>-->
 								</td>
 							</tr>
-							<tr>
-								<th>有休消化計</th>
-								<td>
-									<!--<span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'FULL_PAID_VACATION_AFTER')}">22</span><span>/</span><span th:text="${#workTimes.workTypeDays(workTimeYearMonth, 'HALF_PAID_VACATION_AFTER')}">22</span><span>日</span>-->
-								</td>
-							</tr>
 							<!--/*/ </th:block> /*/-->
 							</tbody>
 						</table>
@@ -200,7 +194,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<table class="table" th:with="regularWorkTime=${normalCount} * 8.00">
+						<table class="table" th:with="regularWorkTime=${#lists.size(businessDays)} * ${workTimeYearMonth.staff.workTime}">
 							<thead>
 							<tr class="text-left">
 								<th class="col-md-1" th:text="#{worktime.list.header.date}">日付</th>
@@ -230,7 +224,17 @@
 								<td></td>
 								<td></td>
 								<td></td>
-								<td th:text="${workTimeYearMonth.staff.flextime} ? '有休消化数' : '規定時間'">規定時間</td>
+								<td>労働時間</td>
+								<td th:text="${workTimeYearMonth.staff.workTime}">8</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>規定時間</td>
 								<td th:text="${regularWorkTime}">154:00</td>
 								<td></td>
 							</tr>

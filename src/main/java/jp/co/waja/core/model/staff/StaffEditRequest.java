@@ -17,6 +17,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class StaffEditRequest implements Serializable {
 
+	private long code;
+
 	private Team team;
 
 	private String nameLast;
@@ -34,6 +36,8 @@ public class StaffEditRequest implements Serializable {
 	private Staff.EmploymentType employmentType;
 
 	private LocalDate enteredDate;
+
+	private int workTime;
 
 	private boolean flextime;
 

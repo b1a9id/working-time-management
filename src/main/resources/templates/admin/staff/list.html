@@ -85,17 +85,6 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-2">
-									<label class="control-label">雇用形態</label>
-								</div>
-								<div class="col-sm-10">
-									<select class="form-control" th:field="*{employmentType}">
-										<option value=""></option>
-										<option th:each="employmentType : ${employmentTypes}" th:value="${employmentType}" th:text="#{|staff.employmenttype.${employmentType}|}">正社員</option>
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-2">
 									<label class="control-label">権限</label>
 								</div>
 								<div class="col-sm-10">
@@ -106,10 +95,19 @@
 								</div>
 							</div>
 							<div class="form-group">
+								<div class="col-sm-2">
+									<label class="control-label">在宅勤務</label>
+								</div>
+								<div class="col-sm-10">
+									<select class="form-control" th:field="*{telework}">
+										<option value=""></option>
+										<option value="true">可</option>
+										<option value="false">不可</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
 								<div class="col-sm-offset-2">
-									<div class="col-sm-3 checkbox">
-										<label><input th:field="*{telework}" type="checkbox" />在宅勤務可</label>
-									</div>
 									<div class="col-sm-3 checkbox">
 										<label><input th:field="*{disabled}" type="checkbox" />無効アカウントのみ</label>
 									</div>
@@ -195,6 +193,7 @@
 					<table class="table" id="staff-delete">
 						<thead>
 						<tr>
+							<th th:text="#{staff.field.code}">社員番号</th>
 							<th th:text="#{staff.field.team}">チーム名</th>
 							<th th:text="#{staff.field.name}">名前</th>
 							<th th:text="#{staff.field.employmenttype}">雇用形態</th>
@@ -205,12 +204,13 @@
 							<th class="text-center" th:text="#{staff.field.telework}">在宅</th>
 							<th th:text="#{role.label}">権限</th>
 							<th></th>
-							<th></th>
-							<th></th>
+							<th sec:authorize="hasAnyRole('ADMIN')"></th>
+							<th sec:authorize="hasAnyRole('ADMIN')"></th>
 						</tr>
 						</thead>
 						<tbody>
 						<tr th:each="staff : ${staffs}">
+							<td th:text="${staff.code}">1</td>
 							<td th:text="${staff.team.shortName}">クリエイティブチーム</td>
 							<td><a th:href="@{/admin/staffs/describe/{id}(id=${staff.id})}" th:text="${staff.getName()}">テスト太郎</a></td>
 							<td th:text="#{|staff.employmenttype.${staff.employmentType}|}">正社員</td>
@@ -221,8 +221,8 @@
 							<td class="text-center"><i th:class="${staff.telework} ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-minus'"></i></td>
 							<td th:text="|#{|role.${staff.role}|}">スタッフ</td>
 							<td><a class="btn btn-link glyphicon glyphicon-time" data-toggle="tooltip" data-container="body" title="今月の稼働実績" data-placement="top" th:href="@{/admin/work-time/{id}(id=${staff.id})}"></a></td>
-							<td><a class="btn btn-link glyphicon glyphicon-pencil" data-toggle="tooltip" data-container="body" title="編集" data-placement="top" th:href="@{/admin/staffs/edit/{id}(id=${staff.id})}"></a></td>
-							<td>
+							<td sec:authorize="hasAnyRole('ADMIN')"><a class="btn btn-link glyphicon glyphicon-pencil" data-toggle="tooltip" data-container="body" title="編集" data-placement="top" th:href="@{/admin/staffs/edit/{id}(id=${staff.id})}"></a></td>
+							<td sec:authorize="hasAnyRole('ADMIN')">
 								<form method="post" th:action="@{/admin/staffs/delete/{id}(id=${staff.id})}">
 									<input type="hidden" name="_method" value="delete"/>
 									<button class="btn btn-link glyphicon glyphicon-trash" data-toggle="tooltip" data-container="body" title="削除" data-placement="top" ></button>
@@ -239,5 +239,4 @@
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
 	</body>
-
 </html>

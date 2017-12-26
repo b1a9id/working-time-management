@@ -42,6 +42,7 @@ public class WorkTimeListController {
 		}
 
 		model.addAttribute("workTimeYearMonth", workTimeYearMonth);
+		model.addAttribute("businessDays", workTimeService.getBusinessDays(WorkTimeUtil.intToYearMonth(workTimeYearMonth.getWorkYearMonth())));
 		//TODO:フロントでやる
 		model.addAttribute("workTimeSum", WorkTimeUtils.getWorkTimeSum(workTimeYearMonth.getWorkTimes()));
 		return "user/worktime/list";

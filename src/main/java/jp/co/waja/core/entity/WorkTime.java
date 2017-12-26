@@ -5,12 +5,37 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.*;
+import java.util.*;
+
+import static java.util.Objects.isNull;
+import static jp.co.waja.core.entity.WorkTime.WorkType.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Embeddable
 public class WorkTime {
+
+	@Column(nullable = false)
+	private LocalDate date;
+
+	@Column(name = "work_type", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private WorkType workType;
+
+	@Column(name = "train_delay")
+	private Boolean trainDelay;
+
+	@Column(name = "start_at")
+	private LocalTime startAt;
+
+	@Column(name = "end_at")
+	private LocalTime endAt;
+
+	@Column(name = "rest_time")
+	private Integer restTime;
+
+	private String remarks;
 
 	public enum WorkTypeGroup {
 		NORMAL, PAID_VACATION, PAID_VACATION_AFTER, ABSENCE, NORMAL_VACATION, ILLEGAL_VACATION
@@ -26,6 +51,7 @@ public class WorkTime {
 		ABSENCE(BigDecimal.valueOf(1), WorkTypeGroup.ABSENCE),
 		HALF_ABSENCE(BigDecimal.valueOf(0.5), WorkTypeGroup.ABSENCE),
 		COMPENSATORY_VACATION(BigDecimal.valueOf(1), WorkTypeGroup.ILLEGAL_VACATION),
+		HALF_COMPENSATORY_VACATION(BigDecimal.valueOf(0.5), WorkTypeGroup.ILLEGAL_VACATION),
 		SPECIAL_VACATION(BigDecimal.valueOf(1), WorkTypeGroup.ILLEGAL_VACATION);
 
 		private final BigDecimal day;
@@ -50,24 +76,13 @@ public class WorkTime {
 		this.workType = workType;
 	}
 
-	@Column(nullable = false)
-	private LocalDate date;
-
-	@Column(name = "work_type", nullable = false)
-	@Enumerated(EnumType.STRING)
-	private WorkType workType;
-
-	@Column(name = "train_delay")
-	private Boolean trainDelay;
-
-	@Column(name = "start_at")
-	private LocalTime startAt;
-
-	@Column(name = "end_at")
-	private LocalTime endAt;
-
-	@Column(name = "rest_time")
-	private Integer restTime;
-
-	private String remarks;
+	public boolean isNoRestTimeType() {
+		if (isNull(this.workType)) {
+			return false;
+		}
+		List<WorkType> noRestTimeTypes = Arrays.asList(
+				LEGAL_VACATION, FULL_PAID_VACATION, FULL_PAID_VACATION_AFTER,
+				ABSENCE, COMPENSATORY_VACATION, SPECIAL_VACATION);
+		return noRestTimeTypes.contains(this.workType);
+	}
 }

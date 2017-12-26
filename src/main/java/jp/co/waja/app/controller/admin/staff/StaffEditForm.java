@@ -20,6 +20,9 @@ import java.time.LocalDate;
 public class StaffEditForm implements Serializable {
 
 	@NotNull
+	private Long code;
+
+	@NotNull
 	private Team team;
 
 	@NotNull
@@ -48,6 +51,9 @@ public class StaffEditForm implements Serializable {
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate enteredDate;
 
+	@NotNull
+	private Integer workTime;
+
 	private boolean flextime;
 
 	private boolean telework;
@@ -58,6 +64,7 @@ public class StaffEditForm implements Serializable {
 	private Role role;
 
 	public StaffEditForm(Staff staff) {
+		this.code = staff.getCode();
 		this.team = staff.getTeam();
 		this.nameLast = staff.getNameLast();
 		this.nameFirst = staff.getNameFirst();
@@ -67,6 +74,7 @@ public class StaffEditForm implements Serializable {
 		this.gender = staff.getGender();
 		this.employmentType = staff.getEmploymentType();
 		this.enteredDate = staff.getEnteredDate();
+		this.workTime = staff.getWorkTime();
 		this.flextime = staff.isFlextime();
 		this.telework = staff.isTelework();
 		this.disabled = staff.isDisabled();
@@ -75,6 +83,7 @@ public class StaffEditForm implements Serializable {
 
 	public StaffEditRequest toStaffEditRequest() {
 		StaffEditRequest request = new StaffEditRequest();
+		request.setCode(getCode());
 		request.setTeam(getTeam());
 		request.setNameLast(getNameLast());
 		request.setNameFirst(getNameFirst());
@@ -84,6 +93,7 @@ public class StaffEditForm implements Serializable {
 		request.setGender(getGender());
 		request.setEmploymentType(getEmploymentType());
 		request.setEnteredDate(getEnteredDate());
+		request.setWorkTime(getWorkTime());
 		request.setFlextime(isFlextime());
 		request.setTelework(isTelework());
 		request.setDisabled(isDisabled());

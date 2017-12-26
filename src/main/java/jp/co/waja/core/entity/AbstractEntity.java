@@ -77,7 +77,7 @@ public class AbstractEntity<PK extends Serializable> implements Persistable<PK>,
 
 		AbstractEntity<?> that = (AbstractEntity<?>) obj;
 
-		return null == this.getId() && this.getId().equals(that.getId());
+		return null != this.getId() && this.getId().equals(that.getId());
 	}
 
 	@Override

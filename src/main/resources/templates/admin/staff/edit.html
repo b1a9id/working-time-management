@@ -39,6 +39,17 @@
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
 						<form class="form-horizontal" method="post" th:action="@{/admin/staffs/edit/{id}(id=${staff.id})}" th:object="${form}">
+							<div class="form-group" th:classappend="${#fields.hasErrors('code')}? has-error">
+								<div class="col-sm-3">
+									<label class="control-label"><span th:text="#{staff.field.code}">社員番号</span><span class="text-danger">*</span></label>
+								</div>
+								<div class="col-sm-9">
+									<div th:classappend="${#fields.hasErrors('code')}? 'error'">
+										<input class="form-control" th:field="*{code}" />
+									</div>
+									<p class="help-block" th:if="${#fields.hasErrors('code')}" th:errors="*{code}">エラーメッセージ</p>
+								</div>
+							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('team')}? has-error">
 								<div class="col-sm-3">
 									<label class="control-label"><span th:text="#{staff.field.team}">チーム名</span><span class="text-danger">*</span></label>
@@ -121,6 +132,17 @@
 								<div class="col-sm-9">
 									<input class="form-control date-picker" th:field="*{enteredDate}"/>
 									<p class="help-block" th:if="${#fields.hasErrors('enteredDate')}" th:errors="*{enteredDate}">エラーメッセージ</p>
+								</div>
+							</div>
+							<div class="form-group" th:classappend="${#fields.hasErrors('workTime')}? has-error">
+								<div class="col-sm-3">
+									<label class="control-label"><span th:text="#{staff.field.worktime}">労働時間</span><span class="text-danger">*</span></label>
+								</div>
+								<div class="col-sm-9">
+									<select class="form-control" th:field="*{workTime}">
+										<option th:each="seq : ${#numbers.sequence(4, 8)}" th:value="${seq}" th:text="${seq}">4</option>
+									</select>
+									<p class="help-block" th:if="${#fields.hasErrors('workTime')}" th:errors="*{workTime}">エラーメッセージ</p>
 								</div>
 							</div>
 							<div class="form-group" th:classappend="${#fields.hasErrors('flextime')}? has-error">

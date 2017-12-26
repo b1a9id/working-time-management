@@ -7,6 +7,8 @@ import lombok.Setter;
 @Setter
 public class Profile {
 
+	private long code;
+
 	private String teamName;
 
 	private String name;

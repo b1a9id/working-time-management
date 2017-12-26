@@ -9,6 +9,7 @@ import java.time.LocalDate;
 public class Staff_ {
 
 	public static volatile SingularAttribute<Staff, Long> id;
+	public static volatile SingularAttribute<Staff, Long> code;
 	public static volatile SingularAttribute<Staff, Team> team;
 	public static volatile SingularAttribute<Staff, String> nameLast;
 	public static volatile SingularAttribute<Staff, String> nameFirst;

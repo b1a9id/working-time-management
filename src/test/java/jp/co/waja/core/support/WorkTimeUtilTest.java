@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import java.time.*;
-import java.util.List;
+import java.util.*;
 
 import static jp.co.waja.core.entity.WorkTime.WorkType.*;
 
@@ -36,38 +36,6 @@ public class WorkTimeUtilTest {
 	}
 
 	@Test
-	public void workTypeLegalVacationWhenHoliday() {
-		LocalDate holiday = LocalDate.of(2017, 11, 3);
-		WorkTime.WorkType result = WorkTimeUtil.workType(holiday);
-		Assertions.assertThat(result)
-				.isEqualTo(WorkTime.WorkType.LEGAL_VACATION);
-	}
-
-	@Test
-	public void workTypeLegalVacationWhenSaturday() {
-		LocalDate saturday = LocalDate.of(2017, 9, 30);
-		WorkTime.WorkType result = WorkTimeUtil.workType(saturday);
-		Assertions.assertThat(result)
-				.isEqualTo(WorkTime.WorkType.LEGAL_VACATION);
-	}
-
-	@Test
-	public void workTypeLegalVacationWhenSunday() {
-		LocalDate sunday = LocalDate.of(2017, 10, 1);
-		WorkTime.WorkType result = WorkTimeUtil.workType(sunday);
-		Assertions.assertThat(result)
-				.isEqualTo(WorkTime.WorkType.LEGAL_VACATION);
-	}
-
-	@Test
-	public void workTypeNormal() {
-		LocalDate normal = LocalDate.of(2017, 9, 29);
-		WorkTime.WorkType result = WorkTimeUtil.workType(normal);
-		Assertions.assertThat(result)
-				.isEqualTo(WorkTime.WorkType.NORMAL);
-	}
-
-	@Test
 	public void workTypesNotFlextime() {
 		List<WorkTime.WorkType> result = WorkTimeUtil.workTypes(generateStaff(false));
 		Assertions.assertThat(result)
@@ -81,6 +49,7 @@ public class WorkTimeUtilTest {
 						ABSENCE,
 						HALF_ABSENCE,
 						COMPENSATORY_VACATION,
+						HALF_COMPENSATORY_VACATION,
 						SPECIAL_VACATION);
 	}
 

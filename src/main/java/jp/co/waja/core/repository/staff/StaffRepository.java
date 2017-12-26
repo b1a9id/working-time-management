@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.LockModeType;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface StaffRepository extends StaffRepositoryCustom, JpaRepository<Staff, Long> {
@@ -17,6 +18,8 @@ public interface StaffRepository extends StaffRepositoryCustom, JpaRepository<St
 	Staff findOneById(Long id);
 
 	Staff findOneByEmail(String email);
+
+	Optional<Staff> findOneByCode(long code);
 
 	List<Staff> findAllByDisabled(boolean disabled);
 
