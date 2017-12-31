@@ -1,27 +1,39 @@
 package jp.co.waja.core.support;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
 import java.time.LocalDate;
 
-public class LocalDateConverterTest {
+class LocalDateConverterTest {
 
-	@Test
-	public void convertToDatabaseColumnWhenNull() {
-		LocalDateConverter converter = new LocalDateConverter();
-		Date result = converter.convertToDatabaseColumn(null);
-		Assertions.assertThat(result).isNull();
-	}
+	@Nested
+	class convertToDatabaseColumn {
+		LocalDateConverter converter;
 
-	@Test
-	public void convertToDatabaseColumn() {
-		LocalDateConverter converter = new LocalDateConverter();
-		LocalDate today = LocalDate.now();
+		LocalDate target;
 
-		Date result = converter.convertToDatabaseColumn(today);
-		Assertions.assertThat(result).isEqualTo(Date.valueOf(today));
+		@BeforeEach
+		void beforeEach() {
+			converter = new LocalDateConverter();
+		}
+
+		@Test
+		void argNull() {
+			Date result = converter.convertToDatabaseColumn(target);
+			Assertions.assertThat(result).isNull();
+		}
+
+		@Test
+		void argsNotNull() {
+			target = LocalDate.of(2017, 12, 31);
+
+			Date result = converter.convertToDatabaseColumn(target);
+			Assertions.assertThat(result).isEqualTo(Date.valueOf(target));
+		}
 	}
 
 }

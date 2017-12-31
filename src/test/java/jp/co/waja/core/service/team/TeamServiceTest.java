@@ -5,8 +5,8 @@ import jp.co.waja.core.repository.staff.StaffRepository;
 import jp.co.waja.core.repository.team.TeamRepository;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.groups.Tuple;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -16,7 +16,7 @@ import java.util.List;
 
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class TeamServiceTest {
+class TeamServiceTest {
 
 	@InjectMocks
 	private TeamService teamService;
@@ -27,13 +27,13 @@ public class TeamServiceTest {
 	@Mock
 	private StaffRepository staffRepository;
 
-	@Before
-	public void setup() {
+	@BeforeEach
+	void setup() {
 		initMocks(this);
 	}
 
 	@Test
-	public void getTeams() {
+	void getTeams() {
 		Team cr = generateTeam("クリエイティブ", "CR");
 		Team jisui = generateTeam("事業推進室", "じすい");
 		List<Team> expectedTeams = Arrays.asList(cr, jisui);
