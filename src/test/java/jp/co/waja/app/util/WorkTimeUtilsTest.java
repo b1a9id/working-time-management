@@ -1,10 +1,13 @@
 package jp.co.waja.app.util;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.stream.Stream;
 
@@ -29,6 +32,32 @@ class WorkTimeUtilsTest {
 				Arguments.of(startAt, null, null),
 				Arguments.of(null, null, null)
 		);
+	}
+
+	@Nested
+	class OverTime {
+		@Test
+		void workTimeNull() {
+			Assertions.assertFalse(WorkTimeUtils.overTime(null));
+		}
+
+		@Test
+		void isTrue() {
+			Assertions.assertTrue(WorkTimeUtils.overTime(new BigDecimal(9)));
+		}
+
+		@Test
+		void isFalse() {
+			Assertions.assertFalse(WorkTimeUtils.overTime(new BigDecimal(8)));
+		}
+	}
+
+	@Nested
+	class FormattedYearMonth {
+		@Test
+		void formattedYearMonth() {
+			Assertions.assertEquals("2017年12月", WorkTimeUtils.formattedYearMonth(201712));
+		}
 	}
 
 }
