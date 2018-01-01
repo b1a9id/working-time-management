@@ -4,15 +4,15 @@ import jp.co.waja.core.entity.LongLeave;
 import jp.co.waja.core.entity.Staff;
 import jp.co.waja.core.repository.longleave.LongLeaveRepository;
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class LongLeaveServiceTest {
+class LongLeaveServiceTest {
 
 	@InjectMocks
 	private LongLeaveService longLeaveService;
@@ -20,25 +20,18 @@ public class LongLeaveServiceTest {
 	@Mock
 	private LongLeaveRepository longLeaveRepository;
 
-	@Before
-	public void setup() {
+	@BeforeEach
+	void setup() {
 		initMocks(this);
 	}
 
 	@Test
-	public void getLongLeave() {
+	void getLongLeave() {
 		LongLeave longLeave = generateLongLeave(LongLeave.Type.CHILD);
 		Mockito.when(longLeaveRepository.findOne(Mockito.anyLong())).thenReturn(longLeave);
 
 		Assertions.assertThat(longLeaveService.getLongLeave(1L))
 				.isEqualToComparingFieldByField(longLeave);
-	}
-
-	private Staff generateStaff(String nameLast, String nameFirst) {
-		Staff staff = new Staff();
-		staff.setNameLast(nameLast);
-		staff.setNameFirst(nameFirst);
-		return staff;
 	}
 
 	private LongLeave generateLongLeave(LongLeave.Type type) {
