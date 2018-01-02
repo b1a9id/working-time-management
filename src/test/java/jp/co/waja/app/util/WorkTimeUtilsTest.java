@@ -2,21 +2,19 @@ package jp.co.waja.app.util;
 
 import jp.co.waja.core.entity.WorkTime;
 import jp.co.waja.core.entity.WorkTimeYearMonth;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.YearMonth;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -129,6 +127,77 @@ class WorkTimeUtilsTest {
 					.extracting(LocalDate::getYear)
 					.filteredOn(year -> year == 2017)
 					.hasSize(31);
+		}
+	}
+
+	@Nested
+	class GetWorkTimeSum {
+
+		List<WorkTime> workTimes;
+
+		@BeforeEach
+		void beforeEach() {
+			List<WorkTime> works1 = new ArrayList<>();
+			for (int i = 0; i < 10; i++) {
+				WorkTime workTime = new WorkTime();
+				workTime.setStartAt(LocalTime.of(9, 0));
+				workTime.setEndAt(LocalTime.of(18, 0));
+				workTime.setRestTime(60);
+				works1.add(workTime);
+			}
+
+			List<WorkTime> vacations = new ArrayList<>();
+			for (int i = 0; i < 10; i++) {
+				vacations.add(new WorkTime());
+			}
+
+			List<WorkTime> works2 = new ArrayList<>();
+			for (int i = 0; i < 10; i++) {
+				WorkTime workTime = new WorkTime();
+				workTime.setStartAt(LocalTime.of(10, 0));
+				workTime.setEndAt(LocalTime.of(18, 0));
+				workTime.setRestTime(60);
+				works2.add(workTime);
+			}
+
+			workTimes = new ArrayList<>();
+			workTimes.addAll(works1);
+			workTimes.addAll(vacations);
+			workTimes.addAll(works2);
+		}
+
+		@Test
+		void success() {
+			BigDecimal result = WorkTimeUtils.getWorkTimeSum(workTimes);
+			BigDecimal expected = new BigDecimal(150.00).setScale(2, RoundingMode.UNNECESSARY);
+			Assertions.assertEquals(expected, result);
+		}
+	}
+
+	@Nested
+	class Label {
+
+		Map<WorkTime.WorkTypeGroup, String> workTypeGroupMap;
+
+		@BeforeEach
+		void beforeEach() {
+			workTypeGroupMap = new HashMap<>();
+			workTypeGroupMap.put(WorkTime.WorkTypeGroup.NORMAL, "label-default");
+			workTypeGroupMap.put(WorkTime.WorkTypeGroup.NORMAL_VACATION, "label-danger");
+			workTypeGroupMap.put(WorkTime.WorkTypeGroup.PAID_VACATION, "label-success");
+			workTypeGroupMap.put(WorkTime.WorkTypeGroup.PAID_VACATION_AFTER, "label-success");
+			workTypeGroupMap.put(WorkTime.WorkTypeGroup.ABSENCE, "label-info");
+			workTypeGroupMap.put(WorkTime.WorkTypeGroup.ILLEGAL_VACATION, "label-warning");
+		}
+
+		@ParameterizedTest
+		@EnumSource(value = WorkTime.WorkType.class)
+		void success(WorkTime.WorkType type) {
+			WorkTime workTime = new WorkTime();
+			workTime.setWorkType(type);
+			String expected = workTypeGroupMap.get(type.getGroup());
+			String result = WorkTimeUtils.label(workTime);
+			Assertions.assertEquals(expected, result);
 		}
 	}
 
