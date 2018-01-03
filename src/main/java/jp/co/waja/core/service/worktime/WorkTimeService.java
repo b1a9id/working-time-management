@@ -5,6 +5,7 @@ import jp.co.waja.core.entity.*;
 import jp.co.waja.core.model.worktime.*;
 import jp.co.waja.core.repository.worktime.WorkTimeYearMonthRepository;
 import jp.co.waja.core.support.WorkTimeUtil;
+import jp.co.waja.exception.CannotApproveException;
 import jp.co.waja.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -127,6 +128,9 @@ public class WorkTimeService {
 		WorkTimeYearMonth workTimeYearMonth = getWorkTimeYearMonth(id);
 		if (isNull(workTimeYearMonth)) {
 			throw new NotFoundException();
+		}
+		if (isNull(workTimeYearMonth.getCompletedAt())) {
+			throw new CannotApproveException();
 		}
 
 		String approvedByName = approve2 ? approve2Staff.getName() : null;

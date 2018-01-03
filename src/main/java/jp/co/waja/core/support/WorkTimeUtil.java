@@ -77,7 +77,7 @@ public class WorkTimeUtil {
 
 		if (role == Role.ADMIN) {
 			if (isNull(workTimeYearMonth.getApproved2At()) && workTimeYearMonth.getStaff().getTeam().equals(team)) {
-				return false;
+				return isNull(workTimeYearMonth.getCompletedAt());
 			}
 			if (nonNull(workTimeYearMonth.getCompletedAt())
 					&& nonNull(workTimeYearMonth.getApproved1At())
