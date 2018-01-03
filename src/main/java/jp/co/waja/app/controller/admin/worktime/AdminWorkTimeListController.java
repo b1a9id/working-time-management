@@ -1,7 +1,9 @@
 package jp.co.waja.app.controller.admin.worktime;
 
 import jp.co.waja.app.util.WorkTimeUtils;
-import jp.co.waja.core.entity.*;
+import jp.co.waja.core.entity.Staff;
+import jp.co.waja.core.entity.WorkTime;
+import jp.co.waja.core.entity.WorkTimeYearMonth;
 import jp.co.waja.core.service.staff.StaffService;
 import jp.co.waja.core.service.worktime.WorkTimeService;
 import jp.co.waja.core.support.WorkTimeUtil;
@@ -11,8 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.YearMonth;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin/work-time")
@@ -47,7 +53,10 @@ public class AdminWorkTimeListController {
 		model.addAttribute("workTimeYearMonth", workTimeYearMonth);
 		model.addAttribute("businessDays", workTimeService.getBusinessDays(WorkTimeUtil.intToYearMonth(workTimeYearMonth.getWorkYearMonth())));
 		//TODO:フロントでやる
-		model.addAttribute("workTimeSum", WorkTimeUtils.getWorkTimeSum(workTimeYearMonth.getWorkTimes()));
+		BigDecimal workTimeSum = WorkTimeUtils.getWorkTimeSum(workTimeYearMonth.getWorkTimes());
+		BigDecimal paidVacationTimeSum = WorkTimeUtils.getPaidVacationTimes(workTimeYearMonth.getWorkTimes());
+		model.addAttribute("workTimeSum", workTimeSum);
+		model.addAttribute("totalWorkTime", workTimeSum.add(paidVacationTimeSum));
 		return "admin/worktime/list";
 	}
 }
