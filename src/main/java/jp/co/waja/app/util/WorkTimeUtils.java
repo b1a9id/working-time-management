@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static jp.co.waja.core.entity.WorkTime.WorkType.*;
 import static jp.co.waja.core.entity.WorkTime.WorkTypeGroup.NORMAL;
 
 public final class WorkTimeUtils {
@@ -83,6 +84,21 @@ public final class WorkTimeUtils {
 			workTimeSum = workTimeSum.add(time);
 		}
 		return workTimeSum;
+	}
+
+	public static BigDecimal getPaidVacationTimes(List<WorkTime> workTimes) {
+		BigDecimal paidVacationWorkTimeSum = BigDecimal.ZERO;
+		List<WorkTime> paidWorkTimes = workTimes.stream()
+				.filter(workTime -> {
+					WorkTime.WorkType workType = workTime.getWorkType();
+					return workType == FULL_PAID_VACATION || workType == HALF_PAID_VACATION || workType == FULL_PAID_VACATION_AFTER || workType == HALF_PAID_VACATION_AFTER ||
+							workType == COMPENSATORY_VACATION || workType == HALF_COMPENSATORY_VACATION;
+				})
+				.collect(Collectors.toList());
+		for (WorkTime workTime : paidWorkTimes) {
+			paidVacationWorkTimeSum = paidVacationWorkTimeSum.add(workTime.getWorkType().getDay().multiply(new BigDecimal(8)));
+		}
+		return paidVacationWorkTimeSum.setScale(2, RoundingMode.UNNECESSARY);
 	}
 
 	public static long workTypeCount(List<WorkTime> workTimes, WorkTime.WorkType workType) {

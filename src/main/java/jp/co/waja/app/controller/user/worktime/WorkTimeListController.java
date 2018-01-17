@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.YearMonth;
 import java.util.*;
 
@@ -44,7 +45,10 @@ public class WorkTimeListController {
 		model.addAttribute("workTimeYearMonth", workTimeYearMonth);
 		model.addAttribute("businessDays", workTimeService.getBusinessDays(WorkTimeUtil.intToYearMonth(workTimeYearMonth.getWorkYearMonth())));
 		//TODO:フロントでやる
-		model.addAttribute("workTimeSum", WorkTimeUtils.getWorkTimeSum(workTimeYearMonth.getWorkTimes()));
+		BigDecimal workTimeSum = WorkTimeUtils.getWorkTimeSum(workTimeYearMonth.getWorkTimes());
+		BigDecimal paidVacationTimeSum = WorkTimeUtils.getPaidVacationTimes(workTimeYearMonth.getWorkTimes());
+		model.addAttribute("workTimeSum", workTimeSum);
+		model.addAttribute("totalWorkTime", workTimeSum.add(paidVacationTimeSum));
 		return "user/worktime/list";
 	}
 }
